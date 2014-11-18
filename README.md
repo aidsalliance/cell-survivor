@@ -53,6 +53,15 @@ __3.18__  visited http://aidsalliance.github.io/wad14-game/ to check GitHub Page
 __3.19__  tidied up ‘README.md’ and released version 0.0.4  
 
 
+4. Pasted functionality from previous Phaser tryout into real app
+-----------------------------------------------------------------
+
+__4.1__   `$ gulp` to open the game in a browser window and start watching for changes  
+__4.2__   `$ git flow feature start convert-tryout-to-real-app`  
+__4.3__   incremented version to '0.0.5-1' in package.json and bower.json  
+
+
+
 
 
 
@@ -60,7 +69,9 @@ __3.19__  tidied up ‘README.md’ and released version 0.0.4
 Releases
 --------
 
-+ 0.0.0  Initial setup, before versioning
-+ 0.0.2  Initial release, to test GitHub Pages
-+ 0.0.4  GitHub Pages works, tidy up before build proper
++ 0.0.0    Initial setup, before versioning
++ 0.0.2    Initial release, to test GitHub Pages
++ 0.0.4    GitHub Pages works, tidy up before build proper
++ 0.0.5-1  start converting tryout to the real app
+
 
