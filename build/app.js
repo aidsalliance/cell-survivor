@@ -155,9 +155,13 @@ Game = (function() {
     var x, y;
     x = this.game.width / 2;
     y = this.game.height / 2;
+    this.background = this.add.tileSprite(0, 0, 800, 600, 'cellfield');
     this.player = this.add.sprite(x, y, 'player');
     this.player.anchor.setTo(0.5, 0.5);
-    return this.input.onDown.add(this.onInputDown, this);
+    this.input.onDown.add(this.onInputDown, this);
+    this.paddle = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'breakin', 'ball_3.png');
+    this.paddle.scale.setTo(4, 4);
+    return this.paddle.anchor.setTo(0.5, 0.5);
   };
 
   Game.prototype.update = function() {
@@ -239,7 +243,9 @@ Preloader = (function() {
     this.load.onLoadComplete.addOnce(this.onLoadComplete, this);
     this.load.setPreloadSprite(this.asset);
     this.load.image('player', 'assets/images/player.png');
-    return this.load.bitmapFont('minecraftia', 'assets/fonts/minecraftia.png', 'assets/fonts/minecraftia.xml');
+    this.load.bitmapFont('minecraftia', 'assets/fonts/minecraftia.png', 'assets/fonts/minecraftia.xml');
+    this.load.atlas('breakin', 'assets/images/breakin-v2.png', 'assets/images/breakin-v2.json');
+    return this.load.image('cellfield', 'assets/images/cellfield.jpg');
   };
 
   Preloader.prototype.create = function() {

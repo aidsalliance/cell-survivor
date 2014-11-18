@@ -1,0 +1,243 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+		]
+	},
+	"buffers":
+	[
+		{
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "How the wad14-game was built\n============================\n\nWe built the game in OS X. You should be able to follow these instructions if you use a Linux operating system (eg Ubuntu), or even Windows.\n\n\n1. Installed basic development tools\n------------------------------------\nYou may have some of these installed already, so you might be able to skip some of these steps.\n\n__1.1__   git and git flow  \n__1.2__   node and npm  \n__1.3__   yeoman, gulp, and phaser-coffee-gulp  \n__1.4__   ruby and gem  \n__1.5__   compass  \n__1.6__   Sublime Text with the [CoffeeScript plugin](https://github.com/Xavura/CoffeeScript-Sublime-Plugin \"Install the Sublime Coffeescript plugin\")  \n\n\n2. Used phaser-coffee-gulp to create a barebones Phaser game\n------------------------------------------------------------\n\n__2.1__   `$ mkdir wad14-game && cd $_`  \n__2.2__   `$ sudo yo phaser-coffee-gulp`  \n__2.3__   added these lines to \"devDependencies\" in package.json:  \n```json\n      \"coffee-script\": \"~1.8.0\",\n      \"gifsicle\": \"~1.0.3\"\n```\n__2.4__   `$ gulp`  \n\n\n3. Set up the game to be hosted on GitHub Pages\n-----------------------------------------------\n\n__3.1__   `$ nano .gitignore` and comment-out or delete the ‘build’ directory  \n__3.2__   `$ cp build/index.html index.html`  \n__3.3__   `$ nano index.html` and add `<base href=\"build/\">` to the `<head>`  \n__3.4__   `$ nano README.md` to start writing this ‘How to’ guide  \n__3.5__   `$ git flow init`, and choose `gh-pages` as the production branch  \n__3.6__   copied a GPL ‘LICENSE’ file from a previous project  \n__3.7__   `$ git add .`  \n__3.8__   `$ git commit -am '+ 0.0.0  Initial setup, before versioning'`  \n__3.9__   incremented version to '0.0.2' in package.json and bower.json  \n__3.10__  `$ git flow release start 0.0.2`  \n__3.11__  `$ git commit -am '+ 0.0.2  Initial release, to test GitHub Pages'`  \n__3.12__  `$ git flow release finish 0.0.2`  \n__3.13__  created a new repository in GitHub  \n__3.14__  `$ git remote add origin https://github.com/aidsalliance/wad14-game.git`  \n__3.15__  `$ git push -u origin gh-pages`  \n__3.16__  `$ git push -u origin develop`  \n__3.17__  `$ git push --tags`  \n__3.18__  visited http://aidsalliance.github.io/wad14-game/ to check GitHub Pages  \n__3.19__  tidied up ‘README.md’ and released version 0.0.4  \n\n\n4. Pasted functionality from previous Phaser tryout into real app\n-----------------------------------------------------------------\n\n__4.1__   `$ gulp` to open the game in a browser window and start watching for changes  \n__4.2__   `$ git flow feature start convert-tryout-to-real-app`  \n__4.3__   incremented version to '0.0.5-1' in package.json and bower.json  \n__4.4__   corrected HTML window title  \n__4.5__   corrected HTML window title  \n\n\n\n\n\n\n\nReleases\n--------\n\n+ 0.0.0    Initial setup, before versioning\n+ 0.0.2    Initial release, to test GitHub Pages\n+ 0.0.4    GitHub Pages works, tidy up before build proper\n+ 0.0.5-1  start converting tryout to the real app\n\n\n",
+			"file": "README.md",
+			"file_size": 2955,
+			"file_write_time": 1416330925000000,
+			"settings":
+			{
+				"buffer_size": 2979,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"selected_items":
+		[
+			[
+				"packa",
+				"Preferences: Browse Packages"
+			]
+		],
+		"width": 575.0
+	},
+	"console":
+	{
+		"height": 174.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/wad14-game/README.md",
+		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/wad14-game/src/assets/fonts/minecraftia.xml",
+		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/ARCHIVE/world-aids-day-2014-game/breakout.js",
+		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/wad14-game/src/game/main.coffee",
+		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/wad14-game/package.json",
+		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/wad14-game/index.html",
+		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/game-2014/README.md",
+		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/game-2014/package.json",
+		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/game-2014/index.html",
+		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/ARCHIVE/world-aids-day-2014-game-old/index.html",
+		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/game-2014/gulpfile.js",
+		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/game-2014/gulp/tasks/setWatch.coffee",
+		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/game-2014/gulp/tasks/default.coffee",
+		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/game-2014/gulp/tasks/build.coffee",
+		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/game-2014/compass.rb",
+		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/starter-template/README.md",
+		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/world-aids-day-2014-game/README.md",
+		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/world-aids-day-2014-game/index.html",
+		"/Users/richplastow/Documents/meteorpi/index.html",
+		"/Users/richplastow/Documents/meteorpi/test/unit/controllersSpec.js",
+		"/Users/richplastow/Documents/meteorpi/js/controllers.js",
+		"/Users/richplastow/Documents/meteorpi/bower_components/fastclick/bower.json",
+		"/Users/richplastow/Documents/meteorpi/bower_components/foundation/bower.json",
+		"/Users/richplastow/Documents/meteorpi/bower.json",
+		"/Users/richplastow/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+		"/Users/richplastow/Library/Application Support/Sublime Text 2/Packages/Default/Preferences.sublime-settings"
+	],
+	"find":
+	{
+		"height": 38.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"'",
+			"\n- ",
+			"we ",
+			"phone",
+			"js/",
+			"css/"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"\n__",
+			"feature",
+			"bower_components/foundation/js/",
+			"bower_components/foundation/css/",
+			"css/"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "README.md",
+					"settings":
+					{
+						"buffer_size": 2979,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2745,
+								2718
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Markdown/Markdown.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 970.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 70.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 188.0,
+	"status_bar_visible": true
+}

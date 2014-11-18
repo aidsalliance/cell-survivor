@@ -13,7 +13,7 @@ __1.2__   node and npm
 __1.3__   yeoman, gulp, and phaser-coffee-gulp  
 __1.4__   ruby and gem  
 __1.5__   compass  
-__1.6__   Sublime Text  
+__1.6__   Sublime Text with the [CoffeeScript plugin](https://github.com/Xavura/CoffeeScript-Sublime-Plugin "Install the Sublime Coffeescript plugin")  
 
 
 2. Used phaser-coffee-gulp to create a barebones Phaser game
@@ -58,7 +58,15 @@ __3.19__  tidied up ‘README.md’ and released version 0.0.4
 
 __4.1__   `$ gulp` to open the game in a browser window and start watching for changes  
 __4.2__   `$ git flow feature start convert-tryout-to-real-app`  
-__4.3__   incremented version to '0.0.5-1' in package.json and bower.json  
+__4.3__   version '0.0.5-1' in package.json and bower.json, and commit  
+__4.4__   corrected HTML window title  
+__4.5__   saved ‘wad14-game.sublime-project’ for easy access to ‘src/’ and ‘README.md’  
+__4.6__   pasted in ‘ref/breakin.js’, a tryout we based on Phaser’s Breakout example  
+__4.7__   pasted breakin’s images and slice-data in ‘src/assets/images/’  
+__4.8__   restarted gulp, ctrl-c followed by `$ gulp`, to take in new files
+__4.9__   loaded the images and slice-data in ‘src/game/states/preloader.coffee’  
+__4.10__  display the images in ‘src/game/states/game.coffee’ (browser console helps)  
+__4.11__  version '0.0.5-2', `$ git add .` new files, and commit  
 
 
 
@@ -73,5 +81,6 @@ Releases
 + 0.0.2    Initial release, to test GitHub Pages
 + 0.0.4    GitHub Pages works, tidy up before build proper
 + 0.0.5-1  start converting tryout to the real app
++ 0.0.5-2  preload and display background and sprite images
 
 

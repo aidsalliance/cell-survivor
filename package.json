@@ -3,7 +3,7 @@
   "description": "An HTML5 game with information on living with HIV.",
   "readme": "README.md",
   "repository": "https://github.com/aidsalliance/wad14-game",
-  "version": "0.0.5-1",
+  "version": "0.0.5-2",
   "dependencies": {},
   "browser": {
     "phaser": "./src/bower_components/phaser-official/build/phaser.min.js"
