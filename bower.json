@@ -1,6 +1,6 @@
 {
   "name": "wad14-game",
-  "version": "0.0.4",
+  "version": "0.0.5-2",
   "dependencies": {
     "phaser-official": "2.1.3"
   }
