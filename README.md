@@ -13,7 +13,7 @@ __1.2__   node and npm
 __1.3__   yeoman, gulp, and phaser-coffee-gulp  
 __1.4__   ruby and gem  
 __1.5__   compass  
-__1.6__   Sublime Text  
+__1.6__   Sublime Text with the [CoffeeScript plugin](https://github.com/Xavura/CoffeeScript-Sublime-Plugin "Install the Sublime Coffeescript plugin")  
 
 
 2. Used phaser-coffee-gulp to create a barebones Phaser game
@@ -53,6 +53,27 @@ __3.18__  visited http://aidsalliance.github.io/wad14-game/ to check GitHub Page
 __3.19__  tidied up ‘README.md’ and released version 0.0.4  
 
 
+4. Pasted functionality from previous Phaser tryout into real app
+-----------------------------------------------------------------
+
+__4.1__   `$ gulp` to open the game in a browser window and start watching for changes  
+__4.2__   `$ git flow feature start convert-tryout-to-real-app`  
+__4.3__   version '0.0.5-1' in package.json and bower.json, and commit  
+__4.4__   corrected HTML window title  
+__4.5__   saved ‘wad14-game.sublime-project’ for easy access to ‘src/’ and ‘README.md’  
+__4.6__   pasted in ‘ref/breakin.js’, a tryout we based on Phaser’s Breakout example  
+__4.7__   pasted breakin’s images and slice-data in ‘src/assets/images/’  
+__4.8__   restarted gulp, ctrl-c followed by `$ gulp`, to take in new files
+__4.9__   loaded the images and slice-data in ‘src/game/states/preloader.coffee’  
+__4.10__  display the images in ‘src/game/states/game.coffee’ (browser console helps)  
+__4.11__  bumped version to '0.0.5-2', track new files with `$ git add .`, and commit  
+__4.12__  defined `Pathogen` and `Brick` classes in ‘src/game/classes/’  
+__4.13__  bricks rotate around nucleus, pathogens appear at random from top and bounce  
+__4.14__  collisions detected: bricks are destroyed correctly, nucleus hit ends game  
+__4.15__  bumped version to '0.0.5-3', track new files and commit  
+__4.16__  `$ git flow release start 0.0.6` released version '0.0.6', pushed to GitHub
+
+
 
 
 
@@ -60,7 +81,12 @@ __3.19__  tidied up ‘README.md’ and released version 0.0.4
 Releases
 --------
 
-+ 0.0.0  Initial setup, before versioning
-+ 0.0.2  Initial release, to test GitHub Pages
-+ 0.0.4  GitHub Pages works, tidy up before build proper
++ 0.0.0    initial setup, before versioning
++ 0.0.2    initial release, to test GitHub Pages
++ 0.0.4    GitHub Pages works, tidy up before build proper
++ 0.0.5-1  start converting tryout to the real app
++ 0.0.5-2  preload and display background and sprite images
++ 0.0.5-3  basic game mechanic working
++ 0.0.6    basic game mechanic ready for testing
+
 
