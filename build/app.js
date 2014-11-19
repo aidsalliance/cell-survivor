@@ -97,6 +97,63 @@ b.exports=c,c.prototype=new d,c.prototype.solve=function(){throw new Error("Solv
 
 }).call(this,require("qvMYcC"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"qvMYcC":1}],3:[function(require,module,exports){
+var Brick,
+  __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+Brick = (function(_super) {
+  __extends(Brick, _super);
+
+  function Brick(game, x, y, key, frame) {
+    Brick.__super__.constructor.call(this, game, x, y, key, frame);
+  }
+
+  return Brick;
+
+})(Phaser.Sprite);
+
+module.exports = Brick;
+
+
+},{}],4:[function(require,module,exports){
+var Pathogen,
+  __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+Pathogen = (function(_super) {
+  __extends(Pathogen, _super);
+
+  function Pathogen(game, x, y) {
+    var color;
+    color = game.rnd.pick([
+      {
+        start: 'pathogen_1.png',
+        anim: ['pathogen_1.png', 'pathogen_4.png']
+      }, {
+        start: 'pathogen_2.png',
+        anim: ['pathogen_2.png', 'pathogen_5.png']
+      }
+    ]);
+    Pathogen.__super__.constructor.call(this, game, x, y, 'breakin', color.start);
+    game.physics.enable(this, Phaser.Physics.ARCADE);
+    this.anchor.set(0.5);
+    this.checkWorldBounds = true;
+    this.body.collideWorldBounds = true;
+    this.body.bounce.set(1);
+    this.body.velocity = {
+      x: game.rnd.between(-200, 200),
+      y: game.rnd.between(50, 200)
+    };
+  }
+
+  return Pathogen;
+
+})(Phaser.Sprite);
+
+module.exports = Pathogen;
+
+
+},{}],5:[function(require,module,exports){
 window.onload = function() {
   'use strict';
   var Phaser, game;
@@ -110,7 +167,7 @@ window.onload = function() {
 };
 
 
-},{"./states/boot":4,"./states/game":5,"./states/menu":6,"./states/preloader":7,"phaser":2}],4:[function(require,module,exports){
+},{"./states/boot":6,"./states/game":7,"./states/menu":8,"./states/preloader":9,"phaser":2}],6:[function(require,module,exports){
 var Boot;
 
 Boot = (function() {
@@ -143,44 +200,77 @@ Boot = (function() {
 module.exports = Boot;
 
 
-},{}],5:[function(require,module,exports){
-var Game;
+},{}],7:[function(require,module,exports){
+var Brick, Game, Pathogen;
+
+Pathogen = require('../classes/pathogen');
+
+Brick = require('../classes/brick');
 
 Game = (function() {
   function Game() {}
 
-  Game.player = null;
-
   Game.prototype.create = function() {
-    var x, y;
-    x = this.game.width / 2;
-    y = this.game.height / 2;
+    var adjacent, angle, brick, frame, opposite, _i, _results;
     this.background = this.add.tileSprite(0, 0, 800, 600, 'cellfield');
-    this.player = this.add.sprite(x, y, 'player');
-    this.player.anchor.setTo(0.5, 0.5);
-    this.input.onDown.add(this.onInputDown, this);
-    this.paddle = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'breakin', 'ball_3.png');
-    this.paddle.scale.setTo(4, 4);
-    return this.paddle.anchor.setTo(0.5, 0.5);
+    this.nucleus = this.add.sprite(this.world.centerX, this.world.centerY, 'breakin', 'nucleus.png');
+    this.physics.enable(this.nucleus, Phaser.Physics.ARCADE);
+    this.nucleus.scale.setTo(4, 4);
+    this.nucleus.anchor.setTo(0.5, 0.5);
+    this.nucleus.body.collideWorldBounds = true;
+    this.nucleus.body.bounce.set(1);
+    this.nucleus.body.immovable = true;
+    this.pathogens = this.add.group();
+    this.pathogens.enableBody = true;
+    this.pathogens.physicsBodyType = Phaser.Physics.ARCADE;
+    this.pathogens.classType = Pathogen;
+    this.bricks = this.add.group();
+    this.bricks.enableBody = true;
+    this.bricks.physicsBodyType = Phaser.Physics.ARCADE;
+    this.bricks.classType = Brick;
+    this.bricks.x = this.world.centerX;
+    this.bricks.y = this.world.centerY;
+    _results = [];
+    for (angle = _i = 0; _i <= 39; angle = ++_i) {
+      opposite = Math.sin(angle * Math.PI / 20) * 100;
+      adjacent = Math.cos(angle * Math.PI / 20) * 100;
+      frame = (angle / 6) % 2 > .7 ? 'pathogen_1.png' : 'pathogen_2.png';
+      brick = this.bricks.create(opposite, adjacent, 'breakin', frame);
+      brick.anchor.setTo(.5, .5);
+      _results.push(brick.body.immovable = true);
+    }
+    return _results;
   };
 
   Game.prototype.update = function() {
-    var angle, cx, cy, dx, dy, scale, x, y;
+    var angle, cx, cy, x, y;
     x = this.input.position.x;
     y = this.input.position.y;
     cx = this.world.centerX;
     cy = this.world.centerY;
     angle = Math.atan2(y - cy, x - cx) * (180 / Math.PI);
-    this.player.angle = angle;
-    dx = x - cx;
-    dy = y - cy;
-    scale = Math.sqrt(dx * dx + dy * dy) / 100;
-    this.player.scale.x = scale * 0.6;
-    return this.player.scale.y = scale * 0.6;
+    this.bricks.angle = angle;
+    this.physics.arcade.collide(this.pathogens, this.nucleus, this.pathogenHitNucleus, null, this);
+    this.physics.arcade.collide(this.pathogens, this.bricks, this.pathogenHitBrick);
+    if (!this.rnd.between(0, 100)) {
+      return this.pathogens.create(this.rnd.between(0, this.world.width), 0);
+    }
   };
 
-  Game.prototype.onInputDown = function() {
+  Game.prototype.pathogenHitNucleus = function() {
     return this.game.state.start('menu');
+  };
+
+  Game.prototype.pathogenHitBrick = function(pathogen, brick) {
+    var brickColor, pathogenColor;
+    brickColor = '1' === brick._frame.name[9] || '4' === brick._frame.name[9] ? 'blue' : 'red';
+    pathogenColor = '1' === pathogen._frame.name[9] || '4' === pathogen._frame.name[9] ? 'blue' : 'red';
+    if (brickColor !== pathogenColor) {
+      brick.kill();
+    } else {
+
+    }
+    return pathogen.kill();
   };
 
   return Game;
@@ -190,7 +280,7 @@ Game = (function() {
 module.exports = Game;
 
 
-},{}],6:[function(require,module,exports){
+},{"../classes/brick":3,"../classes/pathogen":4}],8:[function(require,module,exports){
 var Menu;
 
 Menu = (function() {
@@ -227,7 +317,7 @@ Menu = (function() {
 module.exports = Menu;
 
 
-},{}],7:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 var Preloader;
 
 Preloader = (function() {
@@ -269,4 +359,4 @@ Preloader = (function() {
 module.exports = Preloader;
 
 
-},{}]},{},[3])
+},{}]},{},[5])

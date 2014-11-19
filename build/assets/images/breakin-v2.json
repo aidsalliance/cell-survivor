@@ -1,7 +1,7 @@
 {"frames": [
 
 {
-	"filename": "ball_1.png",
+	"filename": "pathogen_1.png",
 	"frame": {"x":218,"y":38,"w":16,"h":16},
 	"rotated": false,
 	"trimmed": false,
@@ -9,7 +9,7 @@
 	"sourceSize": {"w":16,"h":16}
 },
 {
-	"filename": "ball_2.png",
+	"filename": "pathogen_2.png",
 	"frame": {"x":218,"y":20,"w":16,"h":16},
 	"rotated": false,
 	"trimmed": false,
@@ -17,7 +17,7 @@
 	"sourceSize": {"w":16,"h":16}
 },
 {
-	"filename": "ball_3.png",
+	"filename": "nucleus.png",
 	"frame": {"x":218,"y":2,"w":16,"h":16},
 	"rotated": false,
 	"trimmed": false,
@@ -25,7 +25,7 @@
 	"sourceSize": {"w":16,"h":16}
 },
 {
-	"filename": "ball_4.png",
+	"filename": "pathogen_4.png",
 	"frame": {"x":200,"y":38,"w":16,"h":16},
 	"rotated": false,
 	"trimmed": false,
@@ -33,7 +33,7 @@
 	"sourceSize": {"w":16,"h":16}
 },
 {
-	"filename": "ball_5.png",
+	"filename": "pathogen_5.png",
 	"frame": {"x":200,"y":20,"w":16,"h":16},
 	"rotated": false,
 	"trimmed": false,
@@ -227,7 +227,7 @@
 "meta": {
 	"app": "http://www.texturepacker.com",
 	"version": "1.0",
-	"image": "breakout.png",
+	"image": "breakin.png",
 	"format": "RGBA8888",
 	"size": {"w":302,"h":64},
 	"scale": "1",

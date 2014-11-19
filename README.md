@@ -66,7 +66,11 @@ __4.7__   pasted breakin’s images and slice-data in ‘src/assets/images/’
 __4.8__   restarted gulp, ctrl-c followed by `$ gulp`, to take in new files
 __4.9__   loaded the images and slice-data in ‘src/game/states/preloader.coffee’  
 __4.10__  display the images in ‘src/game/states/game.coffee’ (browser console helps)  
-__4.11__  version '0.0.5-2', `$ git add .` new files, and commit  
+__4.11__  bumped version to '0.0.5-2', track new files with `$ git add .`, and commit  
+__4.12__  defined `Pathogen` and `Brick` classes in ‘src/game/classes/’  
+__4.13__  bricks rotate around nucleus, pathogens appear at random from top and bounce  
+__4.14__  collisions detected: bricks are destroyed correctly, nucleus hit ends game  
+__4.15__  bumped version to '0.0.5-3', track new files and commit  
 
 
 
@@ -77,10 +81,11 @@ __4.11__  version '0.0.5-2', `$ git add .` new files, and commit
 Releases
 --------
 
-+ 0.0.0    Initial setup, before versioning
-+ 0.0.2    Initial release, to test GitHub Pages
++ 0.0.0    initial setup, before versioning
++ 0.0.2    initial release, to test GitHub Pages
 + 0.0.4    GitHub Pages works, tidy up before build proper
 + 0.0.5-1  start converting tryout to the real app
 + 0.0.5-2  preload and display background and sprite images
++ 0.0.5-3  basic game mechanic working
 
 
