@@ -71,7 +71,7 @@ __4.12__  defined `Pathogen` and `Brick` classes in ‘src/game/classes/’
 __4.13__  bricks rotate around nucleus, pathogens appear at random from top and bounce  
 __4.14__  collisions detected: bricks are destroyed correctly, nucleus hit ends game  
 __4.15__  bumped version to '0.0.5-3', track new files and commit  
-
+__4.16__  `$ git flow release start 0.0.6` released version '0.0.6', pushed to GitHub
 
 
 
@@ -87,5 +87,6 @@ Releases
 + 0.0.5-1  start converting tryout to the real app
 + 0.0.5-2  preload and display background and sprite images
 + 0.0.5-3  basic game mechanic working
++ 0.0.6    basic game mechanic ready for testing
 
 
