@@ -3,7 +3,7 @@ window.onload = ->
 
   Phaser = require 'phaser'
 
-  game = new Phaser.Game 800, 600, Phaser.AUTO, 'wad14-game'
+  game = new Phaser.Game 800, 600, Phaser.AUTO, 'cell-survivor'
 
   # Game states
   game.state.add 'boot'              , require './states/boot'

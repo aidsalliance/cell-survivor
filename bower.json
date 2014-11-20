@@ -1,6 +1,6 @@
 {
-  "name": "wad14-game",
-  "version": "0.0.7-1",
+  "name": "cell-survivor",
+  "version": "0.1.0",
   "dependencies": {
     "phaser-official": "2.1.3"
   }
