@@ -93,6 +93,14 @@ __5.5__   created generic ‘Level’ and ‘Message’ classes
 __5.6__   pasted simple ‘score’ system from ‘breakin.js’  
 __5.7__   added states ‘level-two/three/four’ and ‘level-two/three-complete’  
 __5.8__   bumped version to '0.0.7-2', track new files and commit  
+__5.9__   `$ git flow feature finish levels`, `$ git flow release start 0.1.0`  
+
+
+6. Renamed game to ‘Cell Survivor’, and added real graphics and messages
+------------------------------------------------------------------------
+
+__6.1__   Find/replace 'wad14-game' to 'cell-survivor' in all files  
+__6.2__   `$ git flow release finish 0.1.0`  
 
 
 
@@ -105,6 +113,7 @@ Releases
 + 0.0.6    basic game mechanic ready for testing
 + 0.0.7-1  simple ‘splash’, ‘level-one’, ‘level-one-complete’, ‘game-over’
 + 0.0.7-2  score, and four levels of increasing difficulty
++ 0.1.0    score, levels, and CNAME, renamed game to ‘Cell Survivor’
 
 
 
