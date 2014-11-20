@@ -253,7 +253,7 @@ window.onload = function() {
   'use strict';
   var Phaser, game;
   Phaser = require('phaser');
-  game = new Phaser.Game(800, 600, Phaser.AUTO, 'wad14-game');
+  game = new Phaser.Game(800, 600, Phaser.AUTO, 'cell-survivor');
   game.state.add('boot', require('./states/boot'));
   game.state.add('preloader', require('./states/preloader'));
   game.state.add('splash', require('./states/splash'));
