@@ -1,7 +1,7 @@
 How the wad14-game was built
 ============================
 
-We built the game in OS X. You should be able to follow these instructions if you use a Linux operating system (eg Ubuntu), or even Windows.
+We built [the game](http://aidsalliance.github.io/wad14-game "Play the game here") in OS X. You should be able to follow these instructions if you use a Linux operating system (eg Ubuntu), or even Windows.
 
 
 1. Installed basic development tools
@@ -63,7 +63,7 @@ __4.4__   corrected HTML window title
 __4.5__   saved ‘wad14-game.sublime-project’ for easy access to ‘src/’ and ‘README.md’  
 __4.6__   pasted in ‘ref/breakin.js’, a tryout we based on Phaser’s Breakout example  
 __4.7__   pasted breakin’s images and slice-data in ‘src/assets/images/’  
-__4.8__   restarted gulp, ctrl-c followed by `$ gulp`, to take in new files
+__4.8__   restarted gulp, ctrl-c followed by `$ gulp`, to take in new files  
 __4.9__   loaded the images and slice-data in ‘src/game/states/preloader.coffee’  
 __4.10__  display the images in ‘src/game/states/game.coffee’ (browser console helps)  
 __4.11__  bumped version to '0.0.5-2', track new files with `$ git add .`, and commit  
@@ -74,6 +74,21 @@ __4.15__  bumped version to '0.0.5-3', track new files and commit
 __4.16__  `$ git flow release start 0.0.6` released version '0.0.6', pushed to GitHub
 
 
+5. Added levels with condoms and antiretroviral pills, and end-of-level messages
+--------------------------------------------------------------------------------
+
+__5.1__   `$ git flow feature start levels` and bumped version to '0.0.7-1'  
+__5.2__   moved compile-error logs to the Terminal, in ‘gulp/util/handleErrors.coffee’  
+```coffee
+  # Just log to console.
+  notify.onError
+    title: 'Compile Error'
+    message: '<%= error.toString().substr( error.toString().indexOf("/src/") ) %>'
+    notifier: (options, callback) ->
+  .apply this, args
+```
+__5.3__   add/renamed states ‘splash’, ‘level-one’, ‘level-one-complete’, ‘game-over’  
+__5.4__   bumped version to '0.0.7-2', track new files and commit  
 
 
 
@@ -81,12 +96,7 @@ __4.16__  `$ git flow release start 0.0.6` released version '0.0.6', pushed to G
 Releases
 --------
 
-+ 0.0.0    initial setup, before versioning
 + 0.0.2    initial release, to test GitHub Pages
 + 0.0.4    GitHub Pages works, tidy up before build proper
-+ 0.0.5-1  start converting tryout to the real app
-+ 0.0.5-2  preload and display background and sprite images
-+ 0.0.5-3  basic game mechanic working
 + 0.0.6    basic game mechanic ready for testing
-
 

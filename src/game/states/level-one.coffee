@@ -1,7 +1,7 @@
 Pathogen = require '../classes/pathogen'
 Brick    = require '../classes/brick'
 
-class Game
+class LevelOne
 
   create: ->
 
@@ -60,12 +60,12 @@ class Game
     @physics.arcade.collide @pathogens, @nucleus, @pathogenHitNucleus, null, @
     @physics.arcade.collide @pathogens, @bricks , @pathogenHitBrick
 
-    if not @rnd.between 0, 100 # call `newPathogen()` if `between()` returns zero
+    if not @rnd.between 0, 10 # call `newPathogen()` if `between()` returns zero
       @pathogens.create @rnd.between(0, @world.width), 0
 
 
   pathogenHitNucleus: ->
-    @game.state.start 'menu'
+    @game.state.start 'gameOver'
 
 
   pathogenHitBrick: (pathogen, brick) ->
@@ -88,4 +88,4 @@ class Game
     #   game.paused = true
 
 
-module.exports = Game
+module.exports = LevelOne

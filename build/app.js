@@ -161,13 +161,15 @@ window.onload = function() {
   game = new Phaser.Game(800, 600, Phaser.AUTO, 'wad14-game');
   game.state.add('boot', require('./states/boot'));
   game.state.add('preloader', require('./states/preloader'));
-  game.state.add('menu', require('./states/menu'));
-  game.state.add('game', require('./states/game'));
+  game.state.add('splash', require('./states/splash'));
+  game.state.add('levelOne', require('./states/level-one'));
+  game.state.add('levelOneComplete', require('./states/level-one-complete'));
+  game.state.add('gameOver', require('./states/game-over'));
   return game.state.start('boot');
 };
 
 
-},{"./states/boot":6,"./states/game":7,"./states/menu":8,"./states/preloader":9,"phaser":2}],6:[function(require,module,exports){
+},{"./states/boot":6,"./states/game-over":7,"./states/level-one":9,"./states/level-one-complete":8,"./states/preloader":10,"./states/splash":11,"phaser":2}],6:[function(require,module,exports){
 var Boot;
 
 Boot = (function() {
@@ -201,16 +203,90 @@ module.exports = Boot;
 
 
 },{}],7:[function(require,module,exports){
-var Brick, Game, Pathogen;
+var GameOver;
+
+GameOver = (function() {
+  function GameOver() {}
+
+  GameOver.titleTxt = null;
+
+  GameOver.startTxt = null;
+
+  GameOver.prototype.create = function() {
+    var x, y;
+    x = this.game.width / 2;
+    y = this.game.height / 2;
+    this.titleTxt = this.add.bitmapText(x, y, 'minecraftia', 'Game Over');
+    this.titleTxt.align = 'center';
+    this.titleTxt.x = this.game.width / 2 - this.titleTxt.textWidth / 2;
+    y = y + this.titleTxt.height + 5;
+    this.startTxt = this.add.bitmapText(x, y, 'minecraftia', 'PLAY AGAIN');
+    this.startTxt.align = 'center';
+    this.startTxt.x = this.game.width / 2 - this.startTxt.textWidth / 2;
+    return this.input.onDown.add(this.onDown, this);
+  };
+
+  GameOver.prototype.update = function() {};
+
+  GameOver.prototype.onDown = function() {
+    return this.game.state.start('levelOne');
+  };
+
+  return GameOver;
+
+})();
+
+module.exports = GameOver;
+
+
+},{}],8:[function(require,module,exports){
+var LevelOneComplete;
+
+LevelOneComplete = (function() {
+  function LevelOneComplete() {}
+
+  LevelOneComplete.titleTxt = null;
+
+  LevelOneComplete.startTxt = null;
+
+  LevelOneComplete.prototype.create = function() {
+    var x, y;
+    x = this.game.width / 2;
+    y = this.game.height / 2;
+    this.titleTxt = this.add.bitmapText(x, y, 'minecraftia', 'Level 1 Complete!');
+    this.titleTxt.align = 'center';
+    this.titleTxt.x = this.game.width / 2 - this.titleTxt.textWidth / 2;
+    y = y + this.titleTxt.height + 5;
+    this.startTxt = this.add.bitmapText(x, y, 'minecraftia', 'START LEVEL 2');
+    this.startTxt.align = 'center';
+    this.startTxt.x = this.game.width / 2 - this.startTxt.textWidth / 2;
+    return this.input.onDown.add(this.onDown, this);
+  };
+
+  LevelOneComplete.prototype.update = function() {};
+
+  LevelOneComplete.prototype.onDown = function() {
+    return this.game.state.start('levelTwo');
+  };
+
+  return LevelOneComplete;
+
+})();
+
+module.exports = LevelOneComplete;
+
+
+},{}],9:[function(require,module,exports){
+var Brick, LevelOne, Pathogen;
 
 Pathogen = require('../classes/pathogen');
 
 Brick = require('../classes/brick');
 
-Game = (function() {
-  function Game() {}
+LevelOne = (function() {
+  function LevelOne() {}
 
-  Game.prototype.create = function() {
+  LevelOne.prototype.create = function() {
     var adjacent, angle, brick, frame, opposite, _i, _results;
     this.background = this.add.tileSprite(0, 0, 800, 600, 'cellfield');
     this.nucleus = this.add.sprite(this.world.centerX, this.world.centerY, 'breakin', 'nucleus.png');
@@ -242,7 +318,7 @@ Game = (function() {
     return _results;
   };
 
-  Game.prototype.update = function() {
+  LevelOne.prototype.update = function() {
     var angle, cx, cy, x, y;
     x = this.input.position.x;
     y = this.input.position.y;
@@ -252,16 +328,16 @@ Game = (function() {
     this.bricks.angle = angle;
     this.physics.arcade.collide(this.pathogens, this.nucleus, this.pathogenHitNucleus, null, this);
     this.physics.arcade.collide(this.pathogens, this.bricks, this.pathogenHitBrick);
-    if (!this.rnd.between(0, 100)) {
+    if (!this.rnd.between(0, 10)) {
       return this.pathogens.create(this.rnd.between(0, this.world.width), 0);
     }
   };
 
-  Game.prototype.pathogenHitNucleus = function() {
-    return this.game.state.start('menu');
+  LevelOne.prototype.pathogenHitNucleus = function() {
+    return this.game.state.start('gameOver');
   };
 
-  Game.prototype.pathogenHitBrick = function(pathogen, brick) {
+  LevelOne.prototype.pathogenHitBrick = function(pathogen, brick) {
     var brickColor, pathogenColor;
     brickColor = '1' === brick._frame.name[9] || '4' === brick._frame.name[9] ? 'blue' : 'red';
     pathogenColor = '1' === pathogen._frame.name[9] || '4' === pathogen._frame.name[9] ? 'blue' : 'red';
@@ -273,51 +349,14 @@ Game = (function() {
     return pathogen.kill();
   };
 
-  return Game;
+  return LevelOne;
 
 })();
 
-module.exports = Game;
+module.exports = LevelOne;
 
 
-},{"../classes/brick":3,"../classes/pathogen":4}],8:[function(require,module,exports){
-var Menu;
-
-Menu = (function() {
-  function Menu() {}
-
-  Menu.titleTxt = null;
-
-  Menu.startTxt = null;
-
-  Menu.prototype.create = function() {
-    var x, y;
-    x = this.game.width / 2;
-    y = this.game.height / 2;
-    this.titleTxt = this.add.bitmapText(x, y, 'minecraftia', 'Example Game');
-    this.titleTxt.align = 'center';
-    this.titleTxt.x = this.game.width / 2 - this.titleTxt.textWidth / 2;
-    y = y + this.titleTxt.height + 5;
-    this.startTxt = this.add.bitmapText(x, y, 'minecraftia', 'START');
-    this.startTxt.align = 'center';
-    this.startTxt.x = this.game.width / 2 - this.startTxt.textWidth / 2;
-    return this.input.onDown.add(this.onDown, this);
-  };
-
-  Menu.prototype.update = function() {};
-
-  Menu.prototype.onDown = function() {
-    return this.game.state.start('game');
-  };
-
-  return Menu;
-
-})();
-
-module.exports = Menu;
-
-
-},{}],9:[function(require,module,exports){
+},{"../classes/brick":3,"../classes/pathogen":4}],10:[function(require,module,exports){
 var Preloader;
 
 Preloader = (function() {
@@ -344,7 +383,7 @@ Preloader = (function() {
 
   Preloader.prototype.update = function() {
     if (!!this.ready) {
-      return this.game.state.start('menu');
+      return this.game.state.start('splash');
     }
   };
 
@@ -357,6 +396,43 @@ Preloader = (function() {
 })();
 
 module.exports = Preloader;
+
+
+},{}],11:[function(require,module,exports){
+var Splash;
+
+Splash = (function() {
+  function Splash() {}
+
+  Splash.titleTxt = null;
+
+  Splash.startTxt = null;
+
+  Splash.prototype.create = function() {
+    var x, y;
+    x = this.game.width / 2;
+    y = this.game.height / 2;
+    this.titleTxt = this.add.bitmapText(x, y, 'minecraftia', 'Splash Page');
+    this.titleTxt.align = 'center';
+    this.titleTxt.x = this.game.width / 2 - this.titleTxt.textWidth / 2;
+    y = y + this.titleTxt.height + 5;
+    this.startTxt = this.add.bitmapText(x, y, 'minecraftia', 'PLAY');
+    this.startTxt.align = 'center';
+    this.startTxt.x = this.game.width / 2 - this.startTxt.textWidth / 2;
+    return this.input.onDown.add(this.onDown, this);
+  };
+
+  Splash.prototype.update = function() {};
+
+  Splash.prototype.onDown = function() {
+    return this.game.state.start('levelOne');
+  };
+
+  return Splash;
+
+})();
+
+module.exports = Splash;
 
 
 },{}]},{},[5])
