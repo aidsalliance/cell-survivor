@@ -1,7 +1,8 @@
 Pathogen = require '../classes/pathogen'
 Brick    = require '../classes/brick'
 
-class Game
+class Level
+  constructor: (@slowest, @fastest, @spawnRate, @complete, @next) ->
 
   create: ->
 
@@ -12,6 +13,7 @@ class Game
     # @player = @add.sprite x, y, 'player'
     # @player.anchor.setTo 0.5, 0.5
     # @input.onDown.add @onInputDown, this
+    @scoreText = @game.add.text(32, 550, 'score: ' + @game.score, { font: "20px Arial", fill: "#ffffff", align: "left" });
 
     @nucleus = @add.sprite @world.centerX, @world.centerY, 'breakin', 'nucleus.png'
     @physics.enable @nucleus, Phaser.Physics.ARCADE
@@ -58,14 +60,18 @@ class Game
     # @bricks.scale.y = scale * 0.6
 
     @physics.arcade.collide @pathogens, @nucleus, @pathogenHitNucleus, null, @
-    @physics.arcade.collide @pathogens, @bricks , @pathogenHitBrick
+    @physics.arcade.collide @pathogens, @bricks , @pathogenHitBrick, null, @
 
-    if not @rnd.between 0, 100 # call `newPathogen()` if `between()` returns zero
-      @pathogens.create @rnd.between(0, @world.width), 0
+    if not @rnd.between 0, 1 / @spawnRate # call `newPathogen()` if `between()` returns zero
+      pathogen = @pathogens.create @rnd.between(0, @world.width), 0
+      pathogen.body.velocity =
+	      x: @game.rnd.between -@fastest, @fastest
+	      y: @game.rnd.between @slowest, @fastest
+
 
 
   pathogenHitNucleus: ->
-    @game.state.start 'menu'
+    @game.state.start 'gameOver'
 
 
   pathogenHitBrick: (pathogen, brick) ->
@@ -76,16 +82,17 @@ class Game
     if brickColor != pathogenColor
       brick.kill();
     else
-      # score += 10
-      # scoreText.text = 'score: ' + score
+      @game.score += 10
+      @scoreText.text = 'score: ' + @game.score;
 
     pathogen.kill();
 
     # score += 10
-    # if score >= 200
+    if @game.score >= @complete
+      @game.state.start @next
     #   introText.text = 'Level 1 Complete'
     #   introText.visible = true
     #   game.paused = true
 
 
-module.exports = Game
+module.exports = Level

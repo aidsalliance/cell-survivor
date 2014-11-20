@@ -18,7 +18,7 @@ class Preloader
     @asset.cropEnabled = false
 
   update: ->
-    @game.state.start 'menu' unless not @ready
+    @game.state.start 'splash' unless not @ready
 
   onLoadComplete: ->
     @ready = true

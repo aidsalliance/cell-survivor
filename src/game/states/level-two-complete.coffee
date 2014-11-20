@@ -1,4 +1,4 @@
-class Menu
+class LevelTwoComplete
 
   @titleTxt = null
   @startTxt = null
@@ -7,12 +7,12 @@ class Menu
     x = @game.width / 2
     y = @game.height / 2
 
-    @titleTxt = @add.bitmapText(x, y, 'minecraftia', 'Example Game')
+    @titleTxt = @add.bitmapText(x, y, 'minecraftia', 'Level 2 Complete!')
     @titleTxt.align = 'center'
     @titleTxt.x = @game.width / 2 - @titleTxt.textWidth / 2
 
     y = y + @titleTxt.height + 5
-    @startTxt = @add.bitmapText(x, y, 'minecraftia', 'START')
+    @startTxt = @add.bitmapText(x, y, 'minecraftia', 'START LEVEL 3')
     @startTxt.align = 'center'
     @startTxt.x = @game.width / 2 - @startTxt.textWidth / 2
 
@@ -21,6 +21,6 @@ class Menu
   update: ->
 
   onDown: ->
-    @game.state.start 'game'
+    @game.state.start 'levelThree'
 
-module.exports = Menu
+module.exports = LevelTwoComplete
