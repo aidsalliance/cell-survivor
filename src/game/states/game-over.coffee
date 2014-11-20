@@ -21,6 +21,7 @@ class GameOver
   update: ->
 
   onDown: ->
+    @game.score = 0
     @game.state.start 'levelOne'
 
 module.exports = GameOver

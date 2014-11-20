@@ -16,9 +16,5 @@ class Pathogen extends Phaser.Sprite
     @body.collideWorldBounds = true
     @body.bounce.set 1
 
-    @body.velocity =
-      x: game.rnd.between -200, 200
-      y: game.rnd.between 50, 200
-
 
 module.exports = Pathogen

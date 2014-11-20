@@ -74,10 +74,10 @@ __4.15__  bumped version to '0.0.5-3', track new files and commit
 __4.16__  `$ git flow release start 0.0.6` released version '0.0.6', pushed to GitHub
 
 
-5. Added levels with condoms and antiretroviral pills, and end-of-level messages
---------------------------------------------------------------------------------
+5. Added four increasingly difficult levels, a score, and end-of-level messages
+-------------------------------------------------------------------------------
 
-__5.1__   `$ git flow feature start levels` and bumped version to '0.0.7-1'  
+__5.1__   `$ git flow feature start levels`  
 __5.2__   moved compile-error logs to the Terminal, in ‘gulp/util/handleErrors.coffee’  
 ```coffee
   # Just log to console.
@@ -88,7 +88,11 @@ __5.2__   moved compile-error logs to the Terminal, in ‘gulp/util/handleErrors
   .apply this, args
 ```
 __5.3__   add/renamed states ‘splash’, ‘level-one’, ‘level-one-complete’, ‘game-over’  
-__5.4__   bumped version to '0.0.7-2', track new files and commit  
+__5.4__   bumped version to '0.0.7-1', track new files and commit  
+__5.5__   created generic ‘Level’ and ‘Message’ classes  
+__5.6__   pasted simple ‘score’ system from ‘breakin.js’  
+__5.7__   added states ‘level-two/three/four’ and ‘level-two/three-complete’  
+__5.8__   bumped version to '0.0.7-2', track new files and commit  
 
 
 
@@ -99,4 +103,8 @@ Releases
 + 0.0.2    initial release, to test GitHub Pages
 + 0.0.4    GitHub Pages works, tidy up before build proper
 + 0.0.6    basic game mechanic ready for testing
++ 0.0.7-1  simple ‘splash’, ‘level-one’, ‘level-one-complete’, ‘game-over’
++ 0.0.7-2  score, and four levels of increasing difficulty
+
+
 

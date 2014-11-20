@@ -116,6 +116,105 @@ module.exports = Brick;
 
 
 },{}],4:[function(require,module,exports){
+var Brick, Level, Pathogen;
+
+Pathogen = require('../classes/pathogen');
+
+Brick = require('../classes/brick');
+
+Level = (function() {
+  function Level(slowest, fastest, spawnRate, complete, next) {
+    this.slowest = slowest;
+    this.fastest = fastest;
+    this.spawnRate = spawnRate;
+    this.complete = complete;
+    this.next = next;
+  }
+
+  Level.prototype.create = function() {
+    var adjacent, angle, brick, frame, opposite, _i, _results;
+    this.background = this.add.tileSprite(0, 0, 800, 600, 'cellfield');
+    this.scoreText = this.game.add.text(32, 550, 'score: ' + this.game.score, {
+      font: "20px Arial",
+      fill: "#ffffff",
+      align: "left"
+    });
+    this.nucleus = this.add.sprite(this.world.centerX, this.world.centerY, 'breakin', 'nucleus.png');
+    this.physics.enable(this.nucleus, Phaser.Physics.ARCADE);
+    this.nucleus.scale.setTo(4, 4);
+    this.nucleus.anchor.setTo(0.5, 0.5);
+    this.nucleus.body.collideWorldBounds = true;
+    this.nucleus.body.bounce.set(1);
+    this.nucleus.body.immovable = true;
+    this.pathogens = this.add.group();
+    this.pathogens.enableBody = true;
+    this.pathogens.physicsBodyType = Phaser.Physics.ARCADE;
+    this.pathogens.classType = Pathogen;
+    this.bricks = this.add.group();
+    this.bricks.enableBody = true;
+    this.bricks.physicsBodyType = Phaser.Physics.ARCADE;
+    this.bricks.classType = Brick;
+    this.bricks.x = this.world.centerX;
+    this.bricks.y = this.world.centerY;
+    _results = [];
+    for (angle = _i = 0; _i <= 39; angle = ++_i) {
+      opposite = Math.sin(angle * Math.PI / 20) * 100;
+      adjacent = Math.cos(angle * Math.PI / 20) * 100;
+      frame = (angle / 6) % 2 > .7 ? 'pathogen_1.png' : 'pathogen_2.png';
+      brick = this.bricks.create(opposite, adjacent, 'breakin', frame);
+      brick.anchor.setTo(.5, .5);
+      _results.push(brick.body.immovable = true);
+    }
+    return _results;
+  };
+
+  Level.prototype.update = function() {
+    var angle, cx, cy, pathogen, x, y;
+    x = this.input.position.x;
+    y = this.input.position.y;
+    cx = this.world.centerX;
+    cy = this.world.centerY;
+    angle = Math.atan2(y - cy, x - cx) * (180 / Math.PI);
+    this.bricks.angle = angle;
+    this.physics.arcade.collide(this.pathogens, this.nucleus, this.pathogenHitNucleus, null, this);
+    this.physics.arcade.collide(this.pathogens, this.bricks, this.pathogenHitBrick, null, this);
+    if (!this.rnd.between(0, 1 / this.spawnRate)) {
+      pathogen = this.pathogens.create(this.rnd.between(0, this.world.width), 0);
+      return pathogen.body.velocity = {
+        x: this.game.rnd.between(-this.fastest, this.fastest),
+        y: this.game.rnd.between(this.slowest, this.fastest)
+      };
+    }
+  };
+
+  Level.prototype.pathogenHitNucleus = function() {
+    return this.game.state.start('gameOver');
+  };
+
+  Level.prototype.pathogenHitBrick = function(pathogen, brick) {
+    var brickColor, pathogenColor;
+    brickColor = '1' === brick._frame.name[9] || '4' === brick._frame.name[9] ? 'blue' : 'red';
+    pathogenColor = '1' === pathogen._frame.name[9] || '4' === pathogen._frame.name[9] ? 'blue' : 'red';
+    if (brickColor !== pathogenColor) {
+      brick.kill();
+    } else {
+      this.game.score += 10;
+      this.scoreText.text = 'score: ' + this.game.score;
+    }
+    pathogen.kill();
+    if (this.game.score >= this.complete) {
+      return this.game.state.start(this.next);
+    }
+  };
+
+  return Level;
+
+})();
+
+module.exports = Level;
+
+
+},{"../classes/brick":3,"../classes/pathogen":5}],5:[function(require,module,exports){
 var Pathogen,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -140,10 +239,6 @@ Pathogen = (function(_super) {
     this.checkWorldBounds = true;
     this.body.collideWorldBounds = true;
     this.body.bounce.set(1);
-    this.body.velocity = {
-      x: game.rnd.between(-200, 200),
-      y: game.rnd.between(50, 200)
-    };
   }
 
   return Pathogen;
@@ -153,7 +248,7 @@ Pathogen = (function(_super) {
 module.exports = Pathogen;
 
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 window.onload = function() {
   'use strict';
   var Phaser, game;
@@ -164,12 +259,17 @@ window.onload = function() {
   game.state.add('splash', require('./states/splash'));
   game.state.add('levelOne', require('./states/level-one'));
   game.state.add('levelOneComplete', require('./states/level-one-complete'));
+  game.state.add('levelTwo', require('./states/level-two'));
+  game.state.add('levelTwoComplete', require('./states/level-two-complete'));
+  game.state.add('levelThree', require('./states/level-three'));
+  game.state.add('levelThreeComplete', require('./states/level-three-complete'));
+  game.state.add('levelFour', require('./states/level-four'));
   game.state.add('gameOver', require('./states/game-over'));
   return game.state.start('boot');
 };
 
 
-},{"./states/boot":6,"./states/game-over":7,"./states/level-one":9,"./states/level-one-complete":8,"./states/preloader":10,"./states/splash":11,"phaser":2}],6:[function(require,module,exports){
+},{"./states/boot":7,"./states/game-over":8,"./states/level-four":9,"./states/level-one":11,"./states/level-one-complete":10,"./states/level-three":13,"./states/level-three-complete":12,"./states/level-two":15,"./states/level-two-complete":14,"./states/preloader":16,"./states/splash":17,"phaser":2}],7:[function(require,module,exports){
 var Boot;
 
 Boot = (function() {
@@ -202,7 +302,7 @@ Boot = (function() {
 module.exports = Boot;
 
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 var GameOver;
 
 GameOver = (function() {
@@ -229,6 +329,7 @@ GameOver = (function() {
   GameOver.prototype.update = function() {};
 
   GameOver.prototype.onDown = function() {
+    this.game.score = 0;
     return this.game.state.start('levelOne');
   };
 
@@ -239,7 +340,28 @@ GameOver = (function() {
 module.exports = GameOver;
 
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
+var Level, LevelFour,
+  __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+Level = require('../classes/level');
+
+LevelFour = (function(_super) {
+  __extends(LevelFour, _super);
+
+  function LevelFour() {
+    LevelFour.__super__.constructor.call(this, 150, 300, .5, 0, null);
+  }
+
+  return LevelFour;
+
+})(Level);
+
+module.exports = LevelFour;
+
+
+},{"../classes/level":4}],10:[function(require,module,exports){
 var LevelOneComplete;
 
 LevelOneComplete = (function() {
@@ -276,87 +398,144 @@ LevelOneComplete = (function() {
 module.exports = LevelOneComplete;
 
 
-},{}],9:[function(require,module,exports){
-var Brick, LevelOne, Pathogen;
+},{}],11:[function(require,module,exports){
+var Level, LevelOne,
+  __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-Pathogen = require('../classes/pathogen');
+Level = require('../classes/level');
 
-Brick = require('../classes/brick');
+LevelOne = (function(_super) {
+  __extends(LevelOne, _super);
 
-LevelOne = (function() {
-  function LevelOne() {}
-
-  LevelOne.prototype.create = function() {
-    var adjacent, angle, brick, frame, opposite, _i, _results;
-    this.background = this.add.tileSprite(0, 0, 800, 600, 'cellfield');
-    this.nucleus = this.add.sprite(this.world.centerX, this.world.centerY, 'breakin', 'nucleus.png');
-    this.physics.enable(this.nucleus, Phaser.Physics.ARCADE);
-    this.nucleus.scale.setTo(4, 4);
-    this.nucleus.anchor.setTo(0.5, 0.5);
-    this.nucleus.body.collideWorldBounds = true;
-    this.nucleus.body.bounce.set(1);
-    this.nucleus.body.immovable = true;
-    this.pathogens = this.add.group();
-    this.pathogens.enableBody = true;
-    this.pathogens.physicsBodyType = Phaser.Physics.ARCADE;
-    this.pathogens.classType = Pathogen;
-    this.bricks = this.add.group();
-    this.bricks.enableBody = true;
-    this.bricks.physicsBodyType = Phaser.Physics.ARCADE;
-    this.bricks.classType = Brick;
-    this.bricks.x = this.world.centerX;
-    this.bricks.y = this.world.centerY;
-    _results = [];
-    for (angle = _i = 0; _i <= 39; angle = ++_i) {
-      opposite = Math.sin(angle * Math.PI / 20) * 100;
-      adjacent = Math.cos(angle * Math.PI / 20) * 100;
-      frame = (angle / 6) % 2 > .7 ? 'pathogen_1.png' : 'pathogen_2.png';
-      brick = this.bricks.create(opposite, adjacent, 'breakin', frame);
-      brick.anchor.setTo(.5, .5);
-      _results.push(brick.body.immovable = true);
-    }
-    return _results;
-  };
-
-  LevelOne.prototype.update = function() {
-    var angle, cx, cy, x, y;
-    x = this.input.position.x;
-    y = this.input.position.y;
-    cx = this.world.centerX;
-    cy = this.world.centerY;
-    angle = Math.atan2(y - cy, x - cx) * (180 / Math.PI);
-    this.bricks.angle = angle;
-    this.physics.arcade.collide(this.pathogens, this.nucleus, this.pathogenHitNucleus, null, this);
-    this.physics.arcade.collide(this.pathogens, this.bricks, this.pathogenHitBrick);
-    if (!this.rnd.between(0, 10)) {
-      return this.pathogens.create(this.rnd.between(0, this.world.width), 0);
-    }
-  };
-
-  LevelOne.prototype.pathogenHitNucleus = function() {
-    return this.game.state.start('gameOver');
-  };
-
-  LevelOne.prototype.pathogenHitBrick = function(pathogen, brick) {
-    var brickColor, pathogenColor;
-    brickColor = '1' === brick._frame.name[9] || '4' === brick._frame.name[9] ? 'blue' : 'red';
-    pathogenColor = '1' === pathogen._frame.name[9] || '4' === pathogen._frame.name[9] ? 'blue' : 'red';
-    if (brickColor !== pathogenColor) {
-      brick.kill();
-    } else {
-
-    }
-    return pathogen.kill();
-  };
+  function LevelOne() {
+    LevelOne.__super__.constructor.call(this, 50, 150, .1, 100, 'levelOneComplete');
+  }
 
   return LevelOne;
 
-})();
+})(Level);
 
 module.exports = LevelOne;
 
 
-},{"../classes/brick":3,"../classes/pathogen":4}],10:[function(require,module,exports){
+},{"../classes/level":4}],12:[function(require,module,exports){
+var LevelThreeComplete;
+
+LevelThreeComplete = (function() {
+  function LevelThreeComplete() {}
+
+  LevelThreeComplete.titleTxt = null;
+
+  LevelThreeComplete.startTxt = null;
+
+  LevelThreeComplete.prototype.create = function() {
+    var x, y;
+    x = this.game.width / 2;
+    y = this.game.height / 2;
+    this.titleTxt = this.add.bitmapText(x, y, 'minecraftia', 'Level 3 Complete!');
+    this.titleTxt.align = 'center';
+    this.titleTxt.x = this.game.width / 2 - this.titleTxt.textWidth / 2;
+    y = y + this.titleTxt.height + 5;
+    this.startTxt = this.add.bitmapText(x, y, 'minecraftia', 'START LEVEL 4');
+    this.startTxt.align = 'center';
+    this.startTxt.x = this.game.width / 2 - this.startTxt.textWidth / 2;
+    return this.input.onDown.add(this.onDown, this);
+  };
+
+  LevelThreeComplete.prototype.update = function() {};
+
+  LevelThreeComplete.prototype.onDown = function() {
+    return this.game.state.start('levelFour');
+  };
+
+  return LevelThreeComplete;
+
+})();
+
+module.exports = LevelThreeComplete;
+
+
+},{}],13:[function(require,module,exports){
+var Level, LevelThree,
+  __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+Level = require('../classes/level');
+
+LevelThree = (function(_super) {
+  __extends(LevelThree, _super);
+
+  function LevelThree() {
+    LevelThree.__super__.constructor.call(this, 150, 400, .3, 400, 'levelThreeComplete');
+  }
+
+  return LevelThree;
+
+})(Level);
+
+module.exports = LevelThree;
+
+
+},{"../classes/level":4}],14:[function(require,module,exports){
+var LevelTwoComplete;
+
+LevelTwoComplete = (function() {
+  function LevelTwoComplete() {}
+
+  LevelTwoComplete.titleTxt = null;
+
+  LevelTwoComplete.startTxt = null;
+
+  LevelTwoComplete.prototype.create = function() {
+    var x, y;
+    x = this.game.width / 2;
+    y = this.game.height / 2;
+    this.titleTxt = this.add.bitmapText(x, y, 'minecraftia', 'Level 2 Complete!');
+    this.titleTxt.align = 'center';
+    this.titleTxt.x = this.game.width / 2 - this.titleTxt.textWidth / 2;
+    y = y + this.titleTxt.height + 5;
+    this.startTxt = this.add.bitmapText(x, y, 'minecraftia', 'START LEVEL 3');
+    this.startTxt.align = 'center';
+    this.startTxt.x = this.game.width / 2 - this.startTxt.textWidth / 2;
+    return this.input.onDown.add(this.onDown, this);
+  };
+
+  LevelTwoComplete.prototype.update = function() {};
+
+  LevelTwoComplete.prototype.onDown = function() {
+    return this.game.state.start('levelThree');
+  };
+
+  return LevelTwoComplete;
+
+})();
+
+module.exports = LevelTwoComplete;
+
+
+},{}],15:[function(require,module,exports){
+var Level, LevelTwo,
+  __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+Level = require('../classes/level');
+
+LevelTwo = (function(_super) {
+  __extends(LevelTwo, _super);
+
+  function LevelTwo() {
+    LevelTwo.__super__.constructor.call(this, 100, 250, .2, 200, 'levelTwoComplete');
+  }
+
+  return LevelTwo;
+
+})(Level);
+
+module.exports = LevelTwo;
+
+
+},{"../classes/level":4}],16:[function(require,module,exports){
 var Preloader;
 
 Preloader = (function() {
@@ -398,7 +577,7 @@ Preloader = (function() {
 module.exports = Preloader;
 
 
-},{}],11:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 var Splash;
 
 Splash = (function() {
@@ -425,6 +604,7 @@ Splash = (function() {
   Splash.prototype.update = function() {};
 
   Splash.prototype.onDown = function() {
+    this.game.score = 0;
     return this.game.state.start('levelOne');
   };
 
@@ -435,4 +615,4 @@ Splash = (function() {
 module.exports = Splash;
 
 
-},{}]},{},[5])
+},{}]},{},[6])
