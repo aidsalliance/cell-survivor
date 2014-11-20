@@ -2,6 +2,11 @@ Level = require '../classes/level'
 
 class LevelOne extends Level
   constructor: ->
-    super 50, 150, .1, 100, 'levelOneComplete' # slowest, fastest, spawnRate, complete, next
+    super
+      slowest   : 50
+      fastest   : 150
+      spawnRate : .1
+      complete  : 100
+      next      : 'levelOneComplete'
 
 module.exports = LevelOne

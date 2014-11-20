@@ -123,12 +123,8 @@ Pathogen = require('../classes/pathogen');
 Brick = require('../classes/brick');
 
 Level = (function() {
-  function Level(slowest, fastest, spawnRate, complete, next) {
-    this.slowest = slowest;
-    this.fastest = fastest;
-    this.spawnRate = spawnRate;
-    this.complete = complete;
-    this.next = next;
+  function Level(opt) {
+    this.opt = opt;
   }
 
   Level.prototype.create = function() {
@@ -178,17 +174,18 @@ Level = (function() {
     this.bricks.angle = angle;
     this.physics.arcade.collide(this.pathogens, this.nucleus, this.pathogenHitNucleus, null, this);
     this.physics.arcade.collide(this.pathogens, this.bricks, this.pathogenHitBrick, null, this);
-    if (!this.rnd.between(0, 1 / this.spawnRate)) {
+    if (!this.rnd.between(0, 1 / this.opt.spawnRate)) {
       pathogen = this.pathogens.create(this.rnd.between(0, this.world.width), 0);
       return pathogen.body.velocity = {
-        x: this.game.rnd.between(-this.fastest, this.fastest),
-        y: this.game.rnd.between(this.slowest, this.fastest)
+        x: this.game.rnd.between(-this.opt.fastest, this.opt.fastest),
+        y: this.game.rnd.between(this.opt.slowest, this.opt.fastest)
       };
     }
   };
 
   Level.prototype.pathogenHitNucleus = function() {
-    return this.game.state.start('gameOver');
+    var _ref;
+    return this.game.state.start((_ref = this.opt.gameOver) != null ? _ref : 'gameOver');
   };
 
   Level.prototype.pathogenHitBrick = function(pathogen, brick) {
@@ -202,8 +199,8 @@ Level = (function() {
       this.scoreText.text = 'score: ' + this.game.score;
     }
     pathogen.kill();
-    if (this.game.score >= this.complete) {
-      return this.game.state.start(this.next);
+    if (this.game.score >= this.opt.complete) {
+      return this.game.state.start(this.opt.next);
     }
   };
 
@@ -319,12 +316,13 @@ window.onload = function() {
   game.state.add('levelThree', require('./states/level-three'));
   game.state.add('levelThreeComplete', require('./states/level-three-complete'));
   game.state.add('levelFour', require('./states/level-four'));
+  game.state.add('levelFourGameOver', require('./states/level-four-game-over'));
   game.state.add('gameOver', require('./states/game-over'));
   return game.state.start('boot');
 };
 
 
-},{"./states/boot":8,"./states/game-over":9,"./states/level-four":10,"./states/level-one":12,"./states/level-one-complete":11,"./states/level-three":14,"./states/level-three-complete":13,"./states/level-two":16,"./states/level-two-complete":15,"./states/preloader":17,"./states/splash":18,"phaser":2}],8:[function(require,module,exports){
+},{"./states/boot":8,"./states/game-over":9,"./states/level-four":11,"./states/level-four-game-over":10,"./states/level-one":13,"./states/level-one-complete":12,"./states/level-three":15,"./states/level-three-complete":14,"./states/level-two":17,"./states/level-two-complete":16,"./states/preloader":18,"./states/splash":19,"phaser":2}],8:[function(require,module,exports){
 var Boot;
 
 Boot = (function() {
@@ -389,6 +387,37 @@ module.exports = GameOver;
 
 
 },{"../classes/message":5}],10:[function(require,module,exports){
+var LevelFourGameOver, Message,
+  __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+Message = require('../classes/message');
+
+LevelFourGameOver = (function(_super) {
+  __extends(LevelFourGameOver, _super);
+
+  function LevelFourGameOver() {
+    LevelFourGameOver.__super__.constructor.call(this, {
+      title: 'Game Over',
+      text: ['Not easy was it with no extra help?', 'Now imagine if you’re a young person living with HIV in a country where access to information and services to keep you healthy and fulfilled are either limited or non-existent…', 'To find out more, visit www.aidsalliance.org'],
+      button: 'PLAY AGAIN',
+      next: 'levelOne'
+    });
+  }
+
+  LevelFourGameOver.prototype.create = function() {
+    LevelFourGameOver.__super__.create.apply(this, arguments);
+    return this.game.score = 0;
+  };
+
+  return LevelFourGameOver;
+
+})(Message);
+
+module.exports = LevelFourGameOver;
+
+
+},{"../classes/message":5}],11:[function(require,module,exports){
 var Level, LevelFour,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -399,7 +428,13 @@ LevelFour = (function(_super) {
   __extends(LevelFour, _super);
 
   function LevelFour() {
-    LevelFour.__super__.constructor.call(this, 150, 300, .5, 0, null);
+    LevelFour.__super__.constructor.call(this, {
+      slowest: 150,
+      fastest: 300,
+      spawnRate: .5,
+      complete: 0,
+      gameOver: 'levelFourGameOver'
+    });
   }
 
   return LevelFour;
@@ -409,7 +444,7 @@ LevelFour = (function(_super) {
 module.exports = LevelFour;
 
 
-},{"../classes/level":4}],11:[function(require,module,exports){
+},{"../classes/level":4}],12:[function(require,module,exports){
 var LevelOneComplete, Message,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -435,7 +470,7 @@ LevelOneComplete = (function(_super) {
 module.exports = LevelOneComplete;
 
 
-},{"../classes/message":5}],12:[function(require,module,exports){
+},{"../classes/message":5}],13:[function(require,module,exports){
 var Level, LevelOne,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -446,7 +481,13 @@ LevelOne = (function(_super) {
   __extends(LevelOne, _super);
 
   function LevelOne() {
-    LevelOne.__super__.constructor.call(this, 50, 150, .1, 100, 'levelOneComplete');
+    LevelOne.__super__.constructor.call(this, {
+      slowest: 50,
+      fastest: 150,
+      spawnRate: .1,
+      complete: 100,
+      next: 'levelOneComplete'
+    });
   }
 
   return LevelOne;
@@ -456,7 +497,7 @@ LevelOne = (function(_super) {
 module.exports = LevelOne;
 
 
-},{"../classes/level":4}],13:[function(require,module,exports){
+},{"../classes/level":4}],14:[function(require,module,exports){
 var LevelThreeComplete, Message,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -482,7 +523,7 @@ LevelThreeComplete = (function(_super) {
 module.exports = LevelThreeComplete;
 
 
-},{"../classes/message":5}],14:[function(require,module,exports){
+},{"../classes/message":5}],15:[function(require,module,exports){
 var Level, LevelThree,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -493,7 +534,13 @@ LevelThree = (function(_super) {
   __extends(LevelThree, _super);
 
   function LevelThree() {
-    LevelThree.__super__.constructor.call(this, 150, 400, .3, 400, 'levelThreeComplete');
+    LevelThree.__super__.constructor.call(this, {
+      slowest: 150,
+      fastest: 400,
+      spawnRate: .3,
+      complete: 400,
+      next: 'levelThreeComplete'
+    });
   }
 
   return LevelThree;
@@ -503,7 +550,7 @@ LevelThree = (function(_super) {
 module.exports = LevelThree;
 
 
-},{"../classes/level":4}],15:[function(require,module,exports){
+},{"../classes/level":4}],16:[function(require,module,exports){
 var LevelTwoComplete, Message,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -529,7 +576,7 @@ LevelTwoComplete = (function(_super) {
 module.exports = LevelTwoComplete;
 
 
-},{"../classes/message":5}],16:[function(require,module,exports){
+},{"../classes/message":5}],17:[function(require,module,exports){
 var Level, LevelTwo,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -540,7 +587,13 @@ LevelTwo = (function(_super) {
   __extends(LevelTwo, _super);
 
   function LevelTwo() {
-    LevelTwo.__super__.constructor.call(this, 100, 250, .2, 200, 'levelTwoComplete');
+    LevelTwo.__super__.constructor.call(this, {
+      slowest: 100,
+      fastest: 250,
+      spawnRate: .2,
+      complete: 200,
+      next: 'levelTwoComplete'
+    });
   }
 
   return LevelTwo;
@@ -550,7 +603,7 @@ LevelTwo = (function(_super) {
 module.exports = LevelTwo;
 
 
-},{"../classes/level":4}],17:[function(require,module,exports){
+},{"../classes/level":4}],18:[function(require,module,exports){
 var Preloader;
 
 Preloader = (function() {
@@ -592,7 +645,7 @@ Preloader = (function() {
 module.exports = Preloader;
 
 
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 var Message, Splash,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };

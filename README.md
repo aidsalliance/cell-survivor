@@ -104,6 +104,9 @@ __6.2__   `$ git flow release finish 0.1.0`, `$ git flow feature start messages`
 __6.3__   used the ‘Message’ class for all message screens  
 __6.4__   added work-in-progress messages from ‘Game script.docx’  
 __6.5__   bumped version to '0.1.1-1', track new files and commit  
+__6.6__   moved all ‘Level’ arguments into a single ‘opt’ object  
+__6.7__   special game-over screen for level four  
+__6.8__   bumped version to '0.1.1-2', track new files and commit  
 
 
 
@@ -116,6 +119,7 @@ Releases
 + 0.0.6    basic game mechanic ready for testing
 + 0.1.0    score, levels, and CNAME, renamed game to ‘Cell Survivor’
 + 0.1.1-1  correct messages on all level-complete screens
++ 0.1.1-2  special game-over screen for level four
 
 
 

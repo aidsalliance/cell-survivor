@@ -2,7 +2,7 @@ Pathogen = require '../classes/pathogen'
 Brick    = require '../classes/brick'
 
 class Level
-  constructor: (@slowest, @fastest, @spawnRate, @complete, @next) ->
+  constructor: (@opt) ->
 
   create: ->
 
@@ -62,16 +62,16 @@ class Level
     @physics.arcade.collide @pathogens, @nucleus, @pathogenHitNucleus, null, @
     @physics.arcade.collide @pathogens, @bricks , @pathogenHitBrick, null, @
 
-    if not @rnd.between 0, 1 / @spawnRate # call `newPathogen()` if `between()` returns zero
+    if not @rnd.between 0, 1 / @opt.spawnRate # call `newPathogen()` if `between()` returns zero
       pathogen = @pathogens.create @rnd.between(0, @world.width), 0
       pathogen.body.velocity =
-	      x: @game.rnd.between -@fastest, @fastest
-	      y: @game.rnd.between @slowest, @fastest
+	      x: @game.rnd.between -@opt.fastest, @opt.fastest
+	      y: @game.rnd.between @opt.slowest, @opt.fastest
 
 
 
   pathogenHitNucleus: ->
-    @game.state.start 'gameOver'
+    @game.state.start @opt.gameOver ? 'gameOver'
 
 
   pathogenHitBrick: (pathogen, brick) ->
@@ -88,8 +88,8 @@ class Level
     pathogen.kill();
 
     # score += 10
-    if @game.score >= @complete
-      @game.state.start @next
+    if @game.score >= @opt.complete
+      @game.state.start @opt.next
     #   introText.text = 'Level 1 Complete'
     #   introText.visible = true
     #   game.paused = true

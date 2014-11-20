@@ -17,6 +17,7 @@ window.onload = ->
   game.state.add 'levelThree'        , require './states/level-three'
   game.state.add 'levelThreeComplete', require './states/level-three-complete'
   game.state.add 'levelFour'         , require './states/level-four'
+  game.state.add 'levelFourGameOver' , require './states/level-four-game-over'
   game.state.add 'gameOver'          , require './states/game-over'
 
   # Initialise the game
