@@ -1,26 +1,15 @@
-class LevelTwoComplete
+Message = require '../classes/message'
 
-  @titleTxt = null
-  @startTxt = null
-
-  create: ->
-    x = @game.width / 2
-    y = @game.height / 2
-
-    @titleTxt = @add.bitmapText(x, y, 'minecraftia', 'Level 2 Complete!')
-    @titleTxt.align = 'center'
-    @titleTxt.x = @game.width / 2 - @titleTxt.textWidth / 2
-
-    y = y + @titleTxt.height + 5
-    @startTxt = @add.bitmapText(x, y, 'minecraftia', 'START LEVEL 3')
-    @startTxt.align = 'center'
-    @startTxt.x = @game.width / 2 - @startTxt.textWidth / 2
-
-    @input.onDown.add @onDown, this
-
-  update: ->
-
-  onDown: ->
-    @game.state.start 'levelThree'
+class LevelTwoComplete extends Message
+  constructor: ->
+    super
+      title: 'Level 2 Complete!'
+      text: [
+        'Well done for using your condoms!  If you’re a young person living somewhere like Bangladesh or Ethiopia, condoms may not be readily available.'
+        'An estimated 13 billion condoms per year are needed to help halt the spread of HIV and other sexually transmitted infections. The actual number falls far short…'
+      ]
+      button: 'START LEVEL 3'
+      next: 'levelThree'
 
 module.exports = LevelTwoComplete
+

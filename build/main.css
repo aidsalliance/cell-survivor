@@ -17,4 +17,5 @@ html, body {
   width: 800px;
   margin: 20px auto;
   cursor: pointer;
+  border: 1px solid red;
 }

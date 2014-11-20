@@ -1,26 +1,15 @@
-class LevelThreeComplete
+Message = require '../classes/message'
 
-  @titleTxt = null
-  @startTxt = null
-
-  create: ->
-    x = @game.width / 2
-    y = @game.height / 2
-
-    @titleTxt = @add.bitmapText(x, y, 'minecraftia', 'Level 3 Complete!')
-    @titleTxt.align = 'center'
-    @titleTxt.x = @game.width / 2 - @titleTxt.textWidth / 2
-
-    y = y + @titleTxt.height + 5
-    @startTxt = @add.bitmapText(x, y, 'minecraftia', 'START LEVEL 4')
-    @startTxt.align = 'center'
-    @startTxt.x = @game.width / 2 - @startTxt.textWidth / 2
-
-    @input.onDown.add @onDown, this
-
-  update: ->
-
-  onDown: ->
-    @game.state.start 'levelFour'
+class LevelThreeComplete extends Message
+  constructor: ->
+    super
+      title: 'Level 3 Complete!'
+      text: [
+        'Think that was hard?  Imagine having to take twice daily medication that consists of lots of very large pills, tastes horrible and can cause nasty side effects.'
+        'That’s the reality for young people living with HIV who are on antiretroviral treatment.'
+      ]
+      button: 'START LEVEL 4'
+      next: 'levelFour'
 
 module.exports = LevelThreeComplete
+

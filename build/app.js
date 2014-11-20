@@ -214,7 +214,62 @@ Level = (function() {
 module.exports = Level;
 
 
-},{"../classes/brick":3,"../classes/pathogen":5}],5:[function(require,module,exports){
+},{"../classes/brick":3,"../classes/pathogen":6}],5:[function(require,module,exports){
+var Message;
+
+Message = (function() {
+  Message.titleTxt = null;
+
+  Message.textTxt = null;
+
+  Message.buttonTxt = null;
+
+  function Message(opt) {
+    this.opt = opt;
+    console.log('new Message: ', this.opt);
+  }
+
+  Message.prototype.create = function() {
+    var regex, section, text, x, y, _i, _len, _ref;
+    x = this.game.width / 2;
+    y = 30;
+    this.titleTxt = this.add.bitmapText(x, y, 'minecraftia', this.opt.title);
+    this.titleTxt.align = 'center';
+    this.titleTxt.x = this.game.width / 2 - this.titleTxt.textWidth / 2;
+    y = y + this.titleTxt.height + 50;
+    regex = '.{1,' + 40 + '}(\\s|$)' + (false ? '|.{' + 40 + '}|.+$' : '|\\S+?(\\s|$)');
+    _ref = this.opt.text;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      section = _ref[_i];
+      text = section.match(RegExp(regex, 'g')).join('\n');
+      this.textTxt = this.game.add.text(x, y, text, {
+        font: "30px Arial",
+        fill: "#ffffff",
+        align: "center"
+      });
+      this.textTxt.anchor.setTo(0.5, 0);
+      y = y + this.textTxt.height + 30;
+    }
+    this.buttonTxt = this.add.bitmapText(x, y, 'minecraftia', this.opt.button);
+    this.buttonTxt.align = 'center';
+    this.buttonTxt.x = this.game.width / 2 - this.buttonTxt.textWidth / 2;
+    return this.input.onDown.add(this.onDown, this);
+  };
+
+  Message.prototype.update = function() {};
+
+  Message.prototype.onDown = function() {
+    return this.game.state.start(this.opt.next);
+  };
+
+  return Message;
+
+})();
+
+module.exports = Message;
+
+
+},{}],6:[function(require,module,exports){
 var Pathogen,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -248,7 +303,7 @@ Pathogen = (function(_super) {
 module.exports = Pathogen;
 
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 window.onload = function() {
   'use strict';
   var Phaser, game;
@@ -269,7 +324,7 @@ window.onload = function() {
 };
 
 
-},{"./states/boot":7,"./states/game-over":8,"./states/level-four":9,"./states/level-one":11,"./states/level-one-complete":10,"./states/level-three":13,"./states/level-three-complete":12,"./states/level-two":15,"./states/level-two-complete":14,"./states/preloader":16,"./states/splash":17,"phaser":2}],7:[function(require,module,exports){
+},{"./states/boot":8,"./states/game-over":9,"./states/level-four":10,"./states/level-one":12,"./states/level-one-complete":11,"./states/level-three":14,"./states/level-three-complete":13,"./states/level-two":16,"./states/level-two-complete":15,"./states/preloader":17,"./states/splash":18,"phaser":2}],8:[function(require,module,exports){
 var Boot;
 
 Boot = (function() {
@@ -302,45 +357,38 @@ Boot = (function() {
 module.exports = Boot;
 
 
-},{}],8:[function(require,module,exports){
-var GameOver;
+},{}],9:[function(require,module,exports){
+var GameOver, Message,
+  __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-GameOver = (function() {
-  function GameOver() {}
+Message = require('../classes/message');
 
-  GameOver.titleTxt = null;
+GameOver = (function(_super) {
+  __extends(GameOver, _super);
 
-  GameOver.startTxt = null;
+  function GameOver() {
+    GameOver.__super__.constructor.call(this, {
+      title: 'Game Over',
+      text: ['AIDS-related illnesses are the second leading cause of death among adolescents aged 10–19 years globally and the first in Africa.', 'Contracting HIV need not be ‘Game Over’ but a comprehensive package of prevention, treatment, care and support is needed for this overlooked age group.', 'To find out more, visit www.aidsalliance.org'],
+      button: 'PLAY AGAIN',
+      next: 'levelOne'
+    });
+  }
 
   GameOver.prototype.create = function() {
-    var x, y;
-    x = this.game.width / 2;
-    y = this.game.height / 2;
-    this.titleTxt = this.add.bitmapText(x, y, 'minecraftia', 'Game Over');
-    this.titleTxt.align = 'center';
-    this.titleTxt.x = this.game.width / 2 - this.titleTxt.textWidth / 2;
-    y = y + this.titleTxt.height + 5;
-    this.startTxt = this.add.bitmapText(x, y, 'minecraftia', 'PLAY AGAIN');
-    this.startTxt.align = 'center';
-    this.startTxt.x = this.game.width / 2 - this.startTxt.textWidth / 2;
-    return this.input.onDown.add(this.onDown, this);
-  };
-
-  GameOver.prototype.update = function() {};
-
-  GameOver.prototype.onDown = function() {
-    this.game.score = 0;
-    return this.game.state.start('levelOne');
+    GameOver.__super__.create.apply(this, arguments);
+    return this.game.score = 0;
   };
 
   return GameOver;
 
-})();
+})(Message);
 
 module.exports = GameOver;
 
 
-},{}],9:[function(require,module,exports){
+},{"../classes/message":5}],10:[function(require,module,exports){
 var Level, LevelFour,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -361,44 +409,33 @@ LevelFour = (function(_super) {
 module.exports = LevelFour;
 
 
-},{"../classes/level":4}],10:[function(require,module,exports){
-var LevelOneComplete;
+},{"../classes/level":4}],11:[function(require,module,exports){
+var LevelOneComplete, Message,
+  __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-LevelOneComplete = (function() {
-  function LevelOneComplete() {}
+Message = require('../classes/message');
 
-  LevelOneComplete.titleTxt = null;
+LevelOneComplete = (function(_super) {
+  __extends(LevelOneComplete, _super);
 
-  LevelOneComplete.startTxt = null;
-
-  LevelOneComplete.prototype.create = function() {
-    var x, y;
-    x = this.game.width / 2;
-    y = this.game.height / 2;
-    this.titleTxt = this.add.bitmapText(x, y, 'minecraftia', 'Level 1 Complete!');
-    this.titleTxt.align = 'center';
-    this.titleTxt.x = this.game.width / 2 - this.titleTxt.textWidth / 2;
-    y = y + this.titleTxt.height + 5;
-    this.startTxt = this.add.bitmapText(x, y, 'minecraftia', 'START LEVEL 2');
-    this.startTxt.align = 'center';
-    this.startTxt.x = this.game.width / 2 - this.startTxt.textWidth / 2;
-    return this.input.onDown.add(this.onDown, this);
-  };
-
-  LevelOneComplete.prototype.update = function() {};
-
-  LevelOneComplete.prototype.onDown = function() {
-    return this.game.state.start('levelTwo');
-  };
+  function LevelOneComplete() {
+    LevelOneComplete.__super__.constructor.call(this, {
+      title: 'Level 1 Complete!',
+      text: ['Feeling under the weather?  In some countries if you’re under 19 you may not even be able to take an HIV test to know your status.', 'There are an estimated 2.1 million adolescents living with HIV – many still don’t know that they are and so are not yet on life-saving treatment.'],
+      button: 'START LEVEL 2',
+      next: 'levelTwo'
+    });
+  }
 
   return LevelOneComplete;
 
-})();
+})(Message);
 
 module.exports = LevelOneComplete;
 
 
-},{}],11:[function(require,module,exports){
+},{"../classes/message":5}],12:[function(require,module,exports){
 var Level, LevelOne,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -419,44 +456,33 @@ LevelOne = (function(_super) {
 module.exports = LevelOne;
 
 
-},{"../classes/level":4}],12:[function(require,module,exports){
-var LevelThreeComplete;
+},{"../classes/level":4}],13:[function(require,module,exports){
+var LevelThreeComplete, Message,
+  __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-LevelThreeComplete = (function() {
-  function LevelThreeComplete() {}
+Message = require('../classes/message');
 
-  LevelThreeComplete.titleTxt = null;
+LevelThreeComplete = (function(_super) {
+  __extends(LevelThreeComplete, _super);
 
-  LevelThreeComplete.startTxt = null;
-
-  LevelThreeComplete.prototype.create = function() {
-    var x, y;
-    x = this.game.width / 2;
-    y = this.game.height / 2;
-    this.titleTxt = this.add.bitmapText(x, y, 'minecraftia', 'Level 3 Complete!');
-    this.titleTxt.align = 'center';
-    this.titleTxt.x = this.game.width / 2 - this.titleTxt.textWidth / 2;
-    y = y + this.titleTxt.height + 5;
-    this.startTxt = this.add.bitmapText(x, y, 'minecraftia', 'START LEVEL 4');
-    this.startTxt.align = 'center';
-    this.startTxt.x = this.game.width / 2 - this.startTxt.textWidth / 2;
-    return this.input.onDown.add(this.onDown, this);
-  };
-
-  LevelThreeComplete.prototype.update = function() {};
-
-  LevelThreeComplete.prototype.onDown = function() {
-    return this.game.state.start('levelFour');
-  };
+  function LevelThreeComplete() {
+    LevelThreeComplete.__super__.constructor.call(this, {
+      title: 'Level 3 Complete!',
+      text: ['Think that was hard?  Imagine having to take twice daily medication that consists of lots of very large pills, tastes horrible and can cause nasty side effects.', 'That’s the reality for young people living with HIV who are on antiretroviral treatment.'],
+      button: 'START LEVEL 4',
+      next: 'levelFour'
+    });
+  }
 
   return LevelThreeComplete;
 
-})();
+})(Message);
 
 module.exports = LevelThreeComplete;
 
 
-},{}],13:[function(require,module,exports){
+},{"../classes/message":5}],14:[function(require,module,exports){
 var Level, LevelThree,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -477,44 +503,33 @@ LevelThree = (function(_super) {
 module.exports = LevelThree;
 
 
-},{"../classes/level":4}],14:[function(require,module,exports){
-var LevelTwoComplete;
+},{"../classes/level":4}],15:[function(require,module,exports){
+var LevelTwoComplete, Message,
+  __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-LevelTwoComplete = (function() {
-  function LevelTwoComplete() {}
+Message = require('../classes/message');
 
-  LevelTwoComplete.titleTxt = null;
+LevelTwoComplete = (function(_super) {
+  __extends(LevelTwoComplete, _super);
 
-  LevelTwoComplete.startTxt = null;
-
-  LevelTwoComplete.prototype.create = function() {
-    var x, y;
-    x = this.game.width / 2;
-    y = this.game.height / 2;
-    this.titleTxt = this.add.bitmapText(x, y, 'minecraftia', 'Level 2 Complete!');
-    this.titleTxt.align = 'center';
-    this.titleTxt.x = this.game.width / 2 - this.titleTxt.textWidth / 2;
-    y = y + this.titleTxt.height + 5;
-    this.startTxt = this.add.bitmapText(x, y, 'minecraftia', 'START LEVEL 3');
-    this.startTxt.align = 'center';
-    this.startTxt.x = this.game.width / 2 - this.startTxt.textWidth / 2;
-    return this.input.onDown.add(this.onDown, this);
-  };
-
-  LevelTwoComplete.prototype.update = function() {};
-
-  LevelTwoComplete.prototype.onDown = function() {
-    return this.game.state.start('levelThree');
-  };
+  function LevelTwoComplete() {
+    LevelTwoComplete.__super__.constructor.call(this, {
+      title: 'Level 2 Complete!',
+      text: ['Well done for using your condoms!  If you’re a young person living somewhere like Bangladesh or Ethiopia, condoms may not be readily available.', 'An estimated 13 billion condoms per year are needed to help halt the spread of HIV and other sexually transmitted infections. The actual number falls far short…'],
+      button: 'START LEVEL 3',
+      next: 'levelThree'
+    });
+  }
 
   return LevelTwoComplete;
 
-})();
+})(Message);
 
 module.exports = LevelTwoComplete;
 
 
-},{}],15:[function(require,module,exports){
+},{"../classes/message":5}],16:[function(require,module,exports){
 var Level, LevelTwo,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -535,7 +550,7 @@ LevelTwo = (function(_super) {
 module.exports = LevelTwo;
 
 
-},{"../classes/level":4}],16:[function(require,module,exports){
+},{"../classes/level":4}],17:[function(require,module,exports){
 var Preloader;
 
 Preloader = (function() {
@@ -577,42 +592,35 @@ Preloader = (function() {
 module.exports = Preloader;
 
 
-},{}],17:[function(require,module,exports){
-var Splash;
+},{}],18:[function(require,module,exports){
+var Message, Splash,
+  __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-Splash = (function() {
-  function Splash() {}
+Message = require('../classes/message');
 
-  Splash.titleTxt = null;
+Splash = (function(_super) {
+  __extends(Splash, _super);
 
-  Splash.startTxt = null;
+  function Splash() {
+    Splash.__super__.constructor.call(this, {
+      title: 'Cell Survivor',
+      text: ['A CD4 cell is going about its daily business of protecting the body from infection.', 'All of a sudden it comes under attack from HIV…'],
+      button: 'PLAY',
+      next: 'levelOne'
+    });
+  }
 
   Splash.prototype.create = function() {
-    var x, y;
-    x = this.game.width / 2;
-    y = this.game.height / 2;
-    this.titleTxt = this.add.bitmapText(x, y, 'minecraftia', 'Splash Page');
-    this.titleTxt.align = 'center';
-    this.titleTxt.x = this.game.width / 2 - this.titleTxt.textWidth / 2;
-    y = y + this.titleTxt.height + 5;
-    this.startTxt = this.add.bitmapText(x, y, 'minecraftia', 'PLAY');
-    this.startTxt.align = 'center';
-    this.startTxt.x = this.game.width / 2 - this.startTxt.textWidth / 2;
-    return this.input.onDown.add(this.onDown, this);
-  };
-
-  Splash.prototype.update = function() {};
-
-  Splash.prototype.onDown = function() {
-    this.game.score = 0;
-    return this.game.state.start('levelOne');
+    Splash.__super__.create.apply(this, arguments);
+    return this.game.score = 0;
   };
 
   return Splash;
 
-})();
+})(Message);
 
 module.exports = Splash;
 
 
-},{}]},{},[6])
+},{"../classes/message":5}]},{},[7])

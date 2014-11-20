@@ -1,27 +1,19 @@
-class Splash
+Message = require '../classes/message'
 
-  @titleTxt = null
-  @startTxt = null
+class Splash extends Message
+  constructor: ->
+    super
+      title: 'Cell Survivor'
+      text: [
+        'A CD4 cell is going about its daily business of protecting the body from infection.'
+        'All of a sudden it comes under attack from HIV…'
+      ]
+      button: 'PLAY'
+      next: 'levelOne'
 
   create: ->
-    x = @game.width / 2
-    y = @game.height / 2
-
-    @titleTxt = @add.bitmapText(x, y, 'minecraftia', 'Splash Page')
-    @titleTxt.align = 'center'
-    @titleTxt.x = @game.width / 2 - @titleTxt.textWidth / 2
-
-    y = y + @titleTxt.height + 5
-    @startTxt = @add.bitmapText(x, y, 'minecraftia', 'PLAY')
-    @startTxt.align = 'center'
-    @startTxt.x = @game.width / 2 - @startTxt.textWidth / 2
-
-    @input.onDown.add @onDown, this
-
-  update: ->
-
-  onDown: ->
+    super
     @game.score = 0
-    @game.state.start 'levelOne'
 
 module.exports = Splash
+

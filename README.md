@@ -1,7 +1,7 @@
 How the wad14-game was built
 ============================
 
-We built [the game](http://aidsalliance.github.io/wad14-game "Play the game here") in OS X. You should be able to follow these instructions if you use a Linux operating system (eg Ubuntu), or even Windows.
+We built [the game](http://aidsalliance.github.io/cell-survivor "Play the game here") in OS X. You should be able to follow these instructions if you use a Linux operating system (eg Ubuntu), or even Windows.
 
 
 1. Installed basic development tools
@@ -99,8 +99,11 @@ __5.9__   `$ git flow feature finish levels`, `$ git flow release start 0.1.0`
 6. Renamed game to ‘Cell Survivor’, and added real graphics and messages
 ------------------------------------------------------------------------
 
-__6.1__   Find/replace 'wad14-game' to 'cell-survivor' in all files  
-__6.2__   `$ git flow release finish 0.1.0`  
+__6.1__   find/replace 'wad14-game' to 'cell-survivor' in all files  
+__6.2__   `$ git flow release finish 0.1.0`, `$ git flow feature start messages`  
+__6.3__   used the ‘Message’ class for all message screens  
+__6.4__   added work-in-progress messages from ‘Game script.docx’  
+__6.5__   bumped version to '0.1.1-1', track new files and commit  
 
 
 
@@ -111,9 +114,8 @@ Releases
 + 0.0.2    initial release, to test GitHub Pages
 + 0.0.4    GitHub Pages works, tidy up before build proper
 + 0.0.6    basic game mechanic ready for testing
-+ 0.0.7-1  simple ‘splash’, ‘level-one’, ‘level-one-complete’, ‘game-over’
-+ 0.0.7-2  score, and four levels of increasing difficulty
 + 0.1.0    score, levels, and CNAME, renamed game to ‘Cell Survivor’
++ 0.1.1-1  correct messages on all level-complete screens
 
 
 
