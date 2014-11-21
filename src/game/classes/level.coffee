@@ -6,7 +6,8 @@ class Level
 
   create: ->
 
-    @background = @add.tileSprite 0, 0, 800, 600, 'cellfield'
+    @background = @add.tileSprite 0, 0, 600, 600, 'cellfield'
+    @background.scale.setTo 6, 6
 
     # x = @game.width / 2
     # y = @game.height / 2
@@ -15,9 +16,10 @@ class Level
     # @input.onDown.add @onInputDown, this
     @scoreText = @game.add.text(32, 550, 'score: ' + @game.score, { font: "20px Arial", fill: "#ffffff", align: "left" });
 
-    @nucleus = @add.sprite @world.centerX, @world.centerY, 'breakin', 'nucleus.png'
+    @nucleus = @add.sprite @world.centerX, @world.centerY, 'nucleus-main'
     @physics.enable @nucleus, Phaser.Physics.ARCADE
-    @nucleus.scale.setTo 4, 4
+    @nucleus.smoothed = false
+    @nucleus.scale.setTo 3, 3
     @nucleus.anchor.setTo 0.5, 0.5
     @nucleus.body.collideWorldBounds = true
     @nucleus.body.bounce.set 1
@@ -35,11 +37,15 @@ class Level
     @bricks.x = @world.centerX
     @bricks.y = @world.centerY
 
-    for angle in [0..39]
-      opposite = Math.sin(angle * Math.PI / 20) * 100
-      adjacent = Math.cos(angle * Math.PI / 20) * 100
-      frame = if (angle / 6) % 2 > .7 then 'pathogen_1.png' else 'pathogen_2.png'
-      brick = @bricks.create opposite, adjacent, 'breakin', frame
+    for angle in [0..19]
+      opposite = Math.sin(angle * Math.PI / 10) * 110
+      adjacent = Math.cos(angle * Math.PI / 10) * 110
+      spec = if (angle / 6) % 2 > .7 then { key:'hep-c-brick-main', name:'hep-c' } else { key:'herpesviridae-brick-main', name:'herpesviridae' }
+      brick = @bricks.create opposite, adjacent, spec.key
+      brick.name = spec.name
+      brick.scale.setTo 2, 2
+      brick.angle = 180 + angle * -360 / 20
+      brick.smoothed = false
       brick.anchor.setTo .5, .5 #center
       brick.body.immovable = true
 
@@ -64,6 +70,8 @@ class Level
 
     if not @rnd.between 0, 1 / @opt.spawnRate # call `newPathogen()` if `between()` returns zero
       pathogen = @pathogens.create @rnd.between(0, @world.width), 0
+      pathogen.scale.setTo 2, 2
+      pathogen.smoothed = false
       pathogen.body.velocity =
 	      x: @game.rnd.between -@opt.fastest, @opt.fastest
 	      y: @game.rnd.between @opt.slowest, @opt.fastest
@@ -75,24 +83,17 @@ class Level
 
 
   pathogenHitBrick: (pathogen, brick) ->
-    # brickColor    = if '3' == brick._frame.name[6] then 'red' else 'blue'
-    brickColor    = if '1' ==    brick._frame.name[9] || '4' ==    brick._frame.name[9] then 'blue' else 'red'
-    pathogenColor = if '1' == pathogen._frame.name[9] || '4' == pathogen._frame.name[9] then 'blue' else 'red'
 
-    if brickColor != pathogenColor
-      brick.kill();
-    else
+    if pathogen.name == brick.name
       @game.score += 10
       @scoreText.text = 'score: ' + @game.score;
+    else
+      brick.kill();
 
     pathogen.kill();
 
-    # score += 10
     if @game.score >= @opt.complete
       @game.state.start @opt.next
-    #   introText.text = 'Level 1 Complete'
-    #   introText.visible = true
-    #   game.paused = true
 
 
 module.exports = Level

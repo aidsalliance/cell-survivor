@@ -3,9 +3,9 @@ Level = require '../classes/level'
 class LevelTwo extends Level
   constructor: ->
     super
-      slowest   : 100
-      fastest   : 250
-      spawnRate : .2
+      slowest   : 60
+      fastest   : 130
+      spawnRate : .05
       complete  : 200
       next      : 'levelTwoComplete'
 

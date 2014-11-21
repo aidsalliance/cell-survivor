@@ -4,7 +4,6 @@ class Message
   @buttonTxt = null
 
   constructor: (@opt) ->
-    console.log 'new Message: ', @opt
 
   create: ->
     x = @game.width / 2

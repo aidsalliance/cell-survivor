@@ -14,7 +14,7 @@ html, body {
 
 /* line 13, ../src/sass/main.scss */
 #cell-survivor {
-  width: 800px;
+  width: 600px;
   margin: 20px auto;
   cursor: pointer;
   border: 1px solid red;

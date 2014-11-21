@@ -107,6 +107,13 @@ __6.5__   bumped version to '0.1.1-1', track new files and commit
 __6.6__   moved all ‘Level’ arguments into a single ‘opt’ object  
 __6.7__   special game-over screen for level four  
 __6.8__   bumped version to '0.1.1-2', track new files and commit  
+__6.9__   drew nucleus, pathogens, and bricks in Photoshop, converted to GIF  
+__6.10__  drew background in Photoshop, converted to JPEG  
+__6.11__  resized to 600x600 in ‘src/game/main.coffee’ and ‘src/sass/main.scss’  
+__6.12__  added new images to ‘src/game/states/preloader.coffee’  
+__6.13__  simplified collision-type detection, using `name` property  
+__6.14__  slowed down game, to begin tuning difficulty  
+__6.15__  bumped version to '0.1.1-3', track new files and commit  
 
 
 
@@ -120,6 +127,7 @@ Releases
 + 0.1.0    score, levels, and CNAME, renamed game to ‘Cell Survivor’
 + 0.1.1-1  correct messages on all level-complete screens
 + 0.1.1-2  special game-over screen for level four
++ 0.1.1-3  first batch of real graphics in place
 
 
 

@@ -104,8 +104,8 @@ var Brick,
 Brick = (function(_super) {
   __extends(Brick, _super);
 
-  function Brick(game, x, y, key, frame) {
-    Brick.__super__.constructor.call(this, game, x, y, key, frame);
+  function Brick(game, x, y, key) {
+    Brick.__super__.constructor.call(this, game, x, y, key);
   }
 
   return Brick;
@@ -128,16 +128,18 @@ Level = (function() {
   }
 
   Level.prototype.create = function() {
-    var adjacent, angle, brick, frame, opposite, _i, _results;
-    this.background = this.add.tileSprite(0, 0, 800, 600, 'cellfield');
+    var adjacent, angle, brick, opposite, spec, _i, _results;
+    this.background = this.add.tileSprite(0, 0, 600, 600, 'cellfield');
+    this.background.scale.setTo(6, 6);
     this.scoreText = this.game.add.text(32, 550, 'score: ' + this.game.score, {
       font: "20px Arial",
       fill: "#ffffff",
       align: "left"
     });
-    this.nucleus = this.add.sprite(this.world.centerX, this.world.centerY, 'breakin', 'nucleus.png');
+    this.nucleus = this.add.sprite(this.world.centerX, this.world.centerY, 'nucleus-main');
     this.physics.enable(this.nucleus, Phaser.Physics.ARCADE);
-    this.nucleus.scale.setTo(4, 4);
+    this.nucleus.smoothed = false;
+    this.nucleus.scale.setTo(3, 3);
     this.nucleus.anchor.setTo(0.5, 0.5);
     this.nucleus.body.collideWorldBounds = true;
     this.nucleus.body.bounce.set(1);
@@ -153,11 +155,21 @@ Level = (function() {
     this.bricks.x = this.world.centerX;
     this.bricks.y = this.world.centerY;
     _results = [];
-    for (angle = _i = 0; _i <= 39; angle = ++_i) {
-      opposite = Math.sin(angle * Math.PI / 20) * 100;
-      adjacent = Math.cos(angle * Math.PI / 20) * 100;
-      frame = (angle / 6) % 2 > .7 ? 'pathogen_1.png' : 'pathogen_2.png';
-      brick = this.bricks.create(opposite, adjacent, 'breakin', frame);
+    for (angle = _i = 0; _i <= 19; angle = ++_i) {
+      opposite = Math.sin(angle * Math.PI / 10) * 110;
+      adjacent = Math.cos(angle * Math.PI / 10) * 110;
+      spec = (angle / 6) % 2 > .7 ? {
+        key: 'hep-c-brick-main',
+        name: 'hep-c'
+      } : {
+        key: 'herpesviridae-brick-main',
+        name: 'herpesviridae'
+      };
+      brick = this.bricks.create(opposite, adjacent, spec.key);
+      brick.name = spec.name;
+      brick.scale.setTo(2, 2);
+      brick.angle = 180 + angle * -360 / 20;
+      brick.smoothed = false;
       brick.anchor.setTo(.5, .5);
       _results.push(brick.body.immovable = true);
     }
@@ -176,6 +188,8 @@ Level = (function() {
     this.physics.arcade.collide(this.pathogens, this.bricks, this.pathogenHitBrick, null, this);
     if (!this.rnd.between(0, 1 / this.opt.spawnRate)) {
       pathogen = this.pathogens.create(this.rnd.between(0, this.world.width), 0);
+      pathogen.scale.setTo(2, 2);
+      pathogen.smoothed = false;
       return pathogen.body.velocity = {
         x: this.game.rnd.between(-this.opt.fastest, this.opt.fastest),
         y: this.game.rnd.between(this.opt.slowest, this.opt.fastest)
@@ -189,14 +203,11 @@ Level = (function() {
   };
 
   Level.prototype.pathogenHitBrick = function(pathogen, brick) {
-    var brickColor, pathogenColor;
-    brickColor = '1' === brick._frame.name[9] || '4' === brick._frame.name[9] ? 'blue' : 'red';
-    pathogenColor = '1' === pathogen._frame.name[9] || '4' === pathogen._frame.name[9] ? 'blue' : 'red';
-    if (brickColor !== pathogenColor) {
-      brick.kill();
-    } else {
+    if (pathogen.name === brick.name) {
       this.game.score += 10;
       this.scoreText.text = 'score: ' + this.game.score;
+    } else {
+      brick.kill();
     }
     pathogen.kill();
     if (this.game.score >= this.opt.complete) {
@@ -223,7 +234,6 @@ Message = (function() {
 
   function Message(opt) {
     this.opt = opt;
-    console.log('new Message: ', this.opt);
   }
 
   Message.prototype.create = function() {
@@ -275,18 +285,21 @@ Pathogen = (function(_super) {
   __extends(Pathogen, _super);
 
   function Pathogen(game, x, y) {
-    var color;
-    color = game.rnd.pick([
+    var spec;
+    spec = game.rnd.pick([
       {
-        start: 'pathogen_1.png',
+        key: 'hep-c-virus-main',
+        name: 'hep-c',
         anim: ['pathogen_1.png', 'pathogen_4.png']
       }, {
-        start: 'pathogen_2.png',
+        key: 'herpesviridae-virus-main',
+        name: 'herpesviridae',
         anim: ['pathogen_2.png', 'pathogen_5.png']
       }
     ]);
-    Pathogen.__super__.constructor.call(this, game, x, y, 'breakin', color.start);
+    Pathogen.__super__.constructor.call(this, game, x, y, spec.key);
     game.physics.enable(this, Phaser.Physics.ARCADE);
+    this.name = spec.name;
     this.anchor.set(0.5);
     this.checkWorldBounds = true;
     this.body.collideWorldBounds = true;
@@ -305,7 +318,7 @@ window.onload = function() {
   'use strict';
   var Phaser, game;
   Phaser = require('phaser');
-  game = new Phaser.Game(800, 600, Phaser.AUTO, 'cell-survivor');
+  game = new Phaser.Game(600, 600, Phaser.AUTO, 'cell-survivor');
   game.state.add('boot', require('./states/boot'));
   game.state.add('preloader', require('./states/preloader'));
   game.state.add('splash', require('./states/splash'));
@@ -342,7 +355,7 @@ Boot = (function() {
       this.game.scale.minHeight = 260;
       this.game.scale.maxWidth = 640;
       this.game.scale.maxHeight = 480;
-      this.game.scale.forceLandscape = true;
+      this.game.scale.forceLandscape = false;
       this.game.scale.setScreenSize(true);
     }
     return this.game.state.start('preloader');
@@ -429,9 +442,9 @@ LevelFour = (function(_super) {
 
   function LevelFour() {
     LevelFour.__super__.constructor.call(this, {
-      slowest: 150,
-      fastest: 300,
-      spawnRate: .5,
+      slowest: 100,
+      fastest: 200,
+      spawnRate: .3,
       complete: 0,
       gameOver: 'levelFourGameOver'
     });
@@ -482,9 +495,9 @@ LevelOne = (function(_super) {
 
   function LevelOne() {
     LevelOne.__super__.constructor.call(this, {
-      slowest: 50,
-      fastest: 150,
-      spawnRate: .1,
+      slowest: 40,
+      fastest: 80,
+      spawnRate: .03,
       complete: 100,
       next: 'levelOneComplete'
     });
@@ -535,9 +548,9 @@ LevelThree = (function(_super) {
 
   function LevelThree() {
     LevelThree.__super__.constructor.call(this, {
-      slowest: 150,
-      fastest: 400,
-      spawnRate: .3,
+      slowest: 100,
+      fastest: 200,
+      spawnRate: .2,
       complete: 400,
       next: 'levelThreeComplete'
     });
@@ -588,9 +601,9 @@ LevelTwo = (function(_super) {
 
   function LevelTwo() {
     LevelTwo.__super__.constructor.call(this, {
-      slowest: 100,
-      fastest: 250,
-      spawnRate: .2,
+      slowest: 60,
+      fastest: 130,
+      spawnRate: .05,
       complete: 200,
       next: 'levelTwoComplete'
     });
@@ -621,7 +634,21 @@ Preloader = (function() {
     this.load.image('player', 'assets/images/player.png');
     this.load.bitmapFont('minecraftia', 'assets/fonts/minecraftia.png', 'assets/fonts/minecraftia.xml');
     this.load.atlas('breakin', 'assets/images/breakin-v2.png', 'assets/images/breakin-v2.json');
-    return this.load.image('cellfield', 'assets/images/cellfield.jpg');
+    this.load.image('cellfield', 'assets/images/bkgnd-v2.jpg');
+    this.load.image('hep-c-brick-main', 'assets/images/hep-c-brick-main.gif');
+    this.load.image('hep-c-brick-explosion-1', 'assets/images/hep-c-brick-explosion-1.gif');
+    this.load.image('hep-c-brick-explosion-2', 'assets/images/hep-c-brick-explosion-2.gif');
+    this.load.image('hep-c-virus-main', 'assets/images/hep-c-virus-main.gif');
+    this.load.image('hep-c-virus-explosion-1', 'assets/images/hep-c-virus-explosion-1.gif');
+    this.load.image('hep-c-virus-explosion-2', 'assets/images/hep-c-virus-explosion-2.gif');
+    this.load.image('herpesviridae-brick-main', 'assets/images/herpesviridae-brick-main.gif');
+    this.load.image('herpesviridae-brick-explosion-1', 'assets/images/herpesviridae-brick-explosion-1.gif');
+    this.load.image('herpesviridae-brick-explosion-2', 'assets/images/herpesviridae-brick-explosion-2.gif');
+    this.load.image('herpesviridae-virus-explosion-1', 'assets/images/herpesviridae-virus-explosion-1.gif');
+    this.load.image('herpesviridae-virus-explosion-2', 'assets/images/herpesviridae-virus-explosion-2.gif');
+    this.load.image('herpesviridae-virus-main', 'assets/images/herpesviridae-virus-main.gif');
+    this.load.image('hiv-v1_03', 'assets/images/hiv-v1_03.gif');
+    return this.load.image('nucleus-main', 'assets/images/nucleus-main.gif');
   };
 
   Preloader.prototype.create = function() {
