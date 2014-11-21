@@ -11,8 +11,8 @@ class Pathogen extends Phaser.Sprite
     # @animations.add('spin', spec.anim, 50, true, false);
 
     @name = spec.name
-    @anchor.set 0.5
-    @checkWorldBounds = true
+    @anchor.set 0.5, 0.5
+    # @checkWorldBounds = true
 
     @body.collideWorldBounds = true
     @body.bounce.set 1

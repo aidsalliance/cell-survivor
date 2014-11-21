@@ -141,7 +141,6 @@ Level = (function() {
     this.nucleus.smoothed = false;
     this.nucleus.scale.setTo(3, 3);
     this.nucleus.anchor.setTo(0.5, 0.5);
-    this.nucleus.body.collideWorldBounds = true;
     this.nucleus.body.bounce.set(1);
     this.nucleus.body.immovable = true;
     this.pathogens = this.add.group();
@@ -177,7 +176,7 @@ Level = (function() {
   };
 
   Level.prototype.update = function() {
-    var angle, cx, cy, pathogen, x, y;
+    var angle, cx, cy, endZone, pathogen, x, y;
     x = this.input.position.x;
     y = this.input.position.y;
     cx = this.world.centerX;
@@ -190,11 +189,17 @@ Level = (function() {
       pathogen = this.pathogens.create(this.rnd.between(0, this.world.width), 0);
       pathogen.scale.setTo(2, 2);
       pathogen.smoothed = false;
-      return pathogen.body.velocity = {
+      pathogen.body.velocity = {
         x: this.game.rnd.between(-this.opt.fastest, this.opt.fastest),
         y: this.game.rnd.between(this.opt.slowest, this.opt.fastest)
       };
     }
+    endZone = this.world.height - 24;
+    return this.pathogens.forEach(function(pathogen) {
+      if ((pathogen != null ? pathogen.y : void 0) >= endZone) {
+        return pathogen.destroy();
+      }
+    });
   };
 
   Level.prototype.pathogenHitNucleus = function() {
@@ -300,8 +305,7 @@ Pathogen = (function(_super) {
     Pathogen.__super__.constructor.call(this, game, x, y, spec.key);
     game.physics.enable(this, Phaser.Physics.ARCADE);
     this.name = spec.name;
-    this.anchor.set(0.5);
-    this.checkWorldBounds = true;
+    this.anchor.set(0.5, 0.5);
     this.body.collideWorldBounds = true;
     this.body.bounce.set(1);
   }

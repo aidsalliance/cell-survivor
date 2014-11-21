@@ -117,6 +117,12 @@ __6.15__  bumped version to '0.1.1-3', track new files and commit
 __6.16__  release start 0.1.4, bumped to '0.1.4', release finish, pushed to GitHub
 
 
+7. Responsive landscape/portrait, and outer-frame elements
+----------------------------------------------------------
+
+__7.1__   `$ git flow feature start frame`, bumped to '0.1.5-1'
+__7.2__   remove pathogens which have traversed the screen, and commit
+
 
 
 Releases
@@ -126,10 +132,8 @@ Releases
 + 0.0.4    GitHub Pages works, tidy up before build proper
 + 0.0.6    basic game mechanic ready for testing
 + 0.1.0    score, levels, and CNAME, renamed game to ‘Cell Survivor’
-+ 0.1.1-1  correct messages on all level-complete screens
-+ 0.1.1-2  special game-over screen for level four
-+ 0.1.1-3  first batch of real graphics in place
 + 0.1.4    some real graphics
++ 0.1.5-1  pathogens leave bottom of screen
 
 
 

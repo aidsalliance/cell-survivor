@@ -21,7 +21,7 @@ class Level
     @nucleus.smoothed = false
     @nucleus.scale.setTo 3, 3
     @nucleus.anchor.setTo 0.5, 0.5
-    @nucleus.body.collideWorldBounds = true
+    # @nucleus.body.collideWorldBounds = true
     @nucleus.body.bounce.set 1
     @nucleus.body.immovable = true
 
@@ -76,6 +76,12 @@ class Level
 	      x: @game.rnd.between -@opt.fastest, @opt.fastest
 	      y: @game.rnd.between @opt.slowest, @opt.fastest
 
+    # Remove pathogens which have traversed the screen
+    endZone = @world.height - 24 # height of pathogen
+    @pathogens.forEach( # callback, callbackContext, checkExists
+      (pathogen) ->
+        if pathogen?.y >= endZone then pathogen.destroy()
+    )
 
 
   pathogenHitNucleus: ->
