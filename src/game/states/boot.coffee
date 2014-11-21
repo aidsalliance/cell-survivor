@@ -13,7 +13,7 @@ class Boot
       @game.scale.minHeight = 260
       @game.scale.maxWidth = 640
       @game.scale.maxHeight = 480
-      @game.scale.forceLandscape = true
+      @game.scale.forceLandscape = false
       @game.scale.setScreenSize true
 
     @game.state.start 'preloader'

@@ -1,6 +1,6 @@
 class Brick extends Phaser.Sprite
-  constructor: (game, x, y, key, frame) ->
-    super game, x, y, key, frame
+  constructor: (game, x, y, key) ->
+    super game, x, y, key
 
     # @scale.setTo 2, 1
     # @body.bounce.set 1

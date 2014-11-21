@@ -129,7 +129,7 @@ Releases
 + 0.1.1-1  correct messages on all level-complete screens
 + 0.1.1-2  special game-over screen for level four
 + 0.1.1-3  first batch of real graphics in place
-+ 0.1.2    renamed ‘Cell Survivor’; some real graphics
++ 0.1.2    some real graphics
 
 
 

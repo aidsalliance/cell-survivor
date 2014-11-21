@@ -1,15 +1,16 @@
 class Pathogen extends Phaser.Sprite
   constructor: (game, x, y) ->
-    color = game.rnd.pick [
-        { start:'pathogen_1.png', anim:['pathogen_1.png', 'pathogen_4.png'] }
-      , { start:'pathogen_2.png', anim:['pathogen_2.png', 'pathogen_5.png'] }
+    spec = game.rnd.pick [
+        { key:'hep-c-virus-main'        , name:'hep-c'        , anim:['pathogen_1.png', 'pathogen_4.png'] }
+      , { key:'herpesviridae-virus-main', name:'herpesviridae', anim:['pathogen_2.png', 'pathogen_5.png'] }
     ]
-    super game, x, y, 'breakin', color.start
+    super game, x, y, spec.key
 
     game.physics.enable @, Phaser.Physics.ARCADE
 
-    # @animations.add('spin', color.anim, 50, true, false);
+    # @animations.add('spin', spec.anim, 50, true, false);
 
+    @name = spec.name
     @anchor.set 0.5
     @checkWorldBounds = true
 
