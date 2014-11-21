@@ -37,6 +37,8 @@
 	"file_history":
 	[
 		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/cell-survivor/README.md",
+		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/cell-survivor/bower.json",
+		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/cell-survivor/package.json",
 		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/wad14-game/src/game/main.coffee",
 		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/wad14-game/README.md",
 		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/wad14-game/bower.json",
@@ -89,6 +91,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"wad14-game",
 			"score",
 			"ball",
 			"_ball",

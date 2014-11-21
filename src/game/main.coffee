@@ -3,7 +3,7 @@ window.onload = ->
 
   Phaser = require 'phaser'
 
-  game = new Phaser.Game 800, 600, Phaser.AUTO, 'cell-survivor'
+  game = new Phaser.Game 600, 600, Phaser.AUTO, 'cell-survivor'
 
   # Game states
   game.state.add 'boot'              , require './states/boot'
@@ -17,6 +17,7 @@ window.onload = ->
   game.state.add 'levelThree'        , require './states/level-three'
   game.state.add 'levelThreeComplete', require './states/level-three-complete'
   game.state.add 'levelFour'         , require './states/level-four'
+  game.state.add 'levelFourGameOver' , require './states/level-four-game-over'
   game.state.add 'gameOver'          , require './states/game-over'
 
   # Initialise the game

@@ -1,27 +1,20 @@
-class GameOver
+Message = require '../classes/message'
 
-  @titleTxt = null
-  @startTxt = null
+class GameOver extends Message
+  constructor: ->
+    super
+      title: 'Game Over'
+      text: [
+        'AIDS-related illnesses are the second leading cause of death among adolescents aged 10–19 years globally and the first in Africa.'
+        'Contracting HIV need not be ‘Game Over’ but a comprehensive package of prevention, treatment, care and support is needed for this overlooked age group.'
+        'To find out more, visit www.aidsalliance.org'
+      ]
+      button: 'PLAY AGAIN'
+      next: 'levelOne'
 
   create: ->
-    x = @game.width / 2
-    y = @game.height / 2
-
-    @titleTxt = @add.bitmapText(x, y, 'minecraftia', 'Game Over')
-    @titleTxt.align = 'center'
-    @titleTxt.x = @game.width / 2 - @titleTxt.textWidth / 2
-
-    y = y + @titleTxt.height + 5
-    @startTxt = @add.bitmapText(x, y, 'minecraftia', 'PLAY AGAIN')
-    @startTxt.align = 'center'
-    @startTxt.x = @game.width / 2 - @startTxt.textWidth / 2
-
-    @input.onDown.add @onDown, this
-
-  update: ->
-
-  onDown: ->
+    super
     @game.score = 0
-    @game.state.start 'levelOne'
 
 module.exports = GameOver
+

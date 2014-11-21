@@ -1,26 +1,14 @@
-class LevelOneComplete
+Message = require '../classes/message'
 
-  @titleTxt = null
-  @startTxt = null
-
-  create: ->
-    x = @game.width / 2
-    y = @game.height / 2
-
-    @titleTxt = @add.bitmapText(x, y, 'minecraftia', 'Level 1 Complete!')
-    @titleTxt.align = 'center'
-    @titleTxt.x = @game.width / 2 - @titleTxt.textWidth / 2
-
-    y = y + @titleTxt.height + 5
-    @startTxt = @add.bitmapText(x, y, 'minecraftia', 'START LEVEL 2')
-    @startTxt.align = 'center'
-    @startTxt.x = @game.width / 2 - @startTxt.textWidth / 2
-
-    @input.onDown.add @onDown, this
-
-  update: ->
-
-  onDown: ->
-    @game.state.start 'levelTwo'
+class LevelOneComplete extends Message
+  constructor: ->
+    super
+      title: 'Level 1 Complete!'
+      text: [
+        'Feeling under the weather?  In some countries if you’re under 19 you may not even be able to take an HIV test to know your status.'
+        'There are an estimated 2.1 million adolescents living with HIV – many still don’t know that they are and so are not yet on life-saving treatment.'
+      ]
+      button: 'START LEVEL 2'
+      next: 'levelTwo'
 
 module.exports = LevelOneComplete
