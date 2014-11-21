@@ -114,6 +114,7 @@ __6.12__  added new images to ‘src/game/states/preloader.coffee’
 __6.13__  simplified collision-type detection, using `name` property  
 __6.14__  slowed down game, to begin tuning difficulty  
 __6.15__  bumped version to '0.1.1-3', track new files and commit  
+__6.16__  release start 0.1.2, bumped to '0.1.2', release finish, pushed to GitHub
 
 
 
@@ -128,6 +129,7 @@ Releases
 + 0.1.1-1  correct messages on all level-complete screens
 + 0.1.1-2  special game-over screen for level four
 + 0.1.1-3  first batch of real graphics in place
++ 0.1.2    some real graphics
 
 
 
