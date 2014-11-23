@@ -6,7 +6,20 @@ class Level
 
   create: ->
 
-    @background = @add.tileSprite 0, 0, 600, 600, 'cellfield'
+    # Set a limit on the up-scale
+    # @game.scale.minWidth   = 200
+    # @game.scale.minHeight  = 200
+    # @game.scale.maxWidth  = 600
+    # @game.scale.maxHeight = 600
+
+    # Scale up proportionally to whatever the browser can handle
+    # @game.scaleMode = Phaser.ScaleManager.SHOW_ALL
+    # @game.scale.setScreenSize()
+
+    @game.world.setBounds 0, 0, 600, 696
+    @game.camera.y = 48
+
+    @background = @add.tileSprite 0, 48, 600, 600, 'cellfield'
     @background.scale.setTo 6, 6
 
     # x = @game.width / 2

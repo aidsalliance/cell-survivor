@@ -1,7 +1,7 @@
-How the wad14-game was built
-============================
+The Making of Cell Survivor
+===========================
 
-We built [the game](http://aidsalliance.github.io/cell-survivor "Play the game here") in OS X. You should be able to follow these instructions if you use a Linux operating system (eg Ubuntu), or even Windows.
+We built [the game](http://aidsalliance.github.io/cell-survivor "Play the game here") in OS X. You should be able to repeat these steps if you use a Linux operating system (eg Ubuntu), or even Windows.
 
 
 1. Installed basic development tools
@@ -122,6 +122,9 @@ __6.16__  release start 0.1.4, bumped to '0.1.4', release finish, pushed to GitH
 
 __7.1__   `$ git flow feature start frame`, bumped to '0.1.5-1'
 __7.2__   remove pathogens which have traversed the screen, and commit
+__7.3__   game wrapped in window-filling CSS table with #header and #footer elements
+__7.4__   use `setBounds()` and `camera.y` to hide pathogens as they enter and leave
+__7.5__   bumped version to '0.1.5-2' and commit  
 
 
 
@@ -134,6 +137,7 @@ Releases
 + 0.1.0    score, levels, and CNAME, renamed game to ‘Cell Survivor’
 + 0.1.4    some real graphics
 + 0.1.5-1  pathogens leave bottom of screen
++ 0.1.5-2  game wrapped in CSS table
 
 
 

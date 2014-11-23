@@ -129,7 +129,9 @@ Level = (function() {
 
   Level.prototype.create = function() {
     var adjacent, angle, brick, opposite, spec, _i, _results;
-    this.background = this.add.tileSprite(0, 0, 600, 600, 'cellfield');
+    this.game.world.setBounds(0, 0, 600, 696);
+    this.game.camera.y = 48;
+    this.background = this.add.tileSprite(0, 48, 600, 600, 'cellfield');
     this.background.scale.setTo(6, 6);
     this.scoreText = this.game.add.text(32, 550, 'score: ' + this.game.score, {
       font: "20px Arial",
@@ -244,7 +246,7 @@ Message = (function() {
   Message.prototype.create = function() {
     var regex, section, text, x, y, _i, _len, _ref;
     x = this.game.width / 2;
-    y = 30;
+    y = 50;
     this.titleTxt = this.add.bitmapText(x, y, 'minecraftia', this.opt.title);
     this.titleTxt.align = 'center';
     this.titleTxt.x = this.game.width / 2 - this.titleTxt.textWidth / 2;
@@ -351,17 +353,6 @@ Boot = (function() {
 
   Boot.prototype.create = function() {
     this.game.input.maxPointers = 1;
-    if (this.game.device.desktop) {
-      this.game.scale.pageAlignHorizontally = true;
-    } else {
-      this.game.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-      this.game.scale.minWidth = 480;
-      this.game.scale.minHeight = 260;
-      this.game.scale.maxWidth = 640;
-      this.game.scale.maxHeight = 480;
-      this.game.scale.forceLandscape = false;
-      this.game.scale.setScreenSize(true);
-    }
     return this.game.state.start('preloader');
   };
 

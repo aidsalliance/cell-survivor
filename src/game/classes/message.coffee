@@ -7,7 +7,7 @@ class Message
 
   create: ->
     x = @game.width / 2
-    y = 30
+    y = 50
 
     @titleTxt = @add.bitmapText x, y, 'minecraftia', @opt.title
     @titleTxt.align = 'center'

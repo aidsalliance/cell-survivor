@@ -37,6 +37,12 @@
 	"file_history":
 	[
 		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/cell-survivor/README.md",
+		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/cell-survivor/src/sass/main.scss",
+		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/cell-survivor/src/game/classes/message.coffee",
+		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/cell-survivor/src/game/classes/level.coffee",
+		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/cell-survivor/src/game/main.coffee",
+		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/cell-survivor/src/game/states/boot.coffee",
+		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/cell-survivor/src/game/classes/pathogen.coffee",
 		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/cell-survivor/bower.json",
 		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/cell-survivor/package.json",
 		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/wad14-game/src/game/main.coffee",
@@ -91,6 +97,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"@world.",
+			"collideWorldBounds",
 			"wad14-game",
 			"score",
 			"ball",
@@ -188,6 +196,10 @@
 		]
 	},
 	"menu_visible": true,
+	"output.coffeecompile_output":
+	{
+		"height": 32.0
+	},
 	"replace":
 	{
 		"height": 70.0
@@ -213,6 +225,6 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 188.0,
+	"side_bar_width": 298.0,
 	"status_bar_visible": true
 }
