@@ -1,3 +1,4 @@
+$        = require 'jquery'
 Pathogen = require '../classes/pathogen'
 Brick    = require '../classes/brick'
 
@@ -6,20 +7,24 @@ class Level
 
   create: ->
 
-    # Set a limit on the up-scale
-    # @game.scale.minWidth   = 200
-    # @game.scale.minHeight  = 200
-    # @game.scale.maxWidth  = 600
-    # @game.scale.maxHeight = 600
+    # Ensure ‘onResize()’ is run
+    $ window
+      .trigger 'resize'
 
-    # Scale up proportionally to whatever the browser can handle
-    # @game.scaleMode = Phaser.ScaleManager.SHOW_ALL
-    # @game.scale.setScreenSize()
+    @isPortrait = $ '.wrap'
+      .hasClass 'portrait'
 
-    @game.world.setBounds 0, 0, 600, 696
-    @game.camera.y = 48
+    if @isPortrait
+      @game.world.setBounds 0, 0, 696, 600
+      @game.camera.x = 48
+      @background = @add.tileSprite 48, 0, 600, 600, 'cellfield'
+      @endZone = @world.width - 24 # width of pathogen
+    else
+      @game.world.setBounds 0, 0, 600, 696
+      @game.camera.y = 48
+      @background = @add.tileSprite 0, 48, 600, 600, 'cellfield'
+      @endZone = @world.height - 24 # height of pathogen
 
-    @background = @add.tileSprite 0, 48, 600, 600, 'cellfield'
     @background.scale.setTo 6, 6
 
     # x = @game.width / 2
@@ -82,19 +87,32 @@ class Level
     @physics.arcade.collide @pathogens, @bricks , @pathogenHitBrick, null, @
 
     if not @rnd.between 0, 1 / @opt.spawnRate # call `newPathogen()` if `between()` returns zero
-      pathogen = @pathogens.create @rnd.between(0, @world.width), 0
+      if @isPortrait
+        pathogen = @pathogens.create 0, @rnd.between(0, @world.height)
+        pathogen.body.velocity =
+          x: @game.rnd.between @opt.slowest, @opt.fastest
+          y: @game.rnd.between -@opt.fastest, @opt.fastest
+      else
+        pathogen = @pathogens.create @rnd.between(0, @world.width), 0
+        pathogen.body.velocity =
+          x: @game.rnd.between -@opt.fastest, @opt.fastest
+          y: @game.rnd.between @opt.slowest, @opt.fastest
+
       pathogen.scale.setTo 2, 2
       pathogen.smoothed = false
-      pathogen.body.velocity =
-	      x: @game.rnd.between -@opt.fastest, @opt.fastest
-	      y: @game.rnd.between @opt.slowest, @opt.fastest
 
     # Remove pathogens which have traversed the screen
-    endZone = @world.height - 24 # height of pathogen
-    @pathogens.forEach( # callback, callbackContext, checkExists
-      (pathogen) ->
-        if pathogen?.y >= endZone then pathogen.destroy()
-    )
+    if @isPortrait
+      @pathogens.forEach( # callback, callbackContext, checkExists
+        (pathogen) =>
+          if pathogen?.x >= @endZone then pathogen.destroy()
+          # console.log 'ok!', @endZone, pathogen?.x
+      )
+    else
+      @pathogens.forEach( # callback, callbackContext, checkExists
+        (pathogen) =>
+          if pathogen?.y >= @endZone then pathogen.destroy()
+      )
 
 
   pathogenHitNucleus: ->

@@ -125,6 +125,10 @@ __7.2__   remove pathogens which have traversed the screen, and commit
 __7.3__   game wrapped in window-filling CSS table with #header and #footer elements
 __7.4__   use `setBounds()` and `camera.y` to hide pathogens as they enter and leave
 __7.5__   bumped version to '0.1.5-2' and commit  
+__7.6__   installed jQuery via bower  
+__7.7__   used jQuery to switch landscape and portrait modes, and resize canvas  
+__7.8__   pathogens enter from left and exit right in portrait mode  
+__7.9__   bumped version to '0.1.5-3', track  and commit  
 
 
 
@@ -138,6 +142,7 @@ Releases
 + 0.1.4    some real graphics
 + 0.1.5-1  pathogens leave bottom of screen
 + 0.1.5-2  game wrapped in CSS table
++ 0.1.5-3  portrait mode
 
 
 

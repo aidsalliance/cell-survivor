@@ -30,20 +30,67 @@ html, body {
   display: table-cell;
   vertical-align: top;
 }
-/* line 25, ../src/sass/main.scss */
-.wrap > div > div.frame {
-  border: 1px solid blue;
+/* line 27, ../src/sass/main.scss */
+.wrap > div > div#header {
+  width: 50%;
+  text-align: right;
 }
-/* line 32, ../src/sass/main.scss */
-.wrap > div > div#cell-survivor {
+/* line 31, ../src/sass/main.scss */
+.wrap > div > div#main {
   text-align: center;
-  border: 1px solid green;
+  vertical-align: middle;
 }
-/* line 35, ../src/sass/main.scss */
-.wrap > div > div#cell-survivor canvas {
+/* line 34, ../src/sass/main.scss */
+.wrap > div > div#main canvas {
   display: inline-block !important;
-  width: 100% !important;
-  height: 100% !important;
   cursor: pointer;
-  border: 1px solid red;
+}
+/* line 42, ../src/sass/main.scss */
+.wrap > div > div#footer {
+  width: 50%;
+  text-align: left;
+}
+/* line 48, ../src/sass/main.scss */
+.wrap.portrait {
+  display: block;
+}
+/* line 50, ../src/sass/main.scss */
+.wrap.portrait > div {
+  display: table;
+  width: 100%;
+  height: 100%;
+}
+/* line 54, ../src/sass/main.scss */
+.wrap.portrait > div > div {
+  display: table-row;
+}
+/* line 56, ../src/sass/main.scss */
+.wrap.portrait > div > div#header {
+  width: 100%;
+  text-align: center;
+}
+/* line 59, ../src/sass/main.scss */
+.wrap.portrait > div > div#header > div {
+  vertical-align: bottom;
+}
+/* line 63, ../src/sass/main.scss */
+.wrap.portrait > div > div#main {
+  height: 100%;
+}
+/* line 65, ../src/sass/main.scss */
+.wrap.portrait > div > div#main > div {
+  vertical-align: middle;
+}
+/* line 69, ../src/sass/main.scss */
+.wrap.portrait > div > div#footer {
+  width: 100%;
+  text-align: center;
+}
+/* line 72, ../src/sass/main.scss */
+.wrap.portrait > div > div#footer > div {
+  vertical-align: top;
+}
+/* line 76, ../src/sass/main.scss */
+.wrap.portrait > div > div > div {
+  display: table-cell;
 }

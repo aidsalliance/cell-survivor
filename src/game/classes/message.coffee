@@ -1,3 +1,5 @@
+$ = require 'jquery'
+
 class Message
   @titleTxt  = null
   @textTxt   = null
@@ -6,6 +8,11 @@ class Message
   constructor: (@opt) ->
 
   create: ->
+
+    # Ensure ‘onResize()’ is run
+    $ window
+      .trigger 'resize'
+
     x = @game.width / 2
     y = 50
 
