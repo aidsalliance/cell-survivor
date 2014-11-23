@@ -135,6 +135,15 @@ Level = (function() {
     this.opt = opt;
   }
 
+  Level.prototype.createVeinWall = function(name, angle, x, y) {
+    this.veinWall = this.add.tileSprite(0, 48, 15, 600, name);
+    this.veinWall.angle = angle;
+    this.veinWall.x = x;
+    this.veinWall.y = y;
+    this.veinWall.autoScroll(0, this.opt.slowest / 4);
+    return this.veinWall.scale.setTo(2, 2);
+  };
+
   Level.prototype.create = function() {
     var adjacent, angle, brick, opposite, spec, _i, _results;
     $(window).trigger('resize');
@@ -143,11 +152,15 @@ Level = (function() {
       this.game.world.setBounds(0, 0, 696, 600);
       this.game.camera.x = 48;
       this.background = this.add.tileSprite(48, 0, 600, 600, 'cellfield');
+      this.createVeinWall('vein-wall-header', -90, 648, 0);
+      this.createVeinWall('vein-wall-footer', -90, 648, 570);
       this.endZone = this.world.width - 24;
     } else {
       this.game.world.setBounds(0, 0, 600, 696);
       this.game.camera.y = 48;
       this.background = this.add.tileSprite(0, 48, 600, 600, 'cellfield');
+      this.createVeinWall('vein-wall-header', 0, 0, 0);
+      this.createVeinWall('vein-wall-footer', 0, 570, 0);
       this.endZone = this.world.height - 24;
     }
     this.background.scale.setTo(6, 6);
@@ -425,12 +438,15 @@ window.onload = function() {
 
 
 },{"./frame/responsive":8,"./states/boot":10,"./states/game-over":11,"./states/level-four":13,"./states/level-four-game-over":12,"./states/level-one":15,"./states/level-one-complete":14,"./states/level-three":17,"./states/level-three-complete":16,"./states/level-two":19,"./states/level-two-complete":18,"./states/preloader":20,"./states/splash":21,"phaser":3}],10:[function(require,module,exports){
-var Boot;
+var $, Boot;
+
+$ = require('jquery');
 
 Boot = (function() {
   function Boot() {}
 
   Boot.prototype.preload = function() {
+    $(window).trigger('resize');
     return this.load.image('preloader', 'assets/images/preloader.gif');
   };
 
@@ -446,7 +462,7 @@ Boot = (function() {
 module.exports = Boot;
 
 
-},{}],11:[function(require,module,exports){
+},{"jquery":2}],11:[function(require,module,exports){
 var GameOver, Message,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -713,6 +729,8 @@ Preloader = (function() {
     this.load.bitmapFont('minecraftia', 'assets/fonts/minecraftia.png', 'assets/fonts/minecraftia.xml');
     this.load.atlas('breakin', 'assets/images/breakin-v2.png', 'assets/images/breakin-v2.json');
     this.load.image('cellfield', 'assets/images/bkgnd-v2.jpg');
+    this.load.image('vein-wall-header', 'assets/images/vein-wall-header.gif');
+    this.load.image('vein-wall-footer', 'assets/images/vein-wall-footer.gif');
     this.load.image('hep-c-brick-main', 'assets/images/hep-c-brick-main.gif');
     this.load.image('hep-c-brick-explosion-1', 'assets/images/hep-c-brick-explosion-1.gif');
     this.load.image('hep-c-brick-explosion-2', 'assets/images/hep-c-brick-explosion-2.gif');

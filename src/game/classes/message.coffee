@@ -8,10 +8,7 @@ class Message
   constructor: (@opt) ->
 
   create: ->
-
-    # Ensure ‘onResize()’ is run
-    $ window
-      .trigger 'resize'
+    $(window).trigger 'resize' # ensure ‘onResize()’ is run
 
     x = @game.width / 2
     y = 50

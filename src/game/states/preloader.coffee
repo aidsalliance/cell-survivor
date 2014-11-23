@@ -14,6 +14,8 @@ class Preloader
     @load.atlas 'breakin', 'assets/images/breakin-v2.png', 'assets/images/breakin-v2.json'
 
     @load.image 'cellfield'                      , 'assets/images/bkgnd-v2.jpg'
+    @load.image 'vein-wall-header'               , 'assets/images/vein-wall-header.gif'
+    @load.image 'vein-wall-footer'               , 'assets/images/vein-wall-footer.gif'
     @load.image 'hep-c-brick-main'               , 'assets/images/hep-c-brick-main.gif'
     @load.image 'hep-c-brick-explosion-1'        , 'assets/images/hep-c-brick-explosion-1.gif'
     @load.image 'hep-c-brick-explosion-2'        , 'assets/images/hep-c-brick-explosion-2.gif'

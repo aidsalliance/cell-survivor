@@ -5,11 +5,16 @@ Brick    = require '../classes/brick'
 class Level
   constructor: (@opt) ->
 
-  create: ->
+  createVeinWall: (name, angle, x, y) ->
+    @veinWall = @add.tileSprite 0, 48, 15, 600, name
+    @veinWall.angle = angle
+    @veinWall.x = x
+    @veinWall.y = y
+    @veinWall.autoScroll 0, @opt.slowest / 4
+    @veinWall.scale.setTo 2, 2
 
-    # Ensure ‘onResize()’ is run
-    $ window
-      .trigger 'resize'
+  create: ->
+    $(window).trigger 'resize' # ensure ‘onResize()’ is run
 
     @isPortrait = $ '.wrap'
       .hasClass 'portrait'
@@ -18,20 +23,19 @@ class Level
       @game.world.setBounds 0, 0, 696, 600
       @game.camera.x = 48
       @background = @add.tileSprite 48, 0, 600, 600, 'cellfield'
+      @createVeinWall 'vein-wall-header', -90, 648, 0
+      @createVeinWall 'vein-wall-footer', -90, 648, 570
       @endZone = @world.width - 24 # width of pathogen
     else
       @game.world.setBounds 0, 0, 600, 696
       @game.camera.y = 48
       @background = @add.tileSprite 0, 48, 600, 600, 'cellfield'
+      @createVeinWall 'vein-wall-header', 0,   0, 0
+      @createVeinWall 'vein-wall-footer', 0, 570, 0
       @endZone = @world.height - 24 # height of pathogen
 
     @background.scale.setTo 6, 6
 
-    # x = @game.width / 2
-    # y = @game.height / 2
-    # @player = @add.sprite x, y, 'player'
-    # @player.anchor.setTo 0.5, 0.5
-    # @input.onDown.add @onInputDown, this
     @scoreText = @game.add.text(32, 550, 'score: ' + @game.score, { font: "20px Arial", fill: "#ffffff", align: "left" });
 
     @nucleus = @add.sprite @world.centerX, @world.centerY, 'nucleus-main'
