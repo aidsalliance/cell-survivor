@@ -138,6 +138,8 @@ __7.15__  moved score from a game-overlay into the frame
 __7.16__  bumped version to '0.1.5-5', track and commit  
 __7.17__  passed ‘powerups’ array to ‘Levels’ class  
 __7.18__  bumped version to '0.1.5-6', track new files and commit  
+__7.19__  amended some message text, and made level 3 easier
+__7.20__  feature finish, release 0.1.6, pushed to GitHub
 
 
 
@@ -155,6 +157,7 @@ Releases
 + 0.1.5-4  vein walls and frame icons
 + 0.1.5-5  neat frame icons, and score in top left
 + 0.1.5-6  levels add or remove different powerup buttons
++ 0.1.6    vein walls, frame icons, responsive layout
 
 
 

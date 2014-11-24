@@ -5,9 +5,8 @@ class GameOver extends Message
     super
       title: 'Game Over'
       text: [
-        'AIDS-related illnesses are the second leading cause of death among adolescents aged 10–19 years globally and the first in Africa.'
-        'Contracting HIV need not be ‘Game Over’ but a comprehensive package of prevention, treatment, care and support is needed for this overlooked age group.'
-        'To find out more, visit www.aidsalliance.org'
+        'Contracting HIV need not be ‘Game Over’ but prevention, treatment, and care is needed for young people who too often are overlooked.'
+        'For more information about how the International HIV/AIDS Alliance is supporting young people, visit www.aidsalliance.org'
       ]
       button: 'PLAY AGAIN'
       next: 'levelOne'
