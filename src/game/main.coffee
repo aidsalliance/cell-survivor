@@ -20,5 +20,8 @@ window.onload = ->
   game.state.add 'levelFourGameOver' , require './states/level-four-game-over'
   game.state.add 'gameOver'          , require './states/game-over'
 
+  # Responsive
+  require './frame/responsive'
+
   # Initialise the game
   game.state.start 'boot'

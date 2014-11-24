@@ -5,8 +5,8 @@ class Splash extends Message
     super
       title: 'Cell Survivor'
       text: [
-        'A CD4 cell is going about its daily business of protecting the body from infection.'
-        'All of a sudden it comes under attack from HIV…'
+        'A cell is going about its daily business of protecting the body from intruders.'
+        '[the following text will pop up DURING level 1:] All of a sudden it comes under attack from HIV…'
       ]
       button: 'PLAY'
       next: 'levelOne'

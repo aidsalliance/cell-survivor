@@ -8,5 +8,6 @@ class LevelTwo extends Level
       spawnRate : .05
       complete  : 200
       next      : 'levelTwoComplete'
+      powerups  : ['condom','condom','condom','blank','blank','blank']
 
 module.exports = LevelTwo

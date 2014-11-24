@@ -1,3 +1,5 @@
+$ = require 'jquery'
+
 class Message
   @titleTxt  = null
   @textTxt   = null
@@ -6,8 +8,10 @@ class Message
   constructor: (@opt) ->
 
   create: ->
+    $(window).trigger 'resize' # ensure ‘onResize()’ is run
+
     x = @game.width / 2
-    y = 30
+    y = 50
 
     @titleTxt = @add.bitmapText x, y, 'minecraftia', @opt.title
     @titleTxt.align = 'center'
@@ -16,11 +20,11 @@ class Message
     y = y + @titleTxt.height + 50
 
     # http://james.padolsey.com/javascript/wordwrap-for-javascript/
-    regex = '.{1,' + 40 + '}(\\s|$)' + (if false then '|.{' + 40 + '}|.+$' else '|\\S+?(\\s|$)')
+    regex = '.{1,' + 45 + '}(\\s|$)' + (if false then '|.{' + 45 + '}|.+$' else '|\\S+?(\\s|$)')
 
     for section in @opt.text
       text = section.match( RegExp(regex, 'g') ).join('\n')
-      @textTxt = @game.add.text x, y, text, { font: "30px Arial", fill: "#ffffff", align: "center" }
+      @textTxt = @game.add.text x, y, text, { font: "24px Arial", fill: "#ffffff", align: "center" }
       @textTxt.anchor.setTo 0.5, 0
       y = y + @textTxt.height + 30
 

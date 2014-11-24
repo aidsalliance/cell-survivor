@@ -1,7 +1,7 @@
-How the wad14-game was built
-============================
+The Making of Cell Survivor
+===========================
 
-We built [the game](http://aidsalliance.github.io/cell-survivor "Play the game here") in OS X. You should be able to follow these instructions if you use a Linux operating system (eg Ubuntu), or even Windows.
+We built [the game](http://aidsalliance.github.io/cell-survivor "Play the game here") in OS X. You should be able to repeat these steps if you use a Linux operating system (eg Ubuntu), or even Windows.
 
 
 1. Installed basic development tools
@@ -117,6 +117,30 @@ __6.15__  bumped version to '0.1.1-3', track new files and commit
 __6.16__  release start 0.1.4, bumped to '0.1.4', release finish, pushed to GitHub
 
 
+7. Responsive landscape/portrait, and outer-frame elements
+----------------------------------------------------------
+
+__7.1__   `$ git flow feature start frame`, bumped to '0.1.5-1'
+__7.2__   remove pathogens which have traversed the screen, and commit
+__7.3__   game wrapped in window-filling CSS table with #header and #footer elements
+__7.4__   use `setBounds()` and `camera.y` to hide pathogens as they enter and leave
+__7.5__   bumped version to '0.1.5-2' and commit  
+__7.6__   installed jQuery via bower  
+__7.7__   used jQuery to switch landscape and portrait modes, and resize canvas  
+__7.8__   pathogens enter from left and exit right in portrait mode  
+__7.9__   bumped version to '0.1.5-3', track and commit  
+__7.10__  created vein-wall graphics and added to game  
+__7.11__  created frame icons and added to game (not yet functional)  
+__7.12__  bumped version to '0.1.5-4', track and commit  
+__7.13__  made frame icons resize neatly, landscape and portrait  
+__7.14__  added links to frame icons, with css animated hover state  
+__7.15__  moved score from a game-overlay into the frame  
+__7.16__  bumped version to '0.1.5-5', track and commit  
+__7.17__  passed ‘powerups’ array to ‘Levels’ class  
+__7.18__  bumped version to '0.1.5-6', track new files and commit  
+__7.19__  amended some message text, and made level 3 easier
+__7.20__  feature finish, release 0.1.6, pushed to GitHub
+
 
 
 Releases
@@ -126,10 +150,14 @@ Releases
 + 0.0.4    GitHub Pages works, tidy up before build proper
 + 0.0.6    basic game mechanic ready for testing
 + 0.1.0    score, levels, and CNAME, renamed game to ‘Cell Survivor’
-+ 0.1.1-1  correct messages on all level-complete screens
-+ 0.1.1-2  special game-over screen for level four
-+ 0.1.1-3  first batch of real graphics in place
 + 0.1.4    some real graphics
++ 0.1.5-1  pathogens leave bottom of screen
++ 0.1.5-2  game wrapped in CSS table
++ 0.1.5-3  portrait mode
++ 0.1.5-4  vein walls and frame icons
++ 0.1.5-5  neat frame icons, and score in top left
++ 0.1.5-6  levels add or remove different powerup buttons
++ 0.1.6    vein walls, frame icons, responsive layout
 
 
 
