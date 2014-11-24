@@ -136,6 +136,8 @@ __7.13__  made frame icons resize neatly, landscape and portrait
 __7.14__  added links to frame icons, with css animated hover state  
 __7.15__  moved score from a game-overlay into the frame  
 __7.16__  bumped version to '0.1.5-5', track and commit  
+__7.17__  passed ‘powerups’ array to ‘Levels’ class  
+__7.18__  bumped version to '0.1.5-6', track new files and commit  
 
 
 
@@ -152,6 +154,7 @@ Releases
 + 0.1.5-3  portrait mode
 + 0.1.5-4  vein walls and frame icons
 + 0.1.5-5  neat frame icons, and score in top left
++ 0.1.5-6  levels add or remove different powerup buttons
 
 
 

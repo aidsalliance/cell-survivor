@@ -16,6 +16,14 @@ class Level
   create: ->
     $(window).trigger 'resize' # ensure ‘onResize()’ is run
 
+    # Add powerups, if specified
+    for powerup, i in @opt.powerups ?= [] # conditional assignment
+      if !powerup then continue # skip a `null` powerup
+      $ "#powerup-#{i} img"
+        .attr 'src', "assets/images/icon-#{powerup}.gif"
+
+
+
     @isPortrait = $ '.wrap'
       .hasClass 'portrait'
 
