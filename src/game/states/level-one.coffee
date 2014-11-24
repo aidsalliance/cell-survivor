@@ -8,6 +8,6 @@ class LevelOne extends Level
       spawnRate : .03
       complete  : 100
       next      : 'levelOneComplete'
-      powerups  : ['blank','blank','blank','blank','blank','blank']
+      powerups  : ['condom','condom','pill','pill','blank','blank']
 
 module.exports = LevelOne

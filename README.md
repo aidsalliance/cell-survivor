@@ -142,6 +142,15 @@ __7.19__  amended some message text, and made level 3 easier
 __7.20__  feature finish, release 0.1.6, pushed to GitHub
 
 
+8. Powerup functionality and in-game popups
+-------------------------------------------
+
+__8.1__   `$ git flow feature start powerups`
+__8.2__   Added `buildWall()`, called when levels start, and when a pill is clicked
+__8.3__   Added a basic condom-shield graphic, which disappears after a short delay
+__8.4__   Fixed basic shield and pill functionality, to work on all levels
+__8.5__   bumped version to '0.1.7-1', track and commit  
+
 
 Releases
 --------
@@ -151,13 +160,8 @@ Releases
 + 0.0.6    basic game mechanic ready for testing
 + 0.1.0    score, levels, and CNAME, renamed game to ‘Cell Survivor’
 + 0.1.4    some real graphics
-+ 0.1.5-1  pathogens leave bottom of screen
-+ 0.1.5-2  game wrapped in CSS table
-+ 0.1.5-3  portrait mode
-+ 0.1.5-4  vein walls and frame icons
-+ 0.1.5-5  neat frame icons, and score in top left
-+ 0.1.5-6  levels add or remove different powerup buttons
 + 0.1.6    vein walls, frame icons, responsive layout
++ 0.1.7-1  basic condom-shield and pill graphics and functionality
 
 
 

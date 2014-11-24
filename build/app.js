@@ -144,16 +144,81 @@ Level = (function() {
     return this.veinWall.scale.setTo(2, 2);
   };
 
+  Level.prototype.powerup = function(el) {
+    var power, _ref;
+    power = (_ref = ($(el).attr('src')).split('-')[1]) != null ? _ref.split('.')[0] : void 0;
+    if ('condom' === power) {
+      this.shieldUp();
+    }
+    if ('pill' === power) {
+      this.buildWall();
+    }
+    return $(el).attr('src', 'assets/images/icon-blank.gif');
+  };
+
+  Level.prototype.shieldUp = function() {
+    var _ref;
+    this.game.shieldTimer = 300;
+    if ((_ref = this.game.shield) != null) {
+      _ref.destroy();
+    }
+    this.game.shield = this.add.graphics(this.world.centerX, this.world.centerY);
+    this.game.shield.lineStyle(2, 0x0000ff);
+    this.game.shield.drawCircle(0, 0, 260);
+    this.game.shield.lineStyle(2, 0x0088ff);
+    this.game.shield.drawCircle(0, 0, 262);
+    this.game.shield.lineStyle(2, 0x00ffff);
+    return this.game.shield.drawCircle(0, 0, 264);
+  };
+
+  Level.prototype.buildWall = function() {
+    var adjacent, angle, brick, opposite, spec, _i, _ref, _results;
+    if ((_ref = this.game.bricks) != null) {
+      _ref.destroy();
+    }
+    this.game.bricks = this.add.group();
+    this.game.bricks.enableBody = true;
+    this.game.bricks.physicsBodyType = Phaser.Physics.ARCADE;
+    this.game.bricks.classType = Brick;
+    this.game.bricks.x = this.world.centerX;
+    this.game.bricks.y = this.world.centerY;
+    _results = [];
+    for (angle = _i = 0; _i <= 19; angle = ++_i) {
+      opposite = Math.sin(angle * Math.PI / 10) * 110;
+      adjacent = Math.cos(angle * Math.PI / 10) * 110;
+      spec = (angle / 6) % 2 > .7 ? {
+        key: 'hep-c-brick-main',
+        name: 'hep-c'
+      } : {
+        key: 'herpesviridae-brick-main',
+        name: 'herpesviridae'
+      };
+      brick = this.game.bricks.create(opposite, adjacent, spec.key);
+      brick.name = spec.name;
+      brick.scale.setTo(2, 2);
+      brick.angle = 180 + angle * -360 / 20;
+      brick.smoothed = false;
+      brick.anchor.setTo(.5, .5);
+      _results.push(brick.body.immovable = true);
+    }
+    return _results;
+  };
+
   Level.prototype.create = function() {
-    var adjacent, angle, brick, i, opposite, powerup, spec, _base, _i, _j, _len, _ref, _results;
+    var i, powerup, self, _base, _i, _len, _ref;
     $(window).trigger('resize');
+    self = this;
     _ref = (_base = this.opt).powerups != null ? _base.powerups : _base.powerups = [];
     for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
       powerup = _ref[i];
       if (!powerup) {
         continue;
       }
-      $("#powerup-" + i + " img").attr('src', "assets/images/icon-" + powerup + ".gif");
+      $("#powerup-" + i + " img").attr('src', "assets/images/icon-" + powerup + ".gif").off('click', function() {
+        return self.powerup(this);
+      }).on('click', function() {
+        return self.powerup(this);
+      });
     }
     this.isPortrait = $('.wrap').hasClass('portrait');
     if (this.isPortrait) {
@@ -183,63 +248,19 @@ Level = (function() {
     this.pathogens.enableBody = true;
     this.pathogens.physicsBodyType = Phaser.Physics.ARCADE;
     this.pathogens.classType = Pathogen;
-    this.bricks = this.add.group();
-    this.bricks.enableBody = true;
-    this.bricks.physicsBodyType = Phaser.Physics.ARCADE;
-    this.bricks.classType = Brick;
-    this.bricks.x = this.world.centerX;
-    this.bricks.y = this.world.centerY;
-    _results = [];
-    for (angle = _j = 0; _j <= 19; angle = ++_j) {
-      opposite = Math.sin(angle * Math.PI / 10) * 110;
-      adjacent = Math.cos(angle * Math.PI / 10) * 110;
-      spec = (angle / 6) % 2 > .7 ? {
-        key: 'hep-c-brick-main',
-        name: 'hep-c'
-      } : {
-        key: 'herpesviridae-brick-main',
-        name: 'herpesviridae'
-      };
-      brick = this.bricks.create(opposite, adjacent, spec.key);
-      brick.name = spec.name;
-      brick.scale.setTo(2, 2);
-      brick.angle = 180 + angle * -360 / 20;
-      brick.smoothed = false;
-      brick.anchor.setTo(.5, .5);
-      _results.push(brick.body.immovable = true);
-    }
-    return _results;
+    return this.buildWall();
   };
 
   Level.prototype.update = function() {
-    var angle, cx, cy, pathogen, x, y;
+    var angle, cx, cy, pathogen, x, y, _ref;
     x = this.input.position.x;
     y = this.input.position.y;
     cx = this.world.centerX;
     cy = this.world.centerY;
     angle = Math.atan2(y - cy, x - cx) * (180 / Math.PI);
-    this.bricks.angle = angle;
-    this.physics.arcade.collide(this.pathogens, this.nucleus, this.pathogenHitNucleus, null, this);
-    this.physics.arcade.collide(this.pathogens, this.bricks, this.pathogenHitBrick, null, this);
-    if (!this.rnd.between(0, 1 / this.opt.spawnRate)) {
-      if (this.isPortrait) {
-        pathogen = this.pathogens.create(0, this.rnd.between(0, this.world.height));
-        pathogen.body.velocity = {
-          x: this.game.rnd.between(this.opt.slowest, this.opt.fastest),
-          y: this.game.rnd.between(-this.opt.fastest, this.opt.fastest)
-        };
-      } else {
-        pathogen = this.pathogens.create(this.rnd.between(0, this.world.width), 0);
-        pathogen.body.velocity = {
-          x: this.game.rnd.between(-this.opt.fastest, this.opt.fastest),
-          y: this.game.rnd.between(this.opt.slowest, this.opt.fastest)
-        };
-      }
-      pathogen.scale.setTo(2, 2);
-      pathogen.smoothed = false;
-    }
+    this.game.bricks.angle = angle;
     if (this.isPortrait) {
-      return this.pathogens.forEach((function(_this) {
+      this.pathogens.forEach((function(_this) {
         return function(pathogen) {
           if ((pathogen != null ? pathogen.x : void 0) >= _this.endZone) {
             return pathogen.destroy();
@@ -247,13 +268,59 @@ Level = (function() {
         };
       })(this));
     } else {
-      return this.pathogens.forEach((function(_this) {
+      this.pathogens.forEach((function(_this) {
         return function(pathogen) {
           if ((pathogen != null ? pathogen.y : void 0) >= _this.endZone) {
             return pathogen.destroy();
           }
         };
       })(this));
+    }
+    if ((this.game.shieldTimer != null) && 0 > --this.game.shieldTimer) {
+      delete this.game.shieldTimer;
+      if ((_ref = this.game.shield) != null) {
+        _ref.destroy();
+      }
+    }
+    if (this.game.shieldTimer != null) {
+      return this.pathogens.forEach((function(_this) {
+        return function(pathogen) {
+          var dx, dy, hyp;
+          dx = Math.abs((pathogen != null ? pathogen.x : void 0) - cx);
+          if (150 < dx) {
+            return;
+          }
+          dy = Math.abs((pathogen != null ? pathogen.y : void 0) - cy);
+          if (150 < dy) {
+            return;
+          }
+          hyp = Math.sqrt(dx * dx + dy * dy);
+          if (150 < hyp) {
+            return;
+          }
+          return pathogen != null ? pathogen.destroy() : void 0;
+        };
+      })(this));
+    } else {
+      this.physics.arcade.collide(this.pathogens, this.nucleus, this.pathogenHitNucleus, null, this);
+      this.physics.arcade.collide(this.pathogens, this.game.bricks, this.pathogenHitBrick, null, this);
+      if (!this.rnd.between(0, 1 / this.opt.spawnRate)) {
+        if (this.isPortrait) {
+          pathogen = this.pathogens.create(0, this.rnd.between(0, this.world.height));
+          pathogen.body.velocity = {
+            x: this.game.rnd.between(this.opt.slowest, this.opt.fastest),
+            y: this.game.rnd.between(-this.opt.fastest, this.opt.fastest)
+          };
+        } else {
+          pathogen = this.pathogens.create(this.rnd.between(0, this.world.width), 0);
+          pathogen.body.velocity = {
+            x: this.game.rnd.between(-this.opt.fastest, this.opt.fastest),
+            y: this.game.rnd.between(this.opt.slowest, this.opt.fastest)
+          };
+        }
+        pathogen.scale.setTo(2, 2);
+        return pathogen.smoothed = false;
+      }
     }
   };
 
@@ -480,9 +547,11 @@ module.exports = Boot;
 
 
 },{"jquery":2}],11:[function(require,module,exports){
-var GameOver, Message,
+var $, GameOver, Message,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+$ = require('jquery');
 
 Message = require('../classes/message');
 
@@ -500,7 +569,8 @@ GameOver = (function(_super) {
 
   GameOver.prototype.create = function() {
     GameOver.__super__.create.apply(this, arguments);
-    return this.game.score = 0;
+    this.game.score = 0;
+    return $('#score').text(this.game.score);
   };
 
   return GameOver;
@@ -510,10 +580,12 @@ GameOver = (function(_super) {
 module.exports = GameOver;
 
 
-},{"../classes/message":6}],12:[function(require,module,exports){
-var LevelFourGameOver, Message,
+},{"../classes/message":6,"jquery":2}],12:[function(require,module,exports){
+var $, LevelFourGameOver, Message,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+$ = require('jquery');
 
 Message = require('../classes/message');
 
@@ -531,7 +603,8 @@ LevelFourGameOver = (function(_super) {
 
   LevelFourGameOver.prototype.create = function() {
     LevelFourGameOver.__super__.create.apply(this, arguments);
-    return this.game.score = 0;
+    this.game.score = 0;
+    return $('#score').text(this.game.score);
   };
 
   return LevelFourGameOver;
@@ -541,7 +614,7 @@ LevelFourGameOver = (function(_super) {
 module.exports = LevelFourGameOver;
 
 
-},{"../classes/message":6}],13:[function(require,module,exports){
+},{"../classes/message":6,"jquery":2}],13:[function(require,module,exports){
 var Level, LevelFour,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -553,9 +626,9 @@ LevelFour = (function(_super) {
 
   function LevelFour() {
     LevelFour.__super__.constructor.call(this, {
-      slowest: 100,
-      fastest: 200,
-      spawnRate: .3,
+      slowest: 80,
+      fastest: 160,
+      spawnRate: .1,
       complete: 0,
       gameOver: 'levelFourGameOver',
       powerups: ['blank', 'blank', 'blank', 'blank', 'blank', 'blank']
@@ -612,7 +685,7 @@ LevelOne = (function(_super) {
       spawnRate: .03,
       complete: 100,
       next: 'levelOneComplete',
-      powerups: ['blank', 'blank', 'blank', 'blank', 'blank', 'blank']
+      powerups: ['condom', 'condom', 'pill', 'pill', 'blank', 'blank']
     });
   }
 
@@ -690,7 +763,7 @@ LevelTwoComplete = (function(_super) {
   function LevelTwoComplete() {
     LevelTwoComplete.__super__.constructor.call(this, {
       title: 'Level 2 Complete!',
-      text: ['Well done for using your condoms! If you’re a young person living somewhere like Burundi or Bangladesh, condoms may not be readily available.', 'An estimated 13 billion condoms per year are needed to help halt the spread of HIV and other sexually transmitted infections. The actual number falls far short…', 'Contracting HIV is not ‘Game Over’. Now move on to the next level to try your hand at being a viral survivor.'],
+      text: ['Well done for using your condoms! If you’re a young person living somewhere like Burundi or Bangladesh, condoms may not be readily available.', 'An estimated 13 billion condoms per year are needed to help halt the spread of HIV and other sexually transmitted infections. The actual number falls far short…', 'Contracting HIV is not ‘Game Over’. Now move on to the next level to try your hand at being a Cell Survivor.'],
       button: 'START LEVEL 3',
       next: 'levelThree'
     });
