@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
 <head>
+  <base target="_blank">
   <meta charset="utf-8">
   <title>Cell Survivor</title>
   <link rel="stylesheet" href="main.css">
@@ -9,22 +10,32 @@
 <body>
   <div class="wrap">
     <div>
-      <div id="header" class="frame"><div>
-        <img src="assets/images/icon-aa.gif">
-        <img src="assets/images/icon-facebook.gif">
-        <img src="assets/images/icon-twitter.gif">
-      </div></div>
-      <div id="main"><div id="cell-survivor" class="game"></div></div>
-      <div id="footer" class="frame"><div>
-        <img src="assets/images/icon-condom.gif">
-        <img src="assets/images/icon-condom.gif">
-        <img src="assets/images/icon-condom.gif">
-        <img src="assets/images/icon-pill.gif">
-        <img src="assets/images/icon-pill.gif">
-        <img src="assets/images/icon-pill.gif">
-      </div></div>
+      <div id="header" class="frame">
+        <div>
+          <span><span id="score">0</span><img id="score-placeholder" src="assets/images/px.gif"></span>
+          <img src="assets/images/px.gif">
+          <a title="Visit the AIDS Alliance homepage"     href="http://www.aidsalliance.org/"><img src="assets/images/icon-aa.gif"></a>
+          <a title="Follow AIDS Alliance on Facebook"     href="https://www.facebook.com/pages/International-HIVAIDS-Alliance/140226915992252"><img src="assets/images/icon-facebook.gif"></a>
+          <a title="Tweet about Cell Survivor"            href="https://twitter.com/share" class="twitter-share-button" data-via="theaidsalliance" data-count="none" data-hashtags="CellSurvivor"><img src="assets/images/icon-twitter.gif"></a>
+          <a title="Find out how Cell Survivor was built" href="https://github.com/aidsalliance/cell-survivor"><img src="assets/images/icon-github.gif"></a>
+        </div>
+      </div>
+      <div id="main">
+        <div id="cell-survivor" class="game"></div>
+      </div>
+      <div id="footer" class="frame">
+        <div>
+          <a id="powerup-1"><img src="assets/images/px.gif"></a>
+          <a id="powerup-2"><img src="assets/images/px.gif"></a>
+          <a id="powerup-3"><img src="assets/images/px.gif"></a>
+          <a id="powerup-4"><img src="assets/images/px.gif"></a>
+          <a id="powerup-5"><img src="assets/images/px.gif"></a>
+          <a id="powerup-6"><img src="assets/images/px.gif"></a>
+        </div>
+      </div>
     </div>
   </div>
   <script src="app.js"></script>
+  <!--<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>-->
 </body>
 </html>

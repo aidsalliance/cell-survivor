@@ -36,7 +36,7 @@ class Level
 
     @background.scale.setTo 6, 6
 
-    @scoreText = @game.add.text(32, 550, 'score: ' + @game.score, { font: "20px Arial", fill: "#ffffff", align: "left" });
+    # @scoreText = @game.add.text(32, 550, 'score: ' + @game.score, { font: "20px Arial", fill: "#ffffff", align: "left" });
 
     @nucleus = @add.sprite @world.centerX, @world.centerY, 'nucleus-main'
     @physics.enable @nucleus, Phaser.Physics.ARCADE
@@ -127,11 +127,12 @@ class Level
 
     if pathogen.name == brick.name
       @game.score += 10
-      @scoreText.text = 'score: ' + @game.score;
+      $ '#score'
+        .text @game.score
     else
-      brick.kill();
+      brick.kill()
 
-    pathogen.kill();
+    pathogen.kill()
 
     if @game.score >= @opt.complete
       @game.state.start @opt.next

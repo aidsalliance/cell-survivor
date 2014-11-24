@@ -164,11 +164,6 @@ Level = (function() {
       this.endZone = this.world.height - 24;
     }
     this.background.scale.setTo(6, 6);
-    this.scoreText = this.game.add.text(32, 550, 'score: ' + this.game.score, {
-      font: "20px Arial",
-      fill: "#ffffff",
-      align: "left"
-    });
     this.nucleus = this.add.sprite(this.world.centerX, this.world.centerY, 'nucleus-main');
     this.physics.enable(this.nucleus, Phaser.Physics.ARCADE);
     this.nucleus.smoothed = false;
@@ -262,7 +257,7 @@ Level = (function() {
   Level.prototype.pathogenHitBrick = function(pathogen, brick) {
     if (pathogen.name === brick.name) {
       this.game.score += 10;
-      this.scoreText.text = 'score: ' + this.game.score;
+      $('#score').text(this.game.score);
     } else {
       brick.kill();
     }
@@ -389,23 +384,37 @@ onResize = function() {
 };
 
 resizePortrait = function(width, height) {
-  width = Math.min(height - 200, width);
+  width = Math.min(height - 108, width);
   $('.wrap').addClass('portrait');
   $('.wrap .frame').css({
     height: (height - width) / 2
   });
-  return $('.wrap #main canvas').css({
+  $('.wrap .frame >div').css({
+    width: '100%',
+    height: 54
+  });
+  $('.wrap #main canvas').css({
     width: width,
     height: width
+  });
+  return $('.wrap .frame >div img').css({
+    width: 350 > width ? 48 : 54
   });
 };
 
 resizeLandscape = function(width, height) {
-  height = Math.min(width - 200, height);
+  height = Math.min(width - 108, height);
   $('.wrap').removeClass('portrait');
-  return $('.wrap #main canvas').css({
+  $('.wrap .frame >div').css({
+    width: (height - 20) / 7,
+    height: height - 20
+  });
+  $('.wrap #main canvas').css({
     width: height,
     height: height
+  });
+  return $('.wrap .frame >div img').css({
+    width: '100%'
   });
 };
 

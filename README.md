@@ -132,6 +132,10 @@ __7.9__   bumped version to '0.1.5-3', track and commit
 __7.10__  created vein-wall graphics and added to game  
 __7.11__  created frame icons and added to game (not yet functional)  
 __7.12__  bumped version to '0.1.5-4', track and commit  
+__7.13__  made frame icons resize neatly, landscape and portrait  
+__7.14__  added links to frame icons, with css animated hover state  
+__7.15__  moved score from a game-overlay into the frame  
+__7.16__  bumped version to '0.1.5-5', track and commit  
 
 
 
@@ -147,6 +151,7 @@ Releases
 + 0.1.5-2  game wrapped in CSS table
 + 0.1.5-3  portrait mode
 + 0.1.5-4  vein walls and frame icons
++ 0.1.5-5  neat frame icons, and score in top left
 
 
 

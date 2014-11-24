@@ -1,10 +1,11 @@
-/* line 1, ../src/sass/main.scss */
+@import url(http://fonts.googleapis.com/css?family=Press+Start+2P);
+/* line 6, ../src/sass/main.scss */
 * {
   -webkit-user-select: none;
   user-select: none;
 }
 
-/* line 6, ../src/sass/main.scss */
+/* line 11, ../src/sass/main.scss */
 html, body {
   width: 100%;
   height: 100%;
@@ -15,82 +16,108 @@ html, body {
   color: #fff;
 }
 
-/* line 16, ../src/sass/main.scss */
+/* line 21, ../src/sass/main.scss */
 .wrap {
   display: table;
   width: 100%;
   height: 100%;
 }
-/* line 20, ../src/sass/main.scss */
+/* line 25, ../src/sass/main.scss */
 .wrap > div {
   display: table-row;
 }
-/* line 22, ../src/sass/main.scss */
+/* line 27, ../src/sass/main.scss */
 .wrap > div > div {
   display: table-cell;
   vertical-align: top;
 }
-/* line 27, ../src/sass/main.scss */
+/* line 31, ../src/sass/main.scss */
+.wrap > div > div.frame > div {
+  display: inline-block;
+  padding-top: 10px;
+}
+/* line 34, ../src/sass/main.scss */
+.wrap > div > div.frame > div img {
+  width: 100%;
+  height: auto;
+}
+/* line 39, ../src/sass/main.scss */
+.wrap > div > div.frame > div a {
+  transition: opacity .5s;
+  cursor: pointer;
+}
+/* line 42, ../src/sass/main.scss */
+.wrap > div > div.frame > div a:hover {
+  opacity: .7;
+}
+/* line 48, ../src/sass/main.scss */
 .wrap > div > div#header {
   width: 50%;
   text-align: right;
 }
-/* line 31, ../src/sass/main.scss */
+/* line 52, ../src/sass/main.scss */
 .wrap > div > div#main {
   text-align: center;
-  vertical-align: middle;
 }
-/* line 34, ../src/sass/main.scss */
+/* line 54, ../src/sass/main.scss */
 .wrap > div > div#main canvas {
   display: inline-block !important;
   cursor: pointer;
 }
-/* line 42, ../src/sass/main.scss */
+/* line 59, ../src/sass/main.scss */
 .wrap > div > div#footer {
   width: 50%;
   text-align: left;
 }
-/* line 48, ../src/sass/main.scss */
+/* line 65, ../src/sass/main.scss */
 .wrap.portrait {
   display: block;
 }
-/* line 50, ../src/sass/main.scss */
+/* line 67, ../src/sass/main.scss */
 .wrap.portrait > div {
   display: table;
   width: 100%;
   height: 100%;
 }
-/* line 54, ../src/sass/main.scss */
+/* line 71, ../src/sass/main.scss */
 .wrap.portrait > div > div {
   display: table-row;
 }
-/* line 56, ../src/sass/main.scss */
-.wrap.portrait > div > div#header {
-  width: 100%;
+/* line 74, ../src/sass/main.scss */
+.wrap.portrait > div > div.frame > div {
+  padding-top: 0;
   text-align: center;
+  vertical-align: bottom;
 }
-/* line 59, ../src/sass/main.scss */
+/* line 78, ../src/sass/main.scss */
+.wrap.portrait > div > div.frame > div img {
+  width: 54px;
+}
+/* line 84, ../src/sass/main.scss */
 .wrap.portrait > div > div#header > div {
   vertical-align: bottom;
 }
-/* line 63, ../src/sass/main.scss */
+/* line 88, ../src/sass/main.scss */
 .wrap.portrait > div > div#main {
   height: 100%;
 }
-/* line 65, ../src/sass/main.scss */
+/* line 90, ../src/sass/main.scss */
 .wrap.portrait > div > div#main > div {
   vertical-align: middle;
 }
-/* line 69, ../src/sass/main.scss */
-.wrap.portrait > div > div#footer {
-  width: 100%;
-  text-align: center;
-}
-/* line 72, ../src/sass/main.scss */
+/* line 95, ../src/sass/main.scss */
 .wrap.portrait > div > div#footer > div {
   vertical-align: top;
 }
-/* line 76, ../src/sass/main.scss */
+/* line 99, ../src/sass/main.scss */
 .wrap.portrait > div > div > div {
   display: table-cell;
+}
+
+/* line 107, ../src/sass/main.scss */
+#score {
+  position: absolute;
+  padding: 14px 0 0 3px;
+  font: 31px 'Press Start 2P', cursive;
+  text-shadow: #000 0 4px;
 }
