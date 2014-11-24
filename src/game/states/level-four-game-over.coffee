@@ -1,4 +1,3 @@
-$ = require 'jquery'
 Message = require '../classes/message'
 
 class LevelFourGameOver extends Message
@@ -12,12 +11,6 @@ class LevelFourGameOver extends Message
       ]
       button: 'PLAY AGAIN'
       next: 'levelOne'
-
-  create: ->
-    super
-    @game.score = 0
-    $ '#score'
-      .text @game.score
 
 module.exports = LevelFourGameOver
 

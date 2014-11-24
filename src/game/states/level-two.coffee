@@ -6,8 +6,12 @@ class LevelTwo extends Level
       slowest   : 60
       fastest   : 130
       spawnRate : .05
-      complete  : 200
+      complete  : 0 # completed when cell is touched by HIV
       next      : 'levelTwoComplete'
       powerups  : ['condom','condom','condom','blank','blank','blank']
+
+  create: ->
+    super
+    @game.step = 5
 
 module.exports = LevelTwo

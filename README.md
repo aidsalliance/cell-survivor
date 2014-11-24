@@ -138,18 +138,22 @@ __7.15__  moved score from a game-overlay into the frame
 __7.16__  bumped version to '0.1.5-5', track and commit  
 __7.17__  passed ‘powerups’ array to ‘Levels’ class  
 __7.18__  bumped version to '0.1.5-6', track new files and commit  
-__7.19__  amended some message text, and made level 3 easier
-__7.20__  feature finish, release 0.1.6, pushed to GitHub
+__7.19__  amended some message text, and made level 3 easier  
+__7.20__  feature finish, release 0.1.6, pushed to GitHub  
 
 
 8. Powerup functionality and in-game popups
 -------------------------------------------
 
-__8.1__   `$ git flow feature start powerups`
-__8.2__   Added `buildWall()`, called when levels start, and when a pill is clicked
-__8.3__   Added a basic condom-shield graphic, which disappears after a short delay
-__8.4__   Fixed basic shield and pill functionality, to work on all levels
+__8.1__   `$ git flow feature start powerups`  
+__8.2__   Added `buildWall()`, called when levels start, and when a pill is clicked  
+__8.3__   Added a basic condom-shield graphic, which disappears after a short delay  
+__8.4__   Fixed basic shield and pill functionality, to work on all levels  
 __8.5__   bumped version to '0.1.7-1', track and commit  
+__8.6__   HIV appears on level 1, but cannot hit the cell wall or nucleus  
+__8.7__   HIV ends level 2 when touched, and just breaks walls on levels 3 and 4  
+__8.8__   `console.log()` text at various steps in the user journey  
+__8.9__   bumped version to '0.1.7-2', track and commit  
 
 
 Releases
@@ -162,6 +166,7 @@ Releases
 + 0.1.4    some real graphics
 + 0.1.6    vein walls, frame icons, responsive layout
 + 0.1.7-1  basic condom-shield and pill graphics and functionality
++ 0.1.7-2  with HIV and start of popup-text steps
 
 
 

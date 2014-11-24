@@ -15,9 +15,9 @@ class Level
 
   powerup: (el) ->
     # console.log @, el, $(el).parent().attr('id'),
-    power = ( $(el).attr 'src' ).split('-')[1]?.split('.')[0]
-    if 'condom' == power then @shieldUp()
-    if 'pill'   == power then @buildWall()
+    powerup = ( $(el).attr 'src' ).split('-')[1]?.split('.')[0]
+    if 'condom' == powerup then @shieldUp()
+    if 'pill'   == powerup then @buildWall()
     $(el).attr 'src', 'assets/images/icon-blank.gif'
 
   shieldUp: () ->
@@ -102,6 +102,7 @@ class Level
     @buildWall()
 
   update: ->
+    @game.frameCount++
 
     # Rotate cell wall
     x = @input.position.x
@@ -110,6 +111,19 @@ class Level
     cy = @world.centerY
     angle = Math.atan2(y - cy, x - cx) * (180 / Math.PI)
     @game.bricks.angle = angle
+
+    # First popup message
+    if 0 == @game.step and 80 < @game.frameCount
+      @game.step = 1
+      if @game.device.desktop
+        console.log 'Popup: Move your mouse to rotate the cell wall.'
+      else
+        console.log 'Popup: Swipe in a circle to rotate the cell wall.'
+
+    # Ninth popup message
+    else if 9 == @game.step and 80 < @game.frameCount
+      @game.step = 10
+      console.log 'Popup: Oh no! The supply of condoms and pills has run out, this will be really challenging...'
 
     # Remove pathogens which have traversed the screen
     if @isPortrait
@@ -150,7 +164,7 @@ class Level
       @physics.arcade.collide @pathogens, @nucleus    , @pathogenHitNucleus, null, @
       @physics.arcade.collide @pathogens, @game.bricks, @pathogenHitBrick  , null, @
 
-      # Possibly introduce a new pathogen
+      # Possibly add a new green or blue virus
       if not @rnd.between 0, 1 / @opt.spawnRate # call `newPathogen()` if `between()` returns zero
         if @isPortrait
           pathogen = @pathogens.create 0, @rnd.between(0, @world.height)
@@ -166,6 +180,24 @@ class Level
         pathogen.scale.setTo 2, 2
         pathogen.smoothed = false
 
+        # Possibly convert the pathogen to an HIV virus
+        if 3 <= @game.step and 4 != @game.step and not @rnd.between 0, 3
+          pathogen.loadTexture 'hiv-virus-main'
+          pathogen.name = 'hiv'
+          pathogen.body.velocity =
+            x: 40
+            y: 40
+          if 3 == @game.step
+            console.log "Popup: Watch out for the HIV virus: it will infect your cell if it touches!"
+            @game.step = 4
+            if @isPortrait
+              pathogen.y = @world.centerY - 20
+            else
+              pathogen.x = @world.centerX - 20
+          if 5 == @game.step
+            console.log "Popup: Defend the cell against HIV by clicking one of the condom buttons."
+            @game.step = 6
+
 
   pathogenHitNucleus: ->
     @game.state.start @opt.gameOver ? 'gameOver'
@@ -177,12 +209,33 @@ class Level
       @game.score += 10
       $ '#score'
         .text @game.score
+
+      # Second or third popup message (on level 1)
+      if 1 == @game.step or 2 == @game.step
+        @game.step = if 1 == @game.step then 2 else 3
+        console.log "Popup: Well done! #{brick.name} sections of the cell wall defend against #{pathogen.name} viruses."
+
+      # Eighth popup message (on level 3)
+      else if 7 == @game.step
+        @game.step = 8
+        console.log "Popup: When your cell wall gets badly damaged, click on an antiretroviral pill."
+
+    else if 6 == @game.step and 'hiv' == pathogen.name
+      console.log "Anim: cell infection."
+      @game.step = 7
+      @game.state.start 'levelTwoComplete'
+
     else
       brick.kill()
 
+      # Second or third popup message (on level 1)
+      if 1 == @game.step or 2 == @game.step
+        @game.step = if 1 == @game.step then 2 else 3
+        console.log "Popup: Oh no! #{pathogen.name} viruses destroy #{pathogen.name} sections of the cell wall."
+
     pathogen.kill()
 
-    if @game.score >= @opt.complete
+    if @opt.complete and @game.score >= @opt.complete # set `@opt.complete` to zero to make a level which can never be completed
       @game.state.start @opt.next
 
 

@@ -11,9 +11,5 @@ class Splash extends Message
       button: 'PLAY'
       next: 'levelOne'
 
-  create: ->
-    super
-    @game.score = 0
-
 module.exports = Splash
 

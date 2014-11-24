@@ -10,4 +10,9 @@ class LevelFour extends Level
       gameOver  : 'levelFourGameOver'
       powerups  : ['blank','blank','blank','blank','blank','blank']
 
+  create: ->
+    super
+    @game.step = 9
+    @game.frameCount = 0 # time a short delay before explaining missing powerups
+
 module.exports = LevelFour

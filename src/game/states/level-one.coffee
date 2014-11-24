@@ -1,3 +1,4 @@
+$ = require 'jquery'
 Level = require '../classes/level'
 
 class LevelOne extends Level
@@ -9,5 +10,14 @@ class LevelOne extends Level
       complete  : 100
       next      : 'levelOneComplete'
       powerups  : ['condom','condom','pill','pill','blank','blank']
+
+  create: ->
+    super
+    @game.step = 0
+    @game.score = 0
+    @game.frameCount = 0
+    $ '#score'
+      .text @game.score
+
 
 module.exports = LevelOne
