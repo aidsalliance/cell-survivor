@@ -8,5 +8,6 @@ class LevelFour extends Level
       spawnRate : .3
       complete  : 0
       gameOver  : 'levelFourGameOver'
+      powerups  : ['blank','blank','blank','blank','blank','blank']
 
 module.exports = LevelFour

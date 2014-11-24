@@ -1,27 +1,57 @@
+$        = require 'jquery'
 Pathogen = require '../classes/pathogen'
 Brick    = require '../classes/brick'
 
 class Level
   constructor: (@opt) ->
 
-  create: ->
+  createVeinWall: (name, angle, x, y) ->
+    @veinWall = @add.tileSprite 0, 48, 15, 600, name
+    @veinWall.angle = angle
+    @veinWall.x = x
+    @veinWall.y = y
+    @veinWall.autoScroll 0, @opt.slowest / 4
+    @veinWall.scale.setTo 2, 2
 
-    @background = @add.tileSprite 0, 0, 600, 600, 'cellfield'
+  create: ->
+    $(window).trigger 'resize' # ensure ‘onResize()’ is run
+
+    # Add powerups, if specified
+    for powerup, i in @opt.powerups ?= [] # conditional assignment
+      if !powerup then continue # skip a `null` powerup
+      $ "#powerup-#{i} img"
+        .attr 'src', "assets/images/icon-#{powerup}.gif"
+
+
+
+    @isPortrait = $ '.wrap'
+      .hasClass 'portrait'
+
+    if @isPortrait
+      @game.world.setBounds 0, 0, 696, 600
+      @game.camera.x = 48
+      @background = @add.tileSprite 48, 0, 600, 600, 'cellfield'
+      @createVeinWall 'vein-wall-header', -90, 648, 0
+      @createVeinWall 'vein-wall-footer', -90, 648, 570
+      @endZone = @world.width - 24 # width of pathogen
+    else
+      @game.world.setBounds 0, 0, 600, 696
+      @game.camera.y = 48
+      @background = @add.tileSprite 0, 48, 600, 600, 'cellfield'
+      @createVeinWall 'vein-wall-header', 0,   0, 0
+      @createVeinWall 'vein-wall-footer', 0, 570, 0
+      @endZone = @world.height - 24 # height of pathogen
+
     @background.scale.setTo 6, 6
 
-    # x = @game.width / 2
-    # y = @game.height / 2
-    # @player = @add.sprite x, y, 'player'
-    # @player.anchor.setTo 0.5, 0.5
-    # @input.onDown.add @onInputDown, this
-    @scoreText = @game.add.text(32, 550, 'score: ' + @game.score, { font: "20px Arial", fill: "#ffffff", align: "left" });
+    # @scoreText = @game.add.text(32, 550, 'score: ' + @game.score, { font: "20px Arial", fill: "#ffffff", align: "left" });
 
     @nucleus = @add.sprite @world.centerX, @world.centerY, 'nucleus-main'
     @physics.enable @nucleus, Phaser.Physics.ARCADE
     @nucleus.smoothed = false
     @nucleus.scale.setTo 3, 3
     @nucleus.anchor.setTo 0.5, 0.5
-    @nucleus.body.collideWorldBounds = true
+    # @nucleus.body.collideWorldBounds = true
     @nucleus.body.bounce.set 1
     @nucleus.body.immovable = true
 
@@ -69,13 +99,32 @@ class Level
     @physics.arcade.collide @pathogens, @bricks , @pathogenHitBrick, null, @
 
     if not @rnd.between 0, 1 / @opt.spawnRate # call `newPathogen()` if `between()` returns zero
-      pathogen = @pathogens.create @rnd.between(0, @world.width), 0
+      if @isPortrait
+        pathogen = @pathogens.create 0, @rnd.between(0, @world.height)
+        pathogen.body.velocity =
+          x: @game.rnd.between @opt.slowest, @opt.fastest
+          y: @game.rnd.between -@opt.fastest, @opt.fastest
+      else
+        pathogen = @pathogens.create @rnd.between(0, @world.width), 0
+        pathogen.body.velocity =
+          x: @game.rnd.between -@opt.fastest, @opt.fastest
+          y: @game.rnd.between @opt.slowest, @opt.fastest
+
       pathogen.scale.setTo 2, 2
       pathogen.smoothed = false
-      pathogen.body.velocity =
-	      x: @game.rnd.between -@opt.fastest, @opt.fastest
-	      y: @game.rnd.between @opt.slowest, @opt.fastest
 
+    # Remove pathogens which have traversed the screen
+    if @isPortrait
+      @pathogens.forEach( # callback, callbackContext, checkExists
+        (pathogen) =>
+          if pathogen?.x >= @endZone then pathogen.destroy()
+          # console.log 'ok!', @endZone, pathogen?.x
+      )
+    else
+      @pathogens.forEach( # callback, callbackContext, checkExists
+        (pathogen) =>
+          if pathogen?.y >= @endZone then pathogen.destroy()
+      )
 
 
   pathogenHitNucleus: ->
@@ -86,11 +135,12 @@ class Level
 
     if pathogen.name == brick.name
       @game.score += 10
-      @scoreText.text = 'score: ' + @game.score;
+      $ '#score'
+        .text @game.score
     else
-      brick.kill();
+      brick.kill()
 
-    pathogen.kill();
+    pathogen.kill()
 
     if @game.score >= @opt.complete
       @game.state.start @opt.next

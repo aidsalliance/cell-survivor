@@ -1,3 +1,5 @@
+$ = require 'jquery'
+
 class Message
   @titleTxt  = null
   @textTxt   = null
@@ -6,8 +8,10 @@ class Message
   constructor: (@opt) ->
 
   create: ->
+    $(window).trigger 'resize' # ensure ‘onResize()’ is run
+
     x = @game.width / 2
-    y = 30
+    y = 50
 
     @titleTxt = @add.bitmapText x, y, 'minecraftia', @opt.title
     @titleTxt.align = 'center'
