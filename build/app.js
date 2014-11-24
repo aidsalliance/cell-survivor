@@ -307,13 +307,13 @@ Message = (function() {
     this.titleTxt.align = 'center';
     this.titleTxt.x = this.game.width / 2 - this.titleTxt.textWidth / 2;
     y = y + this.titleTxt.height + 50;
-    regex = '.{1,' + 40 + '}(\\s|$)' + (false ? '|.{' + 40 + '}|.+$' : '|\\S+?(\\s|$)');
+    regex = '.{1,' + 45 + '}(\\s|$)' + (false ? '|.{' + 45 + '}|.+$' : '|\\S+?(\\s|$)');
     _ref = this.opt.text;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       section = _ref[_i];
       text = section.match(RegExp(regex, 'g')).join('\n');
       this.textTxt = this.game.add.text(x, y, text, {
-        font: "30px Arial",
+        font: "24px Arial",
         fill: "#ffffff",
         align: "center"
       });
@@ -492,7 +492,7 @@ GameOver = (function(_super) {
   function GameOver() {
     GameOver.__super__.constructor.call(this, {
       title: 'Game Over',
-      text: ['AIDS-related illnesses are the second leading cause of death among adolescents aged 10–19 years globally and the first in Africa.', 'Contracting HIV need not be ‘Game Over’ but a comprehensive package of prevention, treatment, care and support is needed for this overlooked age group.', 'To find out more, visit www.aidsalliance.org'],
+      text: ['Contracting HIV need not be ‘Game Over’ but prevention, treatment, and care is needed for young people who too often are overlooked.', 'For more information about how the International HIV/AIDS Alliance is supporting young people, visit www.aidsalliance.org'],
       button: 'PLAY AGAIN',
       next: 'levelOne'
     });
@@ -523,7 +523,7 @@ LevelFourGameOver = (function(_super) {
   function LevelFourGameOver() {
     LevelFourGameOver.__super__.constructor.call(this, {
       title: 'Game Over',
-      text: ['Not easy was it with no extra help?', 'Now imagine if you’re a young person living with HIV in a country where access to information and services to keep you healthy and fulfilled are either limited or non-existent…', 'To find out more, visit www.aidsalliance.org'],
+      text: ['Not easy was it with no extra help?', 'Now imagine if you’re young and live with HIV in a country where access to information and help to keep you healthy are very limited.', 'For more information about how the International HIV/AIDS Alliance is supporting young people, visit www.aidsalliance.org'],
       button: 'PLAY AGAIN',
       next: 'levelOne'
     });
@@ -582,7 +582,7 @@ LevelOneComplete = (function(_super) {
   function LevelOneComplete() {
     LevelOneComplete.__super__.constructor.call(this, {
       title: 'Level 1 Complete!',
-      text: ['Feeling under the weather?  In some countries if you’re under 19 you may not even be able to take an HIV test to know your status.', 'There are an estimated 2.1 million adolescents living with HIV – many still don’t know that they are and so are not yet on life-saving treatment.'],
+      text: ['Feeling under the weather? In some countries if you’re under 19 you may not even be able to take an HIV test to know whether you carry the virus.', 'There are an estimated 2.1 million young people living with HIV – many don’t know that they have the virus and are not  yet on life-saving treatment.'],
       button: 'START LEVEL 2',
       next: 'levelTwo'
     });
@@ -636,7 +636,7 @@ LevelThreeComplete = (function(_super) {
   function LevelThreeComplete() {
     LevelThreeComplete.__super__.constructor.call(this, {
       title: 'Level 3 Complete!',
-      text: ['Think that was hard?  Imagine having to take twice daily medication that consists of lots of very large pills, tastes horrible and can cause nasty side effects.', 'That’s the reality for young people living with HIV who are on antiretroviral treatment.'],
+      text: ['Think that was hard? Imagine having to take medication twice a day that consists of lots of very large pills, tastes horrible and can cause nasty side effects.', 'That’s the reality for many young people living with HIV who are on treatment.', 'Ready for the next level?'],
       button: 'START LEVEL 4',
       next: 'levelFour'
     });
@@ -661,9 +661,9 @@ LevelThree = (function(_super) {
 
   function LevelThree() {
     LevelThree.__super__.constructor.call(this, {
-      slowest: 100,
-      fastest: 200,
-      spawnRate: .2,
+      slowest: 80,
+      fastest: 160,
+      spawnRate: .1,
       complete: 400,
       next: 'levelThreeComplete',
       powerups: ['condom', 'condom', 'condom', 'pill', 'pill', 'pill']
@@ -690,7 +690,7 @@ LevelTwoComplete = (function(_super) {
   function LevelTwoComplete() {
     LevelTwoComplete.__super__.constructor.call(this, {
       title: 'Level 2 Complete!',
-      text: ['Well done for using your condoms!  If you’re a young person living somewhere like Bangladesh or Ethiopia, condoms may not be readily available.', 'An estimated 13 billion condoms per year are needed to help halt the spread of HIV and other sexually transmitted infections. The actual number falls far short…'],
+      text: ['Well done for using your condoms! If you’re a young person living somewhere like Burundi or Bangladesh, condoms may not be readily available.', 'An estimated 13 billion condoms per year are needed to help halt the spread of HIV and other sexually transmitted infections. The actual number falls far short…', 'Contracting HIV is not ‘Game Over’. Now move on to the next level to try your hand at being a viral survivor.'],
       button: 'START LEVEL 3',
       next: 'levelThree'
     });
@@ -802,7 +802,7 @@ Splash = (function(_super) {
   function Splash() {
     Splash.__super__.constructor.call(this, {
       title: 'Cell Survivor',
-      text: ['A CD4 cell is going about its daily business of protecting the body from infection.', 'All of a sudden it comes under attack from HIV…'],
+      text: ['A cell is going about its daily business of protecting the body from intruders.', '[the following text will pop up DURING level 1:] All of a sudden it comes under attack from HIV…'],
       button: 'PLAY',
       next: 'levelOne'
     });
