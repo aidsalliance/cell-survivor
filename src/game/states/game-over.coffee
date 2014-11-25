@@ -11,9 +11,5 @@ class GameOver extends Message
       button: 'PLAY AGAIN'
       next: 'levelOne'
 
-  create: ->
-    super
-    @game.score = 0
-
 module.exports = GameOver
 

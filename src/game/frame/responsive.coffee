@@ -22,10 +22,20 @@ resizePortrait = (width, height) ->
     .css
       width:  width
       height: width
+  $ '#popup-wrap'
+    .css
+      top: (height - width) / 2 + 40
+      left: 0
+      width: '100%'
+  $ '#popup-inner'
+    .css
+      width: '80%'
   $ '.wrap .frame >div img'
     .css
       width: if 350 > width then 48 else 54 # 320px width
-
+  $ '.bold-bitmap'
+    .css
+      'font-size': width / 25
 
 
 resizeLandscape = (width, height) ->
@@ -40,10 +50,21 @@ resizeLandscape = (width, height) ->
     .css
       width:  height
       height: height
+  $ '#popup-wrap'
+    .css
+      top: height * .1 # 10%
+      left: (width - height) / 2 + (height * .1)
+      width: height * .8
+  $ '#popup-inner'
+    .css
+      width: height * .8 # 80%
   $ '.wrap .frame >div img'
     .css
       width: '100%'
-  
+  $ '.bold-bitmap'
+    .css
+      'font-size': height / 25
+
 
 # Call our resize function each time the window dimensions change @todo ensure that mobile orientation change fires this event
 $(window).resize(onResize)
