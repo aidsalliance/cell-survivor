@@ -161,6 +161,15 @@ __8.13__  bumped version to '0.1.7-3', track new files, and commit
 __8.14__  feature finish, release 0.1.8, pushed to GitHub  
 
 
+9. Added animation, soundtrack, and sound effects
+-------------------------------------------------
+
+__9.1__   `$ git flow feature start animation`  
+__9.2__   simple animation when HIV infects the nucleus  
+__9.3__   `explode()` method works on viruses, bricks, and the nucleus  
+__9.4__   bumped version to '0.1.9-1', tracked new files, and commit  
+
+
 Releases
 --------
 
@@ -170,10 +179,8 @@ Releases
 + 0.1.0    score, levels, and CNAME, renamed game to ‘Cell Survivor’
 + 0.1.4    some real graphics
 + 0.1.6    vein walls, frame icons, responsive layout
-+ 0.1.7-1  basic condom-shield and pill graphics and functionality
-+ 0.1.7-2  with HIV and start of popup-text steps
-+ 0.1.7-3  popup messages and improved playability
 + 0.1.8    powerups and popups
++ 0.1.9-1  infection and explosion animations
 
 
 

@@ -14,6 +14,8 @@ class Level
     @veinWall.scale.setTo 2, 2
 
   powerup: (el) ->
+    if not ({ 'levelTwo':1, 'levelThree':1, 'levelFour':1  })[@game.state.current] then return
+    if @game.paused then return
     # console.log @, el, $(el).parent().attr('id'),
     powerup = ( $(el).attr 'src' ).split('-')[1]?.split('.')[0]
     if 'condom' == powerup then @shieldUp()
@@ -98,7 +100,7 @@ class Level
 
     @background.scale.setTo 6, 6
 
-    @nucleus = @add.sprite @world.centerX, @world.centerY, 'nucleus-main'
+    @nucleus = @add.sprite @world.centerX, @world.centerY, if @game.infected then 'nucleus-infected-1' else 'nucleus-main'
     @physics.enable @nucleus, Phaser.Physics.ARCADE
     @nucleus.smoothed = false
     @nucleus.scale.setTo 3, 3
@@ -154,7 +156,6 @@ class Level
             if @opt.hivExit and 'hiv' == pathogen.name
               @game.state.start @opt.next
             pathogen.destroy()
-          # console.log 'ok!', @endZone, pathogen?.x
       )
     else
       @pathogens.forEach( # callback, callbackContext, checkExists
@@ -176,13 +177,14 @@ class Level
       # Destroy all pathogens which touch the shield, or are inside it
       @pathogens.forEach(
         (pathogen) =>
-          dx = Math.abs pathogen?.x - @world.centerX
+          if not pathogen? then return
+          dx = Math.abs pathogen.x - @world.centerX
           if 160 < dx then return # cannot be inside shield
-          dy = Math.abs pathogen?.y - @world.centerY
+          dy = Math.abs pathogen.y - @world.centerY
           if 160 < dy then return # cannot be inside shield
           hyp = Math.sqrt dx * dx + dy * dy
           if 160 < hyp then return # skirted around corner
-          pathogen?.destroy()
+          @explode pathogen
       )
 
     else
@@ -239,7 +241,10 @@ class Level
 
 
   pathogenHitNucleus: ->
-    @game.state.start @opt.gameOver ? 'gameOver'
+    @explode @nucleus
+    setTimeout (=>
+      @game.state.start @opt.gameOver ? 'gameOver')
+      , 1000
 
 
   pathogenHitBrick: (pathogen, brick) ->
@@ -256,12 +261,27 @@ class Level
         @showPopup "Well done! #{brick.name} sections of the cell wall defend against #{pathogen.name} viruses."
 
     else if 6 == @game.step and 'hiv' == pathogen.name
-      @showPopup "[cell infection animation to happen now]"
+      @game.paused = true
+      @game.infected = true
       @game.step = 7
-      @game.state.start 'levelTwoComplete'
+      setTimeout (=>
+        @nucleus.loadTexture 'nucleus-infected-1')
+        , 400
+      setTimeout (=>
+        @nucleus.loadTexture 'nucleus-infected-2')
+        , 800
+      setTimeout (=>
+        @nucleus.loadTexture 'nucleus-infected-3')
+        , 1200
+      setTimeout (=>
+        @game.paused = false
+        @showPopup "Now the cell has been infected with HIV, but it’s not ‘Game Over’..."
+        @game.state.start 'levelTwoComplete')
+        , 1600
+      return # don’t destroy the HIV 
 
     else
-      brick.kill()
+      @explode brick
 
       # Second or third popup message (on level 1)
       if not @game.hasLostWall and (1 == @game.step or 2 == @game.step)
@@ -274,13 +294,37 @@ class Level
         @game.step = 8
         @showPopup 'Click on an antiretroviral pill to repair the cell wall.'
 
-    pathogen.kill()
+    @explode pathogen
 
     if @opt.complete and @game.score >= @relativeComplete # set `@opt.complete` to zero to make a level which can not be completed by reaching a certain score
       @game.state.start @opt.next
 
+  explode: (sprite) ->
+    if      'hep-c-virus-main' == sprite.key
+      keyPrefix = 'hep-c-virus-explosion-'
+    else if 'hep-c-brick-main' == sprite.key
+      keyPrefix = 'hep-c-brick-explosion-'
+    else if 'herpesviridae-virus-main' == sprite.key
+      keyPrefix = 'herpesviridae-virus-explosion-'
+    else if 'herpesviridae-brick-main' == sprite.key
+      keyPrefix = 'herpesviridae-brick-explosion-'
+    else if 'hiv-virus-main' == sprite.key
+      keyPrefix = 'hiv-virus-explosion-'
+    else if 'nucleus-main' == sprite.key
+      keyPrefix = 'nucleus-infected-'
+    if !keyPrefix then return
+    setTimeout (->
+      sprite.loadTexture keyPrefix + '1')
+      , 100
+    setTimeout (->
+      sprite.loadTexture keyPrefix + '2')
+      , 300
+    setTimeout (->
+      sprite.destroy() )
+      , 500
+
+
   onDown: ->
-    console.log 123
     @game.paused = false
     $ '#popup-wrap'
       .fadeOut()

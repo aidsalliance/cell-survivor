@@ -29,7 +29,12 @@ class Preloader
     @load.image 'herpesviridae-virus-explosion-2', 'assets/images/herpesviridae-virus-explosion-2.gif'
     @load.image 'herpesviridae-virus-main'       , 'assets/images/herpesviridae-virus-main.gif'
     @load.image 'hiv-virus-main'                 , 'assets/images/hiv-virus-main.gif'
+    @load.image 'hiv-virus-explosion-1'          , 'assets/images/hiv-virus-explosion-1.gif'
+    @load.image 'hiv-virus-explosion-2'          , 'assets/images/hiv-virus-explosion-2.gif'
     @load.image 'nucleus-main'                   , 'assets/images/nucleus-main.gif'
+    @load.image 'nucleus-infected-1'             , 'assets/images/nucleus-infected-1.gif'
+    @load.image 'nucleus-infected-2'             , 'assets/images/nucleus-infected-2.gif'
+    @load.image 'nucleus-infected-3'             , 'assets/images/nucleus-infected-3.gif'
 
   create: ->
     @asset.cropEnabled = false

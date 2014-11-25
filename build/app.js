@@ -146,6 +146,16 @@ Level = (function() {
 
   Level.prototype.powerup = function(el) {
     var powerup, _ref;
+    if (!{
+      'levelTwo': 1,
+      'levelThree': 1,
+      'levelFour': 1
+    }[this.game.state.current]) {
+      return;
+    }
+    if (this.game.paused) {
+      return;
+    }
     powerup = (_ref = ($(el).attr('src')).split('-')[1]) != null ? _ref.split('.')[0] : void 0;
     if ('condom' === powerup) {
       this.shieldUp();
@@ -246,7 +256,7 @@ Level = (function() {
       this.endZone = this.world.height - 36;
     }
     this.background.scale.setTo(6, 6);
-    this.nucleus = this.add.sprite(this.world.centerX, this.world.centerY, 'nucleus-main');
+    this.nucleus = this.add.sprite(this.world.centerX, this.world.centerY, this.game.infected ? 'nucleus-infected-1' : 'nucleus-main');
     this.physics.enable(this.nucleus, Phaser.Physics.ARCADE);
     this.nucleus.smoothed = false;
     this.nucleus.scale.setTo(3, 3);
@@ -324,11 +334,14 @@ Level = (function() {
       return this.pathogens.forEach((function(_this) {
         return function(pathogen) {
           var dx, dy, hyp;
-          dx = Math.abs((pathogen != null ? pathogen.x : void 0) - _this.world.centerX);
+          if (pathogen == null) {
+            return;
+          }
+          dx = Math.abs(pathogen.x - _this.world.centerX);
           if (160 < dx) {
             return;
           }
-          dy = Math.abs((pathogen != null ? pathogen.y : void 0) - _this.world.centerY);
+          dy = Math.abs(pathogen.y - _this.world.centerY);
           if (160 < dy) {
             return;
           }
@@ -336,7 +349,7 @@ Level = (function() {
           if (160 < hyp) {
             return;
           }
-          return pathogen != null ? pathogen.destroy() : void 0;
+          return _this.explode(pathogen);
         };
       })(this));
     } else {
@@ -396,8 +409,13 @@ Level = (function() {
   };
 
   Level.prototype.pathogenHitNucleus = function() {
-    var _ref;
-    return this.game.state.start((_ref = this.opt.gameOver) != null ? _ref : 'gameOver');
+    this.explode(this.nucleus);
+    return setTimeout(((function(_this) {
+      return function() {
+        var _ref;
+        return _this.game.state.start((_ref = _this.opt.gameOver) != null ? _ref : 'gameOver');
+      };
+    })(this)), 1000);
   };
 
   Level.prototype.pathogenHitBrick = function(pathogen, brick) {
@@ -410,11 +428,34 @@ Level = (function() {
         this.showPopup("Well done! " + brick.name + " sections of the cell wall defend against " + pathogen.name + " viruses.");
       }
     } else if (6 === this.game.step && 'hiv' === pathogen.name) {
-      this.showPopup("[cell infection animation to happen now]");
+      this.game.paused = true;
+      this.game.infected = true;
       this.game.step = 7;
-      this.game.state.start('levelTwoComplete');
+      setTimeout(((function(_this) {
+        return function() {
+          return _this.nucleus.loadTexture('nucleus-infected-1');
+        };
+      })(this)), 400);
+      setTimeout(((function(_this) {
+        return function() {
+          return _this.nucleus.loadTexture('nucleus-infected-2');
+        };
+      })(this)), 800);
+      setTimeout(((function(_this) {
+        return function() {
+          return _this.nucleus.loadTexture('nucleus-infected-3');
+        };
+      })(this)), 1200);
+      setTimeout(((function(_this) {
+        return function() {
+          _this.game.paused = false;
+          _this.showPopup("Now the cell has been infected with HIV, but it’s not ‘Game Over’...");
+          return _this.game.state.start('levelTwoComplete');
+        };
+      })(this)), 1600);
+      return;
     } else {
-      brick.kill();
+      this.explode(brick);
       if (!this.game.hasLostWall && (1 === this.game.step || 2 === this.game.step)) {
         this.game.step = 1 === this.game.step ? 2 : 3;
         this.game.hasLostWall = true;
@@ -424,14 +465,42 @@ Level = (function() {
         this.showPopup('Click on an antiretroviral pill to repair the cell wall.');
       }
     }
-    pathogen.kill();
+    this.explode(pathogen);
     if (this.opt.complete && this.game.score >= this.relativeComplete) {
       return this.game.state.start(this.opt.next);
     }
   };
 
+  Level.prototype.explode = function(sprite) {
+    var keyPrefix;
+    if ('hep-c-virus-main' === sprite.key) {
+      keyPrefix = 'hep-c-virus-explosion-';
+    } else if ('hep-c-brick-main' === sprite.key) {
+      keyPrefix = 'hep-c-brick-explosion-';
+    } else if ('herpesviridae-virus-main' === sprite.key) {
+      keyPrefix = 'herpesviridae-virus-explosion-';
+    } else if ('herpesviridae-brick-main' === sprite.key) {
+      keyPrefix = 'herpesviridae-brick-explosion-';
+    } else if ('hiv-virus-main' === sprite.key) {
+      keyPrefix = 'hiv-virus-explosion-';
+    } else if ('nucleus-main' === sprite.key) {
+      keyPrefix = 'nucleus-infected-';
+    }
+    if (!keyPrefix) {
+      return;
+    }
+    setTimeout((function() {
+      return sprite.loadTexture(keyPrefix + '1');
+    }), 100);
+    setTimeout((function() {
+      return sprite.loadTexture(keyPrefix + '2');
+    }), 300);
+    return setTimeout((function() {
+      return sprite.destroy();
+    }), 500);
+  };
+
   Level.prototype.onDown = function() {
-    console.log(123);
     this.game.paused = false;
     return $('#popup-wrap').fadeOut();
   };
@@ -812,6 +881,7 @@ LevelOne = (function(_super) {
     this.game.frameCount = 0;
     this.game.hasDefended = false;
     this.game.hasLostWall = false;
+    this.game.infected = false;
     return $('#score').text(this.game.score);
   };
 
@@ -863,7 +933,7 @@ LevelThree = (function(_super) {
       slowest: 70,
       fastest: 120,
       spawnRate: .05,
-      complete: 400,
+      complete: 600,
       next: 'levelThreeComplete',
       powerups: ['condom', 'condom', 'condom', 'pill', 'pill', 'pill']
     });
@@ -969,7 +1039,12 @@ Preloader = (function() {
     this.load.image('herpesviridae-virus-explosion-2', 'assets/images/herpesviridae-virus-explosion-2.gif');
     this.load.image('herpesviridae-virus-main', 'assets/images/herpesviridae-virus-main.gif');
     this.load.image('hiv-virus-main', 'assets/images/hiv-virus-main.gif');
-    return this.load.image('nucleus-main', 'assets/images/nucleus-main.gif');
+    this.load.image('hiv-virus-explosion-1', 'assets/images/hiv-virus-explosion-1.gif');
+    this.load.image('hiv-virus-explosion-2', 'assets/images/hiv-virus-explosion-2.gif');
+    this.load.image('nucleus-main', 'assets/images/nucleus-main.gif');
+    this.load.image('nucleus-infected-1', 'assets/images/nucleus-infected-1.gif');
+    this.load.image('nucleus-infected-2', 'assets/images/nucleus-infected-2.gif');
+    return this.load.image('nucleus-infected-3', 'assets/images/nucleus-infected-3.gif');
   };
 
   Preloader.prototype.create = function() {

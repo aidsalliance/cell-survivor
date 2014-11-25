@@ -6,7 +6,7 @@ class LevelThree extends Level
       slowest   : 70
       fastest   : 120
       spawnRate : .05
-      complete  : 400 # will be added to the current score in `create()`
+      complete  : 600 # will be added to the current score in `create()`
       next      : 'levelThreeComplete'
       powerups  : ['condom','condom','condom','pill','pill','pill']
 
