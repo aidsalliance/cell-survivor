@@ -28,7 +28,7 @@ class Preloader
     @load.image 'herpesviridae-virus-explosion-1', 'assets/images/herpesviridae-virus-explosion-1.gif'
     @load.image 'herpesviridae-virus-explosion-2', 'assets/images/herpesviridae-virus-explosion-2.gif'
     @load.image 'herpesviridae-virus-main'       , 'assets/images/herpesviridae-virus-main.gif'
-    @load.image 'hiv-v1_03'                      , 'assets/images/hiv-v1_03.gif'
+    @load.image 'hiv-virus-main'                 , 'assets/images/hiv-virus-main.gif'
     @load.image 'nucleus-main'                   , 'assets/images/nucleus-main.gif'
 
   create: ->

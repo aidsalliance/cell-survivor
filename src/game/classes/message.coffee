@@ -32,7 +32,7 @@ class Message
     @buttonTxt.align = 'center'
     @buttonTxt.x = @game.width / 2 - @buttonTxt.textWidth / 2
 
-    @input.onDown.add @onDown, this
+    @input.onDown.add @onDown, @
 
   update: ->
 

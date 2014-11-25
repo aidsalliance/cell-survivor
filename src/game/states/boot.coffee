@@ -9,5 +9,12 @@ class Boot
   create: ->
     @game.input.maxPointers = 1
     @game.state.start 'preloader'
+    $ '#popup-dismiss'
+      .on 'click', =>
+        @game.paused = false
+        $ '#popup-wrap'
+          .fadeOut()
+    $ '#popup-wrap'
+      .hide()
 
 module.exports = Boot

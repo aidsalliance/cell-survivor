@@ -1,8 +1,8 @@
 class Pathogen extends Phaser.Sprite
   constructor: (game, x, y) ->
     spec = game.rnd.pick [
-        { key:'hep-c-virus-main'        , name:'hep-c'        , anim:['pathogen_1.png', 'pathogen_4.png'] }
-      , { key:'herpesviridae-virus-main', name:'herpesviridae', anim:['pathogen_2.png', 'pathogen_5.png'] }
+        { key:'hep-c-virus-main'        , name:'green', anim:['pathogen_1.png', 'pathogen_4.png'] }
+      , { key:'herpesviridae-virus-main', name:'blue' , anim:['pathogen_2.png', 'pathogen_5.png'] }
     ]
     super game, x, y, spec.key
 

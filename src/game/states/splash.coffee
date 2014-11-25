@@ -5,15 +5,10 @@ class Splash extends Message
     super
       title: 'Cell Survivor'
       text: [
-        'A cell is going about its daily business of protecting the body from intruders.'
-        '[the following text will pop up DURING level 1:] All of a sudden it comes under attack from HIV…'
+        'A cell is going about its daily business, protecting the body from intruders...'
       ]
       button: 'PLAY'
       next: 'levelOne'
-
-  create: ->
-    super
-    @game.score = 0
 
 module.exports = Splash
 

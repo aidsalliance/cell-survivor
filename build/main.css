@@ -118,6 +118,47 @@ html, body {
 #score {
   position: absolute;
   padding: 14px 0 0 3px;
-  font: 31px 'Press Start 2P', cursive;
+}
+
+/* line 112, ../src/sass/main.scss */
+#popup-wrap {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+}
+/* line 116, ../src/sass/main.scss */
+#popup-wrap #popup-inner {
+  display: inline-block;
+  width: 500px;
+  padding-bottom: 20px;
+  outline: 1px solid #000;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+/* line 122, ../src/sass/main.scss */
+#popup-wrap #popup-inner #popup-dismiss {
+  text-align: right;
+}
+/* line 124, ../src/sass/main.scss */
+#popup-wrap #popup-inner #popup-dismiss span {
+  display: inline-block;
+  padding: 10px 10px 0 10px;
+  font-size: 150%;
+  cursor: pointer;
+  transition: color .2s;
+}
+/* line 130, ../src/sass/main.scss */
+#popup-wrap #popup-inner #popup-dismiss span:hover {
+  color: #ed1c24;
+}
+/* line 135, ../src/sass/main.scss */
+#popup-wrap #popup-inner #popup-text {
+  margin-top: -2%;
+  padding: 0 20px;
+}
+
+/* line 142, ../src/sass/main.scss */
+.bold-bitmap {
+  font: 32px 'Press Start 2P', cursive;
+  line-height: 1.4;
   text-shadow: #000 0 4px;
 }
