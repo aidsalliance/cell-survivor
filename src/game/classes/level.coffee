@@ -44,7 +44,7 @@ class Level
     for angle in [0..19]
       opposite = Math.sin(angle * Math.PI / 10) * 110
       adjacent = Math.cos(angle * Math.PI / 10) * 110
-      spec = if (angle / 6) % 2 > .7 then { key:'hep-c-brick-main', name:'hep-c' } else { key:'herpesviridae-brick-main', name:'herpesviridae' }
+      spec = if (angle / 6) % 2 > .7 then { key:'hep-c-brick-main', name:'green' } else { key:'herpesviridae-brick-main', name:'blue' }
       brick = @game.bricks.create opposite, adjacent, spec.key
       brick.name = spec.name
       brick.scale.setTo 2, 2
@@ -53,8 +53,17 @@ class Level
       brick.anchor.setTo .5, .5 #center
       brick.body.immovable = true
 
+  showPopup: (msg) ->
+    @game.paused = true
+    $ '#popup-text'
+      .html msg + '<br><br>'
+    $ '#popup-wrap'
+      .fadeIn()
+
   create: ->
     $(window).trigger 'resize' # ensure ‘onResize()’ is run
+
+    @relativeComplete = @game.score + @opt.complete
 
     # Add powerups, if specified
     self = @
@@ -65,24 +74,27 @@ class Level
         .off 'click', -> self.powerup(@) # remove event listener, if present
         .on  'click', -> self.powerup(@)
 
+    delete @game.shieldTimer # prevent previously active shield from continuing
+
+    @input.onDown.add @onDown, @
 
     @isPortrait = $ '.wrap'
       .hasClass 'portrait'
 
     if @isPortrait
-      @game.world.setBounds 0, 0, 696, 600
-      @game.camera.x = 48
-      @background = @add.tileSprite 48, 0, 600, 600, 'cellfield'
-      @createVeinWall 'vein-wall-header', -90, 648, 0
-      @createVeinWall 'vein-wall-footer', -90, 648, 570
-      @endZone = @world.width - 24 # width of pathogen
+      @game.world.setBounds 0, 0, 744, 600
+      @game.camera.x = 72
+      @background = @add.tileSprite 72, 0, 600, 600, 'cellfield'
+      @createVeinWall 'vein-wall-header', -90, 672, 0
+      @createVeinWall 'vein-wall-footer', -90, 672, 570
+      @endZone = @world.width - 36 # width of widest pathogen
     else
-      @game.world.setBounds 0, 0, 600, 696
-      @game.camera.y = 48
-      @background = @add.tileSprite 0, 48, 600, 600, 'cellfield'
+      @game.world.setBounds 0, 0, 600, 744
+      @game.camera.y = 72
+      @background = @add.tileSprite 0, 72, 600, 600, 'cellfield'
       @createVeinWall 'vein-wall-header', 0,   0, 0
       @createVeinWall 'vein-wall-footer', 0, 570, 0
-      @endZone = @world.height - 24 # height of pathogen
+      @endZone = @world.height - 36 # height of highest pathogen
 
     @background.scale.setTo 6, 6
 
@@ -101,41 +113,56 @@ class Level
 
     @buildWall()
 
-  update: ->
-    @game.frameCount++
 
-    # Rotate cell wall
+  rotateWall: ->
     x = @input.position.x
     y = @input.position.y
     cx = @world.centerX
     cy = @world.centerY
+
+    dx = Math.abs x - cx
+    dy = Math.abs y - cy
+    hyp = Math.sqrt dx * dx + dy * dy
+    if 130 > hyp then return # too close to nucleus
+
     angle = Math.atan2(y - cy, x - cx) * (180 / Math.PI)
     @game.bricks.angle = angle
+
+  update: ->
+    @game.frameCount++
+
+    @rotateWall()
 
     # First popup message
     if 0 == @game.step and 80 < @game.frameCount
       @game.step = 1
       if @game.device.desktop
-        console.log 'Popup: Move your mouse to rotate the cell wall.'
+        @showPopup 'Move your mouse to rotate the cell wall.'
       else
-        console.log 'Popup: Swipe in a circle to rotate the cell wall.'
+        @showPopup 'Swipe in a circle to rotate the cell wall.'
 
     # Ninth popup message
     else if 9 == @game.step and 80 < @game.frameCount
       @game.step = 10
-      console.log 'Popup: Oh no! The supply of condoms and pills has run out, this will be really challenging...'
+      @showPopup 'Oh no! The supply of condoms and pills has run out, this will be really challenging...'
 
     # Remove pathogens which have traversed the screen
     if @isPortrait
       @pathogens.forEach( # callback, callbackContext, checkExists
         (pathogen) =>
-          if pathogen?.x >= @endZone then pathogen.destroy()
+          if pathogen?.x >= @endZone
+            if @opt.hivExit and 'hiv' == pathogen.name
+              @game.state.start @opt.next
+            pathogen.destroy()
           # console.log 'ok!', @endZone, pathogen?.x
       )
     else
       @pathogens.forEach( # callback, callbackContext, checkExists
         (pathogen) =>
-          if pathogen?.y >= @endZone then pathogen.destroy()
+          if pathogen?.y >= @endZone
+            if @opt.hivExit and 'hiv' == pathogen.name
+              @game.state.start @opt.next
+            pathogen.destroy()
       )
 
 
@@ -149,12 +176,12 @@ class Level
       # Destroy all pathogens which touch the shield, or are inside it
       @pathogens.forEach(
         (pathogen) =>
-          dx = Math.abs pathogen?.x - cx
-          if 150 < dx then return # cannot be inside shield
-          dy = Math.abs pathogen?.y - cy
-          if 150 < dy then return # cannot be inside shield
+          dx = Math.abs pathogen?.x - @world.centerX
+          if 160 < dx then return # cannot be inside shield
+          dy = Math.abs pathogen?.y - @world.centerY
+          if 160 < dy then return # cannot be inside shield
           hyp = Math.sqrt dx * dx + dy * dy
-          if 150 < hyp then return # skirted around corner
+          if 160 < hyp then return # skirted around corner
           pathogen?.destroy()
       )
 
@@ -164,8 +191,16 @@ class Level
       @physics.arcade.collide @pathogens, @nucleus    , @pathogenHitNucleus, null, @
       @physics.arcade.collide @pathogens, @game.bricks, @pathogenHitBrick  , null, @
 
+      # Decide whether to add a new green or blue virus
+      if 1 == @game.frameCount
+        doSpawn = true # always spawn on frame 1 of a level
+      else if 50 > @game.frameCount
+        doSpawn = not @rnd.between 0, 10 / @opt.spawnRate # spawn less at the start of a level
+      else
+        doSpawn = not @rnd.between 0, 1 / @opt.spawnRate
+
       # Possibly add a new green or blue virus
-      if not @rnd.between 0, 1 / @opt.spawnRate # call `newPathogen()` if `between()` returns zero
+      if doSpawn # call `newPathogen()` if `between()` returns zero
         if @isPortrait
           pathogen = @pathogens.create 0, @rnd.between(0, @world.height)
           pathogen.body.velocity =
@@ -181,21 +216,25 @@ class Level
         pathogen.smoothed = false
 
         # Possibly convert the pathogen to an HIV virus
-        if 3 <= @game.step and 4 != @game.step and not @rnd.between 0, 3
+        if 3 <= @game.step and 4 != @game.step and not @rnd.between 0, (if 3 == @game.step then 5 else 15)
           pathogen.loadTexture 'hiv-virus-main'
           pathogen.name = 'hiv'
-          pathogen.body.velocity =
-            x: 40
-            y: 40
+          pathogen.scale.setTo 3, 3
           if 3 == @game.step
-            console.log "Popup: Watch out for the HIV virus: it will infect your cell if it touches!"
+            @showPopup 'Watch out for the HIV virus: it will infect the cell if it touches!'
             @game.step = 4
             if @isPortrait
-              pathogen.y = @world.centerY - 20
+              pathogen.y = @world.centerY + 100
+              pathogen.body.velocity =
+                x: 40
+                y: 20
             else
-              pathogen.x = @world.centerX - 20
+              pathogen.x = @world.centerX + 100
+              pathogen.body.velocity =
+                x: 20
+                y: 40
           if 5 == @game.step
-            console.log "Popup: Defend the cell against HIV by clicking one of the condom buttons."
+            @showPopup 'Defend the cell against HIV by clicking one of the condom buttons.'
             @game.step = 6
 
 
@@ -211,17 +250,13 @@ class Level
         .text @game.score
 
       # Second or third popup message (on level 1)
-      if 1 == @game.step or 2 == @game.step
+      if not @game.hasDefended and (1 == @game.step or 2 == @game.step)
         @game.step = if 1 == @game.step then 2 else 3
-        console.log "Popup: Well done! #{brick.name} sections of the cell wall defend against #{pathogen.name} viruses."
-
-      # Eighth popup message (on level 3)
-      else if 7 == @game.step
-        @game.step = 8
-        console.log "Popup: When your cell wall gets badly damaged, click on an antiretroviral pill."
+        @game.hasDefended = true
+        @showPopup "Well done! #{brick.name} sections of the cell wall defend against #{pathogen.name} viruses."
 
     else if 6 == @game.step and 'hiv' == pathogen.name
-      console.log "Anim: cell infection."
+      @showPopup "[cell infection animation to happen now]"
       @game.step = 7
       @game.state.start 'levelTwoComplete'
 
@@ -229,14 +264,25 @@ class Level
       brick.kill()
 
       # Second or third popup message (on level 1)
-      if 1 == @game.step or 2 == @game.step
+      if not @game.hasLostWall and (1 == @game.step or 2 == @game.step)
         @game.step = if 1 == @game.step then 2 else 3
-        console.log "Popup: Oh no! #{pathogen.name} viruses destroy #{pathogen.name} sections of the cell wall."
+        @game.hasLostWall = true
+        @showPopup "Oh no! #{pathogen.name} viruses destroy #{brick.name} sections of the cell wall."
+
+      # Eighth popup message (on level 3)
+      else if 7 == @game.step
+        @game.step = 8
+        @showPopup 'Click on an antiretroviral pill to repair the cell wall.'
 
     pathogen.kill()
 
-    if @opt.complete and @game.score >= @opt.complete # set `@opt.complete` to zero to make a level which can never be completed
+    if @opt.complete and @game.score >= @relativeComplete # set `@opt.complete` to zero to make a level which can not be completed by reaching a certain score
       @game.state.start @opt.next
 
+  onDown: ->
+    console.log 123
+    @game.paused = false
+    $ '#popup-wrap'
+      .fadeOut()
 
 module.exports = Level

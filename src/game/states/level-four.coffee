@@ -4,8 +4,8 @@ class LevelFour extends Level
   constructor: ->
     super
       slowest   : 80
-      fastest   : 160
-      spawnRate : .1
+      fastest   : 130
+      spawnRate : .06
       complete  : 0
       gameOver  : 'levelFourGameOver'
       powerups  : ['blank','blank','blank','blank','blank','blank']

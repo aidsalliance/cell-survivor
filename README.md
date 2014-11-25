@@ -146,14 +146,18 @@ __7.20__  feature finish, release 0.1.6, pushed to GitHub
 -------------------------------------------
 
 __8.1__   `$ git flow feature start powerups`  
-__8.2__   Added `buildWall()`, called when levels start, and when a pill is clicked  
-__8.3__   Added a basic condom-shield graphic, which disappears after a short delay  
-__8.4__   Fixed basic shield and pill functionality, to work on all levels  
+__8.2__   added `buildWall()`, called when levels start, and when a pill is clicked  
+__8.3__   added a basic condom-shield graphic, which disappears after a short delay  
+__8.4__   fixed basic shield and pill functionality, to work on all levels  
 __8.5__   bumped version to '0.1.7-1', track and commit  
 __8.6__   HIV appears on level 1, but cannot hit the cell wall or nucleus  
 __8.7__   HIV ends level 2 when touched, and just breaks walls on levels 3 and 4  
 __8.8__   `console.log()` text at various steps in the user journey  
-__8.9__   bumped version to '0.1.7-2', track and commit  
+__8.9__   bumped version to '0.1.7-2', track new files, and commit  
+__8.10__  HTML and CSS popup, opacity 0, with dismiss-x  
+__8.11__  popup appears at various steps in the user journey  
+__8.12__  improved playability of levels, and increasing difficulty  
+__8.13__  bumped version to '0.1.7-3', track new files, and commit  
 
 
 Releases
@@ -167,6 +171,7 @@ Releases
 + 0.1.6    vein walls, frame icons, responsive layout
 + 0.1.7-1  basic condom-shield and pill graphics and functionality
 + 0.1.7-2  with HIV and start of popup-text steps
++ 0.1.7-3  popup messages and improved playability
 
 
 

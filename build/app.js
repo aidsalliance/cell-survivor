@@ -188,10 +188,10 @@ Level = (function() {
       adjacent = Math.cos(angle * Math.PI / 10) * 110;
       spec = (angle / 6) % 2 > .7 ? {
         key: 'hep-c-brick-main',
-        name: 'hep-c'
+        name: 'green'
       } : {
         key: 'herpesviridae-brick-main',
-        name: 'herpesviridae'
+        name: 'blue'
       };
       brick = this.game.bricks.create(opposite, adjacent, spec.key);
       brick.name = spec.name;
@@ -204,9 +204,16 @@ Level = (function() {
     return _results;
   };
 
+  Level.prototype.showPopup = function(msg) {
+    this.game.paused = true;
+    $('#popup-text').html(msg + '<br><br>');
+    return $('#popup-wrap').fadeIn();
+  };
+
   Level.prototype.create = function() {
     var i, powerup, self, _base, _i, _len, _ref;
     $(window).trigger('resize');
+    this.relativeComplete = this.game.score + this.opt.complete;
     self = this;
     _ref = (_base = this.opt).powerups != null ? _base.powerups : _base.powerups = [];
     for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
@@ -220,21 +227,23 @@ Level = (function() {
         return self.powerup(this);
       });
     }
+    delete this.game.shieldTimer;
+    this.input.onDown.add(this.onDown, this);
     this.isPortrait = $('.wrap').hasClass('portrait');
     if (this.isPortrait) {
-      this.game.world.setBounds(0, 0, 696, 600);
-      this.game.camera.x = 48;
-      this.background = this.add.tileSprite(48, 0, 600, 600, 'cellfield');
-      this.createVeinWall('vein-wall-header', -90, 648, 0);
-      this.createVeinWall('vein-wall-footer', -90, 648, 570);
-      this.endZone = this.world.width - 24;
+      this.game.world.setBounds(0, 0, 744, 600);
+      this.game.camera.x = 72;
+      this.background = this.add.tileSprite(72, 0, 600, 600, 'cellfield');
+      this.createVeinWall('vein-wall-header', -90, 672, 0);
+      this.createVeinWall('vein-wall-footer', -90, 672, 570);
+      this.endZone = this.world.width - 36;
     } else {
-      this.game.world.setBounds(0, 0, 600, 696);
-      this.game.camera.y = 48;
-      this.background = this.add.tileSprite(0, 48, 600, 600, 'cellfield');
+      this.game.world.setBounds(0, 0, 600, 744);
+      this.game.camera.y = 72;
+      this.background = this.add.tileSprite(0, 72, 600, 600, 'cellfield');
       this.createVeinWall('vein-wall-header', 0, 0, 0);
       this.createVeinWall('vein-wall-footer', 0, 570, 0);
-      this.endZone = this.world.height - 24;
+      this.endZone = this.world.height - 36;
     }
     this.background.scale.setTo(6, 6);
     this.nucleus = this.add.sprite(this.world.centerX, this.world.centerY, 'nucleus-main');
@@ -251,30 +260,44 @@ Level = (function() {
     return this.buildWall();
   };
 
-  Level.prototype.update = function() {
-    var angle, cx, cy, pathogen, x, y, _ref;
-    this.game.frameCount++;
+  Level.prototype.rotateWall = function() {
+    var angle, cx, cy, dx, dy, hyp, x, y;
     x = this.input.position.x;
     y = this.input.position.y;
     cx = this.world.centerX;
     cy = this.world.centerY;
+    dx = Math.abs(x - cx);
+    dy = Math.abs(y - cy);
+    hyp = Math.sqrt(dx * dx + dy * dy);
+    if (130 > hyp) {
+      return;
+    }
     angle = Math.atan2(y - cy, x - cx) * (180 / Math.PI);
-    this.game.bricks.angle = angle;
+    return this.game.bricks.angle = angle;
+  };
+
+  Level.prototype.update = function() {
+    var doSpawn, pathogen, _ref;
+    this.game.frameCount++;
+    this.rotateWall();
     if (0 === this.game.step && 80 < this.game.frameCount) {
       this.game.step = 1;
       if (this.game.device.desktop) {
-        console.log('Popup: Move your mouse to rotate the cell wall.');
+        this.showPopup('Move your mouse to rotate the cell wall.');
       } else {
-        console.log('Popup: Swipe in a circle to rotate the cell wall.');
+        this.showPopup('Swipe in a circle to rotate the cell wall.');
       }
     } else if (9 === this.game.step && 80 < this.game.frameCount) {
       this.game.step = 10;
-      console.log('Popup: Oh no! The supply of condoms and pills has run out, this will be really challenging...');
+      this.showPopup('Oh no! The supply of condoms and pills has run out, this will be really challenging...');
     }
     if (this.isPortrait) {
       this.pathogens.forEach((function(_this) {
         return function(pathogen) {
           if ((pathogen != null ? pathogen.x : void 0) >= _this.endZone) {
+            if (_this.opt.hivExit && 'hiv' === pathogen.name) {
+              _this.game.state.start(_this.opt.next);
+            }
             return pathogen.destroy();
           }
         };
@@ -283,6 +306,9 @@ Level = (function() {
       this.pathogens.forEach((function(_this) {
         return function(pathogen) {
           if ((pathogen != null ? pathogen.y : void 0) >= _this.endZone) {
+            if (_this.opt.hivExit && 'hiv' === pathogen.name) {
+              _this.game.state.start(_this.opt.next);
+            }
             return pathogen.destroy();
           }
         };
@@ -298,16 +324,16 @@ Level = (function() {
       return this.pathogens.forEach((function(_this) {
         return function(pathogen) {
           var dx, dy, hyp;
-          dx = Math.abs((pathogen != null ? pathogen.x : void 0) - cx);
-          if (150 < dx) {
+          dx = Math.abs((pathogen != null ? pathogen.x : void 0) - _this.world.centerX);
+          if (160 < dx) {
             return;
           }
-          dy = Math.abs((pathogen != null ? pathogen.y : void 0) - cy);
-          if (150 < dy) {
+          dy = Math.abs((pathogen != null ? pathogen.y : void 0) - _this.world.centerY);
+          if (160 < dy) {
             return;
           }
           hyp = Math.sqrt(dx * dx + dy * dy);
-          if (150 < hyp) {
+          if (160 < hyp) {
             return;
           }
           return pathogen != null ? pathogen.destroy() : void 0;
@@ -316,7 +342,14 @@ Level = (function() {
     } else {
       this.physics.arcade.collide(this.pathogens, this.nucleus, this.pathogenHitNucleus, null, this);
       this.physics.arcade.collide(this.pathogens, this.game.bricks, this.pathogenHitBrick, null, this);
-      if (!this.rnd.between(0, 1 / this.opt.spawnRate)) {
+      if (1 === this.game.frameCount) {
+        doSpawn = true;
+      } else if (50 > this.game.frameCount) {
+        doSpawn = !this.rnd.between(0, 10 / this.opt.spawnRate);
+      } else {
+        doSpawn = !this.rnd.between(0, 1 / this.opt.spawnRate);
+      }
+      if (doSpawn) {
         if (this.isPortrait) {
           pathogen = this.pathogens.create(0, this.rnd.between(0, this.world.height));
           pathogen.body.velocity = {
@@ -332,24 +365,29 @@ Level = (function() {
         }
         pathogen.scale.setTo(2, 2);
         pathogen.smoothed = false;
-        if (3 <= this.game.step && 4 !== this.game.step && !this.rnd.between(0, 3)) {
+        if (3 <= this.game.step && 4 !== this.game.step && !this.rnd.between(0, (3 === this.game.step ? 5 : 15))) {
           pathogen.loadTexture('hiv-virus-main');
           pathogen.name = 'hiv';
-          pathogen.body.velocity = {
-            x: 40,
-            y: 40
-          };
+          pathogen.scale.setTo(3, 3);
           if (3 === this.game.step) {
-            console.log("Popup: Watch out for the HIV virus: it will infect your cell if it touches!");
+            this.showPopup('Watch out for the HIV virus: it will infect the cell if it touches!');
             this.game.step = 4;
             if (this.isPortrait) {
-              pathogen.y = this.world.centerY - 20;
+              pathogen.y = this.world.centerY + 100;
+              pathogen.body.velocity = {
+                x: 40,
+                y: 20
+              };
             } else {
-              pathogen.x = this.world.centerX - 20;
+              pathogen.x = this.world.centerX + 100;
+              pathogen.body.velocity = {
+                x: 20,
+                y: 40
+              };
             }
           }
           if (5 === this.game.step) {
-            console.log("Popup: Defend the cell against HIV by clicking one of the condom buttons.");
+            this.showPopup('Defend the cell against HIV by clicking one of the condom buttons.');
             return this.game.step = 6;
           }
         }
@@ -366,28 +404,36 @@ Level = (function() {
     if (pathogen.name === brick.name) {
       this.game.score += 10;
       $('#score').text(this.game.score);
-      if (1 === this.game.step || 2 === this.game.step) {
+      if (!this.game.hasDefended && (1 === this.game.step || 2 === this.game.step)) {
         this.game.step = 1 === this.game.step ? 2 : 3;
-        console.log("Popup: Well done! " + brick.name + " sections of the cell wall defend against " + pathogen.name + " viruses.");
-      } else if (7 === this.game.step) {
-        this.game.step = 8;
-        console.log("Popup: When your cell wall gets badly damaged, click on an antiretroviral pill.");
+        this.game.hasDefended = true;
+        this.showPopup("Well done! " + brick.name + " sections of the cell wall defend against " + pathogen.name + " viruses.");
       }
     } else if (6 === this.game.step && 'hiv' === pathogen.name) {
-      console.log("Anim: cell infection.");
+      this.showPopup("[cell infection animation to happen now]");
       this.game.step = 7;
       this.game.state.start('levelTwoComplete');
     } else {
       brick.kill();
-      if (1 === this.game.step || 2 === this.game.step) {
+      if (!this.game.hasLostWall && (1 === this.game.step || 2 === this.game.step)) {
         this.game.step = 1 === this.game.step ? 2 : 3;
-        console.log("Popup: Oh no! " + pathogen.name + " viruses destroy " + pathogen.name + " sections of the cell wall.");
+        this.game.hasLostWall = true;
+        this.showPopup("Oh no! " + pathogen.name + " viruses destroy " + brick.name + " sections of the cell wall.");
+      } else if (7 === this.game.step) {
+        this.game.step = 8;
+        this.showPopup('Click on an antiretroviral pill to repair the cell wall.');
       }
     }
     pathogen.kill();
-    if (this.opt.complete && this.game.score >= this.opt.complete) {
+    if (this.opt.complete && this.game.score >= this.relativeComplete) {
       return this.game.state.start(this.opt.next);
     }
+  };
+
+  Level.prototype.onDown = function() {
+    console.log(123);
+    this.game.paused = false;
+    return $('#popup-wrap').fadeOut();
   };
 
   return Level;
@@ -467,11 +513,11 @@ Pathogen = (function(_super) {
     spec = game.rnd.pick([
       {
         key: 'hep-c-virus-main',
-        name: 'hep-c',
+        name: 'green',
         anim: ['pathogen_1.png', 'pathogen_4.png']
       }, {
         key: 'herpesviridae-virus-main',
-        name: 'herpesviridae',
+        name: 'blue',
         anim: ['pathogen_2.png', 'pathogen_5.png']
       }
     ]);
@@ -520,8 +566,19 @@ resizePortrait = function(width, height) {
     width: width,
     height: width
   });
-  return $('.wrap .frame >div img').css({
+  $('#popup-wrap').css({
+    top: (height - width) / 2 + 40,
+    left: 0,
+    width: '100%'
+  });
+  $('#popup-inner').css({
+    width: '80%'
+  });
+  $('.wrap .frame >div img').css({
     width: 350 > width ? 48 : 54
+  });
+  return $('.bold-bitmap').css({
+    'font-size': width / 25
   });
 };
 
@@ -536,8 +593,19 @@ resizeLandscape = function(width, height) {
     width: height,
     height: height
   });
-  return $('.wrap .frame >div img').css({
+  $('#popup-wrap').css({
+    top: height * .1,
+    left: (width - height) / 2 + (height * .1),
+    width: height * .8
+  });
+  $('#popup-inner').css({
+    width: height * .8
+  });
+  $('.wrap .frame >div img').css({
     width: '100%'
+  });
+  return $('.bold-bitmap').css({
+    'font-size': height / 25
   });
 };
 
@@ -584,7 +652,14 @@ Boot = (function() {
 
   Boot.prototype.create = function() {
     this.game.input.maxPointers = 1;
-    return this.game.state.start('preloader');
+    this.game.state.start('preloader');
+    $('#popup-dismiss').on('click', (function(_this) {
+      return function() {
+        _this.game.paused = false;
+        return $('#popup-wrap').fadeOut();
+      };
+    })(this));
+    return $('#popup-wrap').hide();
   };
 
   return Boot;
@@ -659,8 +734,8 @@ LevelFour = (function(_super) {
   function LevelFour() {
     LevelFour.__super__.constructor.call(this, {
       slowest: 80,
-      fastest: 160,
-      spawnRate: .1,
+      fastest: 130,
+      spawnRate: .06,
       complete: 0,
       gameOver: 'levelFourGameOver',
       powerups: ['blank', 'blank', 'blank', 'blank', 'blank', 'blank']
@@ -720,12 +795,13 @@ LevelOne = (function(_super) {
 
   function LevelOne() {
     LevelOne.__super__.constructor.call(this, {
-      slowest: 40,
-      fastest: 80,
+      slowest: 55,
+      fastest: 75,
       spawnRate: .03,
-      complete: 100,
+      complete: 0,
       next: 'levelOneComplete',
-      powerups: ['condom', 'condom', 'pill', 'pill', 'blank', 'blank']
+      powerups: ['blank', 'blank', 'blank', 'blank', 'blank', 'blank'],
+      hivExit: true
     });
   }
 
@@ -734,6 +810,8 @@ LevelOne = (function(_super) {
     this.game.step = 0;
     this.game.score = 0;
     this.game.frameCount = 0;
+    this.game.hasDefended = false;
+    this.game.hasLostWall = false;
     return $('#score').text(this.game.score);
   };
 
@@ -782,9 +860,9 @@ LevelThree = (function(_super) {
 
   function LevelThree() {
     LevelThree.__super__.constructor.call(this, {
-      slowest: 80,
-      fastest: 160,
-      spawnRate: .1,
+      slowest: 70,
+      fastest: 120,
+      spawnRate: .05,
       complete: 400,
       next: 'levelThreeComplete',
       powerups: ['condom', 'condom', 'condom', 'pill', 'pill', 'pill']
@@ -837,8 +915,8 @@ LevelTwo = (function(_super) {
   function LevelTwo() {
     LevelTwo.__super__.constructor.call(this, {
       slowest: 60,
-      fastest: 130,
-      spawnRate: .05,
+      fastest: 110,
+      spawnRate: .03,
       complete: 0,
       next: 'levelTwoComplete',
       powerups: ['condom', 'condom', 'condom', 'blank', 'blank', 'blank']
@@ -928,7 +1006,7 @@ Splash = (function(_super) {
   function Splash() {
     Splash.__super__.constructor.call(this, {
       title: 'Cell Survivor',
-      text: ['A cell is going about its daily business of protecting the body from intruders.', '[the following text will pop up DURING level 1:] All of a sudden it comes under attack from HIV…'],
+      text: ['A cell is going about its daily business, protecting the body from intruders...'],
       button: 'PLAY',
       next: 'levelOne'
     });

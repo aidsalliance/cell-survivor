@@ -107,8 +107,42 @@ html, body {
 #score {
   position: absolute;
   padding: 14px 0 0 3px;
-  font: 31px 'Press Start 2P', cursive; // @todo responsive font-size
-  text-shadow: #000 0 4px; // @todo cross-browser
-  // outline: 1px solid red;
 }
+
+#popup-wrap {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  #popup-inner {
+    display: inline-block;
+    width: 500px;
+    padding-bottom: 20px;
+    outline: 1px solid #000;
+    background-color: rgba(0,0,0,.8);
+    #popup-dismiss {
+      text-align: right;
+      span {
+        display: inline-block;
+        padding: 10px 10px 0 10px;
+        font-size: 150%;
+        cursor: pointer;
+        transition: color .2s;
+        &:hover {
+          color: #ed1c24;
+        }
+      }
+    }
+    #popup-text {
+      margin-top: -2%;
+      padding: 0 20px;
+    }
+  }
+}
+
+.bold-bitmap {
+  font: 32px 'Press Start 2P', cursive;
+  line-height: 1.4;
+  text-shadow: #000 0 4px; // @todo cross-browser
+}
+
 
