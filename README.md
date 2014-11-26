@@ -193,6 +193,11 @@ __10.9__  Alliance branding on game over screen
 __10.10__ feature finish, release 0.1.12, pushed to GitHub  
 __10.11__ fixed ‘tou.html’ links, hotfix 0.1.14, pushed to GitHub  
 __10.12__ icons, metadata, Facebook and Twitter  
+__10.13__ minor HTML fixes, hotfixes 0.1.16 and 0.1.18  
+__10.14__ pink shield, hide ‘Well done for using…’ if not used  
+__10.15__ hide first 3 popups if player reaches level 2  
+__10.16__ keyboard input for rotation, and dismissing popups and levels  
+__10.17__ hotfix 0.1.20, pushed to GitHub  
 
 
 
@@ -214,6 +219,7 @@ Releases
 + 0.1.14   hotfix ‘tou.html’ links
 + 0.1.16   icons, metadata, Facebook and Twitter
 + 0.1.18   minor fixes to the HTML files
++ 0.1.20   keyboard input
 
 
 
