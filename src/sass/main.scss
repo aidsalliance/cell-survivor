@@ -22,6 +22,17 @@ html, body {
 body.hide-overflow {
   overflow: hidden;
 }
+.wrap.loaded {
+  >div {
+    >div {
+      &.frame {
+        >div {
+          opacity: 1; // fade-in when preloading is complete
+        }
+      }
+    }
+  }
+}
 
 .wrap {
   display: table;
@@ -36,6 +47,8 @@ body.hide-overflow {
         >div {
           display: inline-block; // can range-right
           padding-top: 10px;
+          opacity: 0; // fade-in when preloading is complete
+          transition: opacity 1s;
           img {
             width: 100%;
             // max-width: 81px;
@@ -183,6 +196,7 @@ body.hide-overflow {
   position: absolute;
   width: 100%;
   text-align: center;
+  display: none;
   #popup-inner {
     display: inline-block;
     width: 500px;

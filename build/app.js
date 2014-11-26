@@ -1266,9 +1266,11 @@ module.exports = Preloader;
 
 
 },{}],21:[function(require,module,exports){
-var Message, Splash,
+var $, Message, Splash,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+$ = require('jquery');
 
 Message = require('../classes/message');
 
@@ -1287,6 +1289,7 @@ Splash = (function(_super) {
 
   Splash.prototype.create = function() {
     Splash.__super__.create.apply(this, arguments);
+    $('.wrap').addClass('loaded');
     if (!this.game.suppressBasicPopups) {
       this.game.suppressBasicPopups = false;
     }
@@ -1301,4 +1304,4 @@ Splash = (function(_super) {
 module.exports = Splash;
 
 
-},{"../classes/message":6}]},{},[9])
+},{"../classes/message":6,"jquery":2}]},{},[9])
