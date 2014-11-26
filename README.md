@@ -200,7 +200,9 @@ __10.16__ keyboard input for rotation, and dismissing popups and levels
 __10.17__ hotfix 0.1.20, pushed to GitHub  
 __10.18__ text amends, hotfix 0.1.22, pushed to GitHub  
 __10.19__ screen is kept clean during boot, hotfix 0.1.26  
-__10.20__ amend Alliance header-icon link, hotfix 0.1.28  
+__10.20__ amended Alliance header-icon link, hotfix 0.1.28  
+__10.21__ added Google Analytics  
+__10.22__ never see a popup twice, hotfix 0.1.30  
 
 
 
@@ -224,6 +226,7 @@ Releases
 + 0.1.24   qik fix
 + 0.1.26   cleaner boot
 + 0.1.28   amend header link
++ 0.1.30   Google Analytics, and never see a popup twice
 
 
 
