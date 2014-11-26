@@ -173,12 +173,12 @@ Level = (function() {
       _ref.destroy();
     }
     this.game.shield = this.add.graphics(this.world.centerX, this.world.centerY);
-    this.game.shield.lineStyle(2, 0x0000ff);
-    this.game.shield.drawCircle(0, 0, 260);
-    this.game.shield.lineStyle(2, 0x0088ff);
-    this.game.shield.drawCircle(0, 0, 262);
-    this.game.shield.lineStyle(2, 0x00ffff);
-    this.game.shield.drawCircle(0, 0, 264);
+    this.game.shield.lineStyle(4, 0x6e2a8d);
+    this.game.shield.drawCircle(0, 0, 270);
+    this.game.shield.lineStyle(3, 0xd60c8c);
+    this.game.shield.drawCircle(0, 0, 274);
+    this.game.shield.lineStyle(2, 0xf8c1d9);
+    this.game.shield.drawCircle(0, 0, 278);
     return this.sfx.shieldUp.play();
   };
 
@@ -244,6 +244,18 @@ Level = (function() {
       gameOver: this.game.add.audio('game-over')
     };
     this.relativeComplete = this.game.score + this.opt.complete;
+    this.upKey = this.game.input.keyboard.addKey(Phaser.Keyboard.UP);
+    this.downKey = this.game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
+    this.leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
+    this.rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+    this.lastInputPosX = 0;
+    this.lastInputPosY = 0;
+    this.enterKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+    this.nEnterKey = this.game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_ENTER);
+    this.spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    this.enterKey.onDown.add(this.onDown, this);
+    this.nEnterKey.onDown.add(this.onDown, this);
+    this.spaceKey.onDown.add(this.onDown, this);
     self = this;
     _ref = (_base = this.opt).powerups != null ? _base.powerups : _base.powerups = [];
     for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
@@ -291,19 +303,35 @@ Level = (function() {
   };
 
   Level.prototype.rotateWall = function() {
-    var angle, cx, cy, dx, dy, hyp, x, y;
+    var angle, cx, cy, dx, dy, hyp, keyPower, x, y;
     x = this.input.position.x;
     y = this.input.position.y;
-    cx = this.world.centerX;
-    cy = this.world.centerY;
-    dx = Math.abs(x - cx);
-    dy = Math.abs(y - cy);
-    hyp = Math.sqrt(dx * dx + dy * dy);
-    if (130 > hyp) {
-      return;
+    keyPower = false;
+    if (this.downKey.isDown) {
+      keyPower = 2.5;
+    } else if (this.upKey.isDown) {
+      keyPower = -2.5;
+    } else if (this.rightKey.isDown) {
+      keyPower = .8;
+    } else if (this.leftKey.isDown) {
+      keyPower = -.8;
     }
-    angle = Math.atan2(y - cy, x - cx) * (180 / Math.PI);
-    return this.game.bricks.angle = angle;
+    if (keyPower) {
+      this.game.bricks.angle += keyPower;
+      this.lastInputPosX = x;
+      return this.lastInputPosY = y;
+    } else if (this.lastInputPosX !== x && this.lastInputPosY !== y) {
+      cx = this.world.centerX;
+      cy = this.world.centerY;
+      dx = Math.abs(x - cx);
+      dy = Math.abs(y - cy);
+      hyp = Math.sqrt(dx * dx + dy * dy);
+      if (130 > hyp) {
+        return;
+      }
+      angle = Math.atan2(y - cy, x - cx) * (180 / Math.PI);
+      return this.game.bricks.angle = angle;
+    }
   };
 
   Level.prototype.update = function() {
@@ -571,6 +599,12 @@ Message = (function() {
   Message.prototype.create = function() {
     var regex, section, text, x, y, _i, _len, _ref;
     $(window).trigger('resize');
+    this.enterKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+    this.nEnterKey = this.game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_ENTER);
+    this.spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    this.enterKey.onDown.add(this.onDown, this);
+    this.nEnterKey.onDown.add(this.onDown, this);
+    this.spaceKey.onDown.add(this.onDown, this);
     x = this.game.width / 2;
     y = 50;
     if (this.opt.banner) {
@@ -590,6 +624,11 @@ Message = (function() {
     _ref = this.opt.text;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       section = _ref[_i];
+      if (-1 !== section.indexOf('Well done for using your condoms! ')) {
+        if (3 === $('img[src="assets/images/icon-condom.gif"]').length) {
+          section = section.substr(34);
+        }
+      }
       text = section.match(RegExp(regex, 'g')).join('\n');
       this.textTxt = this.game.add.text(x, y, text, {
         font: "24px Arial",
@@ -972,6 +1011,11 @@ LevelOneComplete = (function(_super) {
     });
   }
 
+  LevelOneComplete.prototype.create = function() {
+    LevelOneComplete.__super__.create.apply(this, arguments);
+    return this.game.suppressBasicPopups = true;
+  };
+
   return LevelOneComplete;
 
 })(Message);
@@ -1093,11 +1137,6 @@ LevelTwoComplete = (function(_super) {
       next: 'levelThree'
     });
   }
-
-  LevelTwoComplete.prototype.create = function() {
-    LevelTwoComplete.__super__.create.apply(this, arguments);
-    return this.game.suppressBasicPopups = true;
-  };
 
   return LevelTwoComplete;
 

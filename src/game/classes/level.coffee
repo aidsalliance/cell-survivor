@@ -26,12 +26,12 @@ class Level
     @game.shieldTimer = 300
     @game.shield?.destroy()
     @game.shield = @add.graphics @world.centerX, @world.centerY
-    @game.shield.lineStyle  2, 0x0000ff
-    @game.shield.drawCircle 0, 0, 260
-    @game.shield.lineStyle  2, 0x0088ff
-    @game.shield.drawCircle 0, 0, 262
-    @game.shield.lineStyle  2, 0x00ffff
-    @game.shield.drawCircle 0, 0, 264
+    @game.shield.lineStyle  4, 0x6e2a8d
+    @game.shield.drawCircle 0, 0, 270
+    @game.shield.lineStyle  3, 0xd60c8c
+    @game.shield.drawCircle 0, 0, 274
+    @game.shield.lineStyle  2, 0xf8c1d9
+    @game.shield.drawCircle 0, 0, 278
     @sfx.shieldUp.play()
     
   buildWall: () ->
@@ -59,7 +59,7 @@ class Level
     @sfx.pill.play()
 
   showPopup: (msg) ->
-    if @game.suppressBasicPopups and 3 >= @game.step then return # don’t show the first three popups after the player has reached level 3
+    if @game.suppressBasicPopups and 3 >= @game.step then return # don’t show the first three popups after the player has reached level 2
     @sfx.popup.play()
     $ '#popup-text'
       .html msg + '<br><br>'
@@ -87,6 +87,20 @@ class Level
       gameOver  : @game.add.audio 'game-over'
 
     @relativeComplete = @game.score + @opt.complete
+
+    @upKey     = @game.input.keyboard.addKey Phaser.Keyboard.UP
+    @downKey   = @game.input.keyboard.addKey Phaser.Keyboard.DOWN
+    @leftKey   = @game.input.keyboard.addKey Phaser.Keyboard.LEFT
+    @rightKey  = @game.input.keyboard.addKey Phaser.Keyboard.RIGHT
+    @lastInputPosX = 0
+    @lastInputPosY = 0
+
+    @enterKey  = @game.input.keyboard.addKey Phaser.Keyboard.ENTER
+    @nEnterKey = @game.input.keyboard.addKey Phaser.Keyboard.NUMPAD_ENTER
+    @spaceKey  = @game.input.keyboard.addKey Phaser.Keyboard.SPACEBAR
+    @enterKey.onDown.add  @onDown, @
+    @nEnterKey.onDown.add @onDown, @
+    @spaceKey.onDown.add  @onDown, @
 
     # Add powerups, if specified
     self = @
@@ -140,16 +154,32 @@ class Level
   rotateWall: ->
     x = @input.position.x
     y = @input.position.y
-    cx = @world.centerX
-    cy = @world.centerY
 
-    dx = Math.abs x - cx
-    dy = Math.abs y - cy
-    hyp = Math.sqrt dx * dx + dy * dy
-    if 130 > hyp then return # too close to nucleus
+    keyPower = false
+    if @downKey.isDown
+      keyPower = 2.5
+    else if @upKey.isDown
+      keyPower = -2.5
+    else if @rightKey.isDown
+      keyPower = .8
+    else if @leftKey.isDown
+      keyPower = -.8
 
-    angle = Math.atan2(y - cy, x - cx) * (180 / Math.PI)
-    @game.bricks.angle = angle
+    if keyPower
+      @game.bricks.angle += keyPower
+      @lastInputPosX = x
+      @lastInputPosY = y
+    else if @lastInputPosX != x and @lastInputPosY != y
+      cx = @world.centerX
+      cy = @world.centerY
+
+      dx = Math.abs x - cx
+      dy = Math.abs y - cy
+      hyp = Math.sqrt dx * dx + dy * dy
+      if 130 > hyp then return # too close to nucleus
+
+      angle = Math.atan2(y - cy, x - cx) * (180 / Math.PI)
+      @game.bricks.angle = angle
 
   update: ->
     @game.frameCount++

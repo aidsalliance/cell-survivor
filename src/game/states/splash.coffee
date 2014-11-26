@@ -14,7 +14,7 @@ class Splash extends Message
   create: ->
     super
 
-    if not @game.suppressBasicPopups then @game.suppressBasicPopups = false # after the player reaches level 3, don’t show the first three popups
+    if not @game.suppressBasicPopups then @game.suppressBasicPopups = false # after the player reaches level 2, don’t show the first three popups
 
     # Audio
     @audioTrack = @game.add.audio 'audio-track'
