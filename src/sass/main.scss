@@ -13,9 +13,14 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-  overflow: hidden;
   background: #000;
   color: #fff;
+  font: 12px arial, sans-serif;
+  text-align: center;
+}
+
+body.hide-overflow {
+  overflow: hidden;
 }
 
 .wrap {
@@ -104,9 +109,64 @@ html, body {
   }
 }
 
+#score-label {
+  position: absolute;
+}
+
 #score {
   position: absolute;
   padding: 14px 0 0 3px;
+}
+
+#textlink {
+  position: absolute;
+  display: none;
+  top: 100px;
+  width: 100%;
+  a {
+    display: block;
+    height: 20px;
+  }
+}
+
+#tou {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  a {
+    color: #808080!important;
+    transition: color .4s;
+    &:hover {
+      color: #d60c8c!important;
+    }
+  }
+}
+
+.bodycopy {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 15px;
+  p {
+    font-size: 16px;
+    line-height: 24px;
+  }
+}
+
+#play-cell-survivor {
+  display: inline-block;
+  margin-bottom: 40px;
+  padding: 10px 20px;
+  border-radius: 4px;
+  background-color: #808080;
+  font-size: 18px;
+  transition: background-color .4s;
+  &:hover {
+    background-color: #d60c8c;
+  }
+  a {
+    color: #fff!important;
+    text-decoration: none;
+  }
 }
 
 #popup-wrap {
@@ -143,6 +203,11 @@ html, body {
   font: 32px 'Press Start 2P', cursive;
   line-height: 1.4;
   text-shadow: #000 0 4px; // @todo cross-browser
+}
+.bold-bitmap-small {
+  font: 32px 'Press Start 2P', cursive;
+  line-height: 0.7;
+  text-shadow: #000 0 2px; // @todo cross-browser
 }
 
 .green {

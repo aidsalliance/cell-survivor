@@ -6,9 +6,11 @@ class GameOver extends Message
       title: 'Game Over'
       text: [
         'Contracting HIV need not be ‘Game Over’ but prevention, treatment, and care is needed for young people who too often are overlooked.'
-        'For more information about how the International HIV/AIDS Alliance is supporting young people, visit www.aidsalliance.org'
+        'For more information about how the International HIV/AIDS Alliance is supporting young people, visit www.aidsalliance.org/worldAIDSday'
       ]
+      textlink: true
       button: 'PLAY AGAIN'
+      footer: 'alliance-logo'
       next: 'levelOne'
 
   create: ->

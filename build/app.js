@@ -231,6 +231,7 @@ Level = (function() {
   Level.prototype.create = function() {
     var i, powerup, self, _base, _i, _len, _ref;
     $(window).trigger('resize');
+    $('#textlink').hide();
     this.sfx = {
       pathogen: this.game.add.audio('pathogen'),
       brick: this.game.add.audio('brick'),
@@ -414,14 +415,14 @@ Level = (function() {
             if (this.isPortrait) {
               pathogen.y = this.world.centerY + 100;
               pathogen.body.velocity = {
-                x: 40,
-                y: 20
+                x: 60,
+                y: 30
               };
             } else {
               pathogen.x = this.world.centerX + 100;
               pathogen.body.velocity = {
-                x: 20,
-                y: 40
+                x: 30,
+                y: 60
               };
             }
           }
@@ -598,6 +599,11 @@ Message = (function() {
       this.textTxt.anchor.setTo(0.5, 0);
       y = y + this.textTxt.height + 30;
     }
+    if (this.opt.textlink) {
+      $('#textlink').show();
+    } else {
+      $('#textlink').hide();
+    }
     if (this.opt.button) {
       this.buttonBackground = this.add.sprite(x, y, 'button-background');
       this.buttonBackground.smoothed = false;
@@ -607,6 +613,24 @@ Message = (function() {
       this.buttonTxt = this.add.bitmapText(x, y, 'minecraftia', this.opt.button);
       this.buttonTxt.align = 'center';
       this.buttonTxt.x = this.game.width / 2 - this.buttonTxt.textWidth / 2;
+      y += this.buttonBackground.height + 10;
+    }
+    if (this.opt.footer) {
+      this.footer = this.add.sprite(x, y, this.opt.footer);
+      this.footer.smoothed = false;
+      this.footer.scale.setTo(1, 1);
+      this.footer.anchor.setTo(0.5, 0);
+      y += this.footer.height + 10;
+    }
+    if (this.opt.afterword) {
+      text = this.opt.afterword.match(RegExp(regex, 'g')).join('\n');
+      this.afterword = this.game.add.text(x, y, text, {
+        font: "18px Arial",
+        fill: "#ffffff",
+        align: "center"
+      });
+      this.afterword.anchor.setTo(0.5, 0);
+      y = y + this.afterword.height + 30;
     }
     return this.input.onDown.add(this.onDown, this);
   };
@@ -690,6 +714,14 @@ resizePortrait = function(width, height) {
     width: width,
     height: width
   });
+  $('#textlink').css({
+    top: (height - width) / 2 + (width * .5),
+    left: 0,
+    width: '100%'
+  });
+  $('#textlink a').css({
+    height: width * .1
+  });
   $('#popup-wrap').css({
     top: (height - width) / 2 + 40,
     left: 0,
@@ -701,8 +733,11 @@ resizePortrait = function(width, height) {
   $('.wrap .frame >div img').css({
     width: 350 > width ? 48 : 54
   });
-  return $('.bold-bitmap').css({
+  $('.bold-bitmap').css({
     'font-size': width / 25
+  });
+  return $('.bold-bitmap-small').css({
+    'font-size': height / 40
   });
 };
 
@@ -717,6 +752,14 @@ resizeLandscape = function(width, height) {
     width: height,
     height: height
   });
+  $('#textlink').css({
+    top: height * .5,
+    left: (width - height) / 2 + (height * .1),
+    width: height * .8
+  });
+  $('#textlink a').css({
+    height: height * .1
+  });
   $('#popup-wrap').css({
     top: height * .1,
     left: (width - height) / 2 + (height * .1),
@@ -728,8 +771,11 @@ resizeLandscape = function(width, height) {
   $('.wrap .frame >div img').css({
     width: '100%'
   });
-  return $('.bold-bitmap').css({
+  $('.bold-bitmap').css({
     'font-size': height / 25
+  });
+  return $('.bold-bitmap-small').css({
+    'font-size': height / 40
   });
 };
 
@@ -806,8 +852,10 @@ GameOver = (function(_super) {
   function GameOver() {
     GameOver.__super__.constructor.call(this, {
       title: 'Game Over',
-      text: ['Contracting HIV need not be ‘Game Over’ but prevention, treatment, and care is needed for young people who too often are overlooked.', 'For more information about how the International HIV/AIDS Alliance is supporting young people, visit www.aidsalliance.org'],
+      text: ['Contracting HIV need not be ‘Game Over’ but prevention, treatment, and care is needed for young people who too often are overlooked.', 'For more information about how the International HIV/AIDS Alliance is supporting young people, visit www.aidsalliance.org/worldAIDSday'],
+      textlink: true,
       button: 'PLAY AGAIN',
+      footer: 'alliance-logo',
       next: 'levelOne'
     });
   }
@@ -842,8 +890,10 @@ LevelFourGameOver = (function(_super) {
   function LevelFourGameOver() {
     LevelFourGameOver.__super__.constructor.call(this, {
       title: 'Game Over',
-      text: ['Not easy was it with no extra help?', 'Now imagine if you’re young and live with HIV in a country where access to information and help to keep you healthy are very limited.', 'For more information about how the International HIV/AIDS Alliance is supporting young people, visit www.aidsalliance.org'],
+      text: ['Not easy was it with no extra help?', 'Now imagine if you’re young and live with HIV in a country where access to information and help to keep you healthy are very limited.', 'For more information about how the International HIV/AIDS Alliance is supporting young people, visit www.aidsalliance.org/worldAIDSday'],
+      textlink: true,
       button: 'PLAY AGAIN',
+      footer: 'alliance-logo',
       next: 'levelOne'
     });
   }
@@ -1100,11 +1150,10 @@ Preloader = (function() {
     this.asset.anchor.setTo(0.5, 0.5);
     this.load.onLoadComplete.addOnce(this.onLoadComplete, this);
     this.load.setPreloadSprite(this.asset);
-    this.load.image('player', 'assets/images/player.png');
     this.load.bitmapFont('minecraftia', 'assets/fonts/minecraftia.png', 'assets/fonts/minecraftia.xml');
-    this.load.atlas('breakin', 'assets/images/breakin-v2.png', 'assets/images/breakin-v2.json');
     this.load.image('button-background', 'assets/images/button-background-v2.gif');
     this.load.image('cell-survivor-logo', 'assets/images/cell-survivor-logo-v1.gif');
+    this.load.image('alliance-logo', 'assets/images/alliance-logo-v1.gif');
     this.load.image('cellfield', 'assets/images/bkgnd-v2.jpg');
     this.load.image('vein-wall-header', 'assets/images/vein-wall-header.gif');
     this.load.image('vein-wall-footer', 'assets/images/vein-wall-footer.gif');
@@ -1175,6 +1224,7 @@ Splash = (function(_super) {
       banner: 'cell-survivor-logo',
       text: ['A cell is going about its daily business, protecting the body from intruders...'],
       button: 'PLAY',
+      afterword: 'If you are under 16 years of age, please obtain a parent’s or a guardian’s permission before playing this game.',
       next: 'levelOne'
     });
   }

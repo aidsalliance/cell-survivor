@@ -178,6 +178,22 @@ __9.11__  bumped version to '0.1.9-3', tracked new files, and commit
 __9.12__  feature finish, release 0.1.10, pushed to GitHub  
 
 
+10. Amends before initial launch version
+----------------------------------------
+
+__10.1__  `$ git flow feature start amends`  
+__10.2__  “Visit the International HIV/AIDS Alliance home page” hover text on icon
+__10.3__  added the word ‘SCORE:’ above the score
+__10.4__  speeded up the HIV virus on level 1
+__10.5__  URL on game-over screens is now www.aidsalliance.org/worldAIDSday
+__10.6__  added a link to the ToU in the bottom-left corner of the screen
+__10.7__  created Terms of Use, at ‘tou.html’
+__10.8__  splash screen has age/parental guidance text 
+__10.9__  Alliance branding on game over screen
+__10.10__ feature finish, release 0.1.12, pushed to GitHub  
+
+
+
 Releases
 --------
 
@@ -191,7 +207,8 @@ Releases
 + 0.1.9-1  infection and explosion animations
 + 0.1.9-2  sfx and background music
 + 0.1.9-3  message button background and Cell Survivor logo
-+ 0.1.8    animation, soundtrack, sfx and ‘Cell Survivor’ logo
++ 0.1.10   animation, soundtrack, sfx and ‘Cell Survivor’ logo
++ 0.1.12   first round of amends before initial launch version
 
 
 

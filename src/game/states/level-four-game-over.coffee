@@ -7,9 +7,11 @@ class LevelFourGameOver extends Message
       text: [
         'Not easy was it with no extra help?'
         'Now imagine if you’re young and live with HIV in a country where access to information and help to keep you healthy are very limited.'
-        'For more information about how the International HIV/AIDS Alliance is supporting young people, visit www.aidsalliance.org'
+        'For more information about how the International HIV/AIDS Alliance is supporting young people, visit www.aidsalliance.org/worldAIDSday'
       ]
+      textlink: true
       button: 'PLAY AGAIN'
+      footer: 'alliance-logo'
       next: 'levelOne'
 
   create: ->
