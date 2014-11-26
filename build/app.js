@@ -219,13 +219,21 @@ Level = (function() {
       return;
     }
     this.sfx.popup.play();
+    $('#popup-note').html('');
     $('#popup-text').html(msg + '<br><br>');
     $('#popup-wrap').fadeIn();
-    return setTimeout(((function(_this) {
+    setTimeout(((function(_this) {
       return function() {
         return _this.game.paused = true;
       };
     })(this)), 400);
+    if (this.game.device.desktop) {
+      return setTimeout(((function(_this) {
+        return function() {
+          return $('#popup-note').html('...press spacebar to continue...');
+        };
+      })(this)), 1800);
+    }
   };
 
   Level.prototype.create = function() {
@@ -341,7 +349,7 @@ Level = (function() {
     if (0 === this.game.step && 80 < this.game.frameCount) {
       this.game.step = 1;
       if (this.game.device.desktop) {
-        this.showPopup('Move your mouse to rotate the cell wall.');
+        this.showPopup('Move your mouse or use the arrow keys to rotate the cell wall.');
       } else {
         this.showPopup('Swipe in a circle to rotate the cell wall.');
       }
@@ -489,7 +497,6 @@ Level = (function() {
       }
     } else if (6 === this.game.step && 'hiv' === pathogen.name) {
       this.game.infected = true;
-      this.game.step = 7;
       this.sfx.infected.play();
       setTimeout(((function(_this) {
         return function() {
@@ -510,6 +517,7 @@ Level = (function() {
       })(this)), 1200);
       setTimeout(((function(_this) {
         return function() {
+          _this.game.step = 7;
           return _this.game.state.start('levelTwoComplete');
         };
       })(this)), 1500);
@@ -596,8 +604,14 @@ Message = (function() {
     this.opt = opt;
   }
 
+  Message.prototype.wrapper = function(len) {
+    var regex;
+    regex = '.{1,' + len + '}(\\s|$)' + (false ? '|.{' + len + '}|.+$' : '|\\S+?(\\s|$)');
+    return RegExp(regex, 'g');
+  };
+
   Message.prototype.create = function() {
-    var regex, section, text, x, y, _i, _len, _ref;
+    var section, text, x, y, _i, _len, _ref;
     $(window).trigger('resize');
     this.enterKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
     this.nEnterKey = this.game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_ENTER);
@@ -620,7 +634,6 @@ Message = (function() {
       this.titleTxt.x = this.game.width / 2 - this.titleTxt.textWidth / 2;
       y = y + this.titleTxt.height + 50;
     }
-    regex = '.{1,' + 45 + '}(\\s|$)' + (false ? '|.{' + 45 + '}|.+$' : '|\\S+?(\\s|$)');
     _ref = this.opt.text;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       section = _ref[_i];
@@ -629,7 +642,7 @@ Message = (function() {
           section = section.substr(34);
         }
       }
-      text = section.match(RegExp(regex, 'g')).join('\n');
+      text = section.match(this.wrapper(45)).join('\n');
       this.textTxt = this.game.add.text(x, y, text, {
         font: "24px Arial",
         fill: "#ffffff",
@@ -662,7 +675,7 @@ Message = (function() {
       y += this.footer.height + 10;
     }
     if (this.opt.afterword) {
-      text = this.opt.afterword.match(RegExp(regex, 'g')).join('\n');
+      text = this.opt.afterword.match(this.wrapper(35)).join('\n');
       this.afterword = this.game.add.text(x, y, text, {
         font: "18px Arial",
         fill: "#ffffff",
@@ -895,7 +908,7 @@ GameOver = (function(_super) {
   function GameOver() {
     GameOver.__super__.constructor.call(this, {
       title: 'Game Over',
-      text: ['Contracting HIV need not be ‘Game Over’ but prevention, treatment, and care is needed for young people who too often are overlooked.', 'For more information about how the International HIV/AIDS Alliance is supporting young people, visit www.aidsalliance.org/worldAIDSday'],
+      text: ['Contracting HIV is not game over - young people can be supported to lead healthy and fulfilled lives.', 'For more information about how the International HIV/AIDS Alliance is supporting young people, visit www.aidsalliance.org/worldAIDSday'],
       textlink: true,
       button: 'PLAY AGAIN',
       footer: 'alliance-logo',
@@ -933,7 +946,7 @@ LevelFourGameOver = (function(_super) {
   function LevelFourGameOver() {
     LevelFourGameOver.__super__.constructor.call(this, {
       title: 'Game Over',
-      text: ['Not easy was it with no extra help?', 'Now imagine if you’re young and live with HIV in a country where access to information and help to keep you healthy are very limited.', 'For more information about how the International HIV/AIDS Alliance is supporting young people, visit www.aidsalliance.org/worldAIDSday'],
+      text: ['Not easy was it with no extra help? But that’s what it’s like if you’re young and living with HIV in a country where access to help to keep you healthy is limited.', 'For more information about how the International HIV/AIDS Alliance is supporting young people, visit www.aidsalliance.org/worldAIDSday'],
       textlink: true,
       button: 'PLAY AGAIN',
       footer: 'alliance-logo',
@@ -1005,7 +1018,7 @@ LevelOneComplete = (function(_super) {
   function LevelOneComplete() {
     LevelOneComplete.__super__.constructor.call(this, {
       title: 'Level 1 Complete!',
-      text: ['Feeling under the weather? In some countries if you’re under 19 you may not even be able to take an HIV test to know whether you carry the virus.', 'There are an estimated 2.1 million young people living with HIV – many don’t know that they have the virus and are not yet on life-saving treatment.'],
+      text: ['Feeling under the weather?', 'Worldwide, there are an estimated 2.1 million young people living with HIV – many don’t know that they have the virus and are not on life-saving treatment yet.', 'Now move on to level 2 and use your condoms to help prevent infection.'],
       button: 'START LEVEL 2',
       next: 'levelTwo'
     });
@@ -1078,7 +1091,7 @@ LevelThreeComplete = (function(_super) {
   function LevelThreeComplete() {
     LevelThreeComplete.__super__.constructor.call(this, {
       title: 'Level 3 Complete!',
-      text: ['Think that was hard? Imagine having to take medication twice a day that consists of lots of very large pills, tastes horrible and can cause nasty side effects.', 'That’s the reality for many young people living with HIV who are on treatment.', 'Ready for the next level?'],
+      text: ['Think that was hard?', 'Imagine having to take medication twice a day that can cause side effects.', 'That’s the reality for many young people living with HIV who are on treatment.', 'Ready for the final level?'],
       button: 'START LEVEL 4',
       next: 'levelFour'
     });
@@ -1106,7 +1119,7 @@ LevelThree = (function(_super) {
       slowest: 70,
       fastest: 120,
       spawnRate: .05,
-      complete: 600,
+      complete: 500,
       next: 'levelThreeComplete',
       powerups: ['condom', 'condom', 'condom', 'pill', 'pill', 'pill']
     });
@@ -1132,7 +1145,7 @@ LevelTwoComplete = (function(_super) {
   function LevelTwoComplete() {
     LevelTwoComplete.__super__.constructor.call(this, {
       title: 'Level 2 Complete!',
-      text: ['Well done for using your condoms! If you’re a young person living somewhere like Burundi or Bangladesh, condoms may not be readily available.', 'An estimated 13 billion condoms per year are needed to help halt the spread of HIV and other sexually transmitted infections. The actual number falls far short…', 'Contracting HIV is not ‘Game Over’. Now move on to the next level to try your hand at being a Cell Survivor.'],
+      text: ['Well done for using your condoms! If you’re a young person living somewhere like Burundi or Bangladesh, condoms may not be readily available.', 'Contracting HIV is not ‘game over’.  Now move on to level 3 to find out how treatment can keep people living with HIV healthy.'],
       button: 'START LEVEL 3',
       next: 'levelThree'
     });
@@ -1267,7 +1280,7 @@ Splash = (function(_super) {
       banner: 'cell-survivor-logo',
       text: ['A cell is going about its daily business, protecting the body from intruders...'],
       button: 'PLAY',
-      afterword: 'If you are under 16 years of age, please obtain a parent’s or a guardian’s permission before playing this game.',
+      afterword: 'This game may not be appropriate for younger children.',
       next: 'levelOne'
     });
   }

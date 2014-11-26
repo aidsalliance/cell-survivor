@@ -5,7 +5,7 @@ class GameOver extends Message
     super
       title: 'Game Over'
       text: [
-        'Contracting HIV need not be ‘Game Over’ but prevention, treatment, and care is needed for young people who too often are overlooked.'
+        'Contracting HIV is not game over - young people can be supported to lead healthy and fulfilled lives.'
         'For more information about how the International HIV/AIDS Alliance is supporting young people, visit www.aidsalliance.org/worldAIDSday'
       ]
       textlink: true

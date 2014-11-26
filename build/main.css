@@ -238,40 +238,47 @@ body.hide-overflow {
   margin-top: -2%;
   padding: 0 20px;
 }
+/* line 209, ../src/sass/main.scss */
+#popup-wrap #popup-inner #popup-note {
+  margin-top: -2em;
+  padding: 2% 20px 0 20px;
+  color: #808080;
+  font-size: 50%;
+}
 
-/* line 212, ../src/sass/main.scss */
+/* line 218, ../src/sass/main.scss */
 .bold-bitmap {
   font: 32px 'Press Start 2P', cursive;
   line-height: 1.4;
   text-shadow: #000 0 4px;
 }
 
-/* line 217, ../src/sass/main.scss */
+/* line 223, ../src/sass/main.scss */
 .bold-bitmap-small {
   font: 32px 'Press Start 2P', cursive;
   line-height: 0.7;
   text-shadow: #000 0 2px;
 }
 
-/* line 223, ../src/sass/main.scss */
+/* line 229, ../src/sass/main.scss */
 .green {
   color: #8cc63f;
   text-shadow: #008053 0 4px;
 }
 
-/* line 227, ../src/sass/main.scss */
+/* line 233, ../src/sass/main.scss */
 .aqua {
   color: #009ac8;
   text-shadow: #008053 0 4px;
 }
 
-/* line 231, ../src/sass/main.scss */
+/* line 237, ../src/sass/main.scss */
 .pink {
   color: #f8c1d9;
   text-shadow: #d60c8c 0 4px;
 }
 
-/* line 235, ../src/sass/main.scss */
+/* line 241, ../src/sass/main.scss */
 .blue {
   color: #8ed8f8;
   text-shadow: #009ac8 0 4px;
