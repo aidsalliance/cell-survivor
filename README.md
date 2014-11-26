@@ -213,6 +213,7 @@ Releases
 + 0.1.12   first round of amends before initial launch version
 + 0.1.14   hotfix ‘tou.html’ links
 + 0.1.16   icons, metadata, Facebook and Twitter
++ 0.1.18   minor fixes to the HTML files
 
 
 
