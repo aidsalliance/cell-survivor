@@ -11,4 +11,8 @@ class LevelOneComplete extends Message
       button: 'START LEVEL 2'
       next: 'levelTwo'
 
+  create: ->
+    super
+    @game.suppressBasicPopups = true # don’t show the first three popups
+
 module.exports = LevelOneComplete

@@ -10,6 +10,13 @@ class Message
   create: ->
     $(window).trigger 'resize' # ensure ‘onResize()’ is run
 
+    @enterKey  = @game.input.keyboard.addKey Phaser.Keyboard.ENTER
+    @nEnterKey = @game.input.keyboard.addKey Phaser.Keyboard.NUMPAD_ENTER
+    @spaceKey  = @game.input.keyboard.addKey Phaser.Keyboard.SPACEBAR
+    @enterKey.onDown.add  @onDown, @
+    @nEnterKey.onDown.add @onDown, @
+    @spaceKey.onDown.add  @onDown, @
+
     x = @game.width / 2
     y = 50
 
@@ -30,6 +37,12 @@ class Message
     regex = '.{1,' + 45 + '}(\\s|$)' + (if false then '|.{' + 45 + '}|.+$' else '|\\S+?(\\s|$)')
 
     for section in @opt.text
+
+      # Qik n dirty removal of ‘Well done for using your condoms! ’ where none were used
+      if -1 != section.indexOf('Well done for using your condoms! ')
+        if 3 == $('img[src="assets/images/icon-condom.gif"]').length
+          section = section.substr 34
+
       text = section.match( RegExp(regex, 'g') ).join('\n')
       @textTxt = @game.add.text x, y, text, { font: "24px Arial", fill: "#ffffff", align: "center" }
       @textTxt.anchor.setTo 0.5, 0
