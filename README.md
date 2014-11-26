@@ -199,7 +199,8 @@ __10.15__ hide first 3 popups if player reaches level 2
 __10.16__ keyboard input for rotation, and dismissing popups and levels  
 __10.17__ hotfix 0.1.20, pushed to GitHub  
 __10.18__ text amends, hotfix 0.1.22, pushed to GitHub  
-__10.19__ amend Alliance header-icon link, cleaner boot, hotfix 0.1.26  
+__10.19__ screen is kept clean during boot, hotfix 0.1.26  
+__10.20__ amend Alliance header-icon link, hotfix 0.1.28  
 
 
 
@@ -221,7 +222,8 @@ Releases
 + 0.1.20   keyboard input
 + 0.1.22   text amends
 + 0.1.24   qik fix
-+ 0.1.26   amend header link
++ 0.1.26   cleaner boot
++ 0.1.28   amend header link
 
 
 
