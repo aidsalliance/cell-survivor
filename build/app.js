@@ -215,9 +215,14 @@ Level = (function() {
   };
 
   Level.prototype.showPopup = function(msg) {
+    console.log(this.game.furthestStep);
     if (this.game.suppressBasicPopups && 3 >= this.game.step) {
       return;
     }
+    if (this.game.furthestStep >= this.game.step) {
+      return;
+    }
+    this.game.furthestStep = Math.max(this.game.furthestStep, this.game.step);
     this.sfx.popup.play();
     $('#popup-note').html('');
     $('#popup-text').html(msg + '<br><br>');
@@ -258,6 +263,10 @@ Level = (function() {
     this.rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
     this.lastInputPosX = 0;
     this.lastInputPosY = 0;
+    this.cKey = this.game.input.keyboard.addKey(Phaser.Keyboard.C);
+    this.pKey = this.game.input.keyboard.addKey(Phaser.Keyboard.P);
+    this.cKey.onDown.add(this.clickCondom, this);
+    this.pKey.onDown.add(this.clickPill, this);
     this.enterKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
     this.nEnterKey = this.game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_ENTER);
     this.spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -308,6 +317,24 @@ Level = (function() {
     this.pathogens.physicsBodyType = Phaser.Physics.ARCADE;
     this.pathogens.classType = Pathogen;
     return this.buildWall();
+  };
+
+  Level.prototype.clickCondom = function() {
+    var $firstButton;
+    $firstButton = $("#footer img[src='assets/images/icon-condom.gif']");
+    if (0 === $firstButton.length) {
+      return;
+    }
+    return $firstButton != null ? $firstButton.first().trigger('click') : void 0;
+  };
+
+  Level.prototype.clickPill = function() {
+    var $firstButton;
+    $firstButton = $("#footer img[src='assets/images/icon-pill.gif']");
+    if (0 === $firstButton.length) {
+      return;
+    }
+    return $firstButton != null ? $firstButton.first().trigger('click') : void 0;
   };
 
   Level.prototype.rotateWall = function() {
@@ -445,7 +472,7 @@ Level = (function() {
           pathogen.loadTexture('hiv-virus-main');
           pathogen.name = 'hiv';
           pathogen.scale.setTo(3, 3);
-          if (3 === this.game.step) {
+          if ('levelOne' === this.game.state.current) {
             this.showPopup('Watch out for the <span class="aqua">HIV virus</span>. <br>It will infect the cell if it touches!');
             this.game.step = 4;
             if (this.isPortrait) {
@@ -463,7 +490,11 @@ Level = (function() {
             }
           }
           if (5 === this.game.step) {
-            this.showPopup('Defend the cell against HIV by clicking one of the <span class="pink">condom buttons</span>.');
+            if (this.game.device.desktop) {
+              this.showPopup('Defend the cell against HIV by clicking one of the <span class="pink">condom buttons</span>, or press ‘c’.');
+            } else {
+              this.showPopup('Defend the cell against HIV by clicking one of the <span class="pink">condom buttons</span>.');
+            }
             return this.game.step = 6;
           }
         }
@@ -531,7 +562,11 @@ Level = (function() {
         this.showPopup("Oh no! <span class='" + pathogen.name + "'>" + pathogen.name + "</span> viruses destroy <span class='" + brick.name + "'>" + brick.name + "</span> sections of the cell wall (and vice versa).");
       } else if (7 === this.game.step) {
         this.game.step = 8;
-        this.showPopup('Click on an <span class="blue">antiretroviral pill</span> to repair the cell wall.');
+        if (this.game.device.desktop) {
+          this.showPopup('Click on an <span class="blue">antiretroviral pill</span> or press ‘p’ to repair the cell wall.');
+        } else {
+          this.showPopup('Click on an <span class="blue">antiretroviral pill</span> to repair the cell wall.');
+        }
       }
     }
     this.explode(pathogen);
@@ -879,6 +914,7 @@ Boot = (function() {
   Boot.prototype.create = function() {
     this.game.input.maxPointers = 1;
     this.game.state.start('preloader');
+    this.game.furthestStep = 0;
     $('#popup-dismiss').on('click', (function(_this) {
       return function() {
         _this.game.paused = false;

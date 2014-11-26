@@ -59,7 +59,10 @@ class Level
     @sfx.pill.play()
 
   showPopup: (msg) ->
-    if @game.suppressBasicPopups and 3 >= @game.step then return # don’t show the first three popups after the player has reached level 2
+    console.log @game.furthestStep
+    if @game.suppressBasicPopups and 3 >= @game.step then return # don’t show the first three popups after the player has reached level 2 @todo remove this old system?
+    if @game.furthestStep >= @game.step then return # don’t show the same popup twice inthe player’s session
+    @game.furthestStep = Math.max @game.furthestStep, @game.step
     @sfx.popup.play()
     $ '#popup-note'
       .html ''
@@ -75,7 +78,6 @@ class Level
         $ '#popup-note'
           .html '...press spacebar to continue...')
         , 1800
-
 
 
   create: ->
@@ -101,6 +103,11 @@ class Level
     @rightKey  = @game.input.keyboard.addKey Phaser.Keyboard.RIGHT
     @lastInputPosX = 0
     @lastInputPosY = 0
+
+    @cKey      = @game.input.keyboard.addKey Phaser.Keyboard.C
+    @pKey      = @game.input.keyboard.addKey Phaser.Keyboard.P
+    @cKey.onDown.add @clickCondom, @
+    @pKey.onDown.add @clickPill, @
 
     @enterKey  = @game.input.keyboard.addKey Phaser.Keyboard.ENTER
     @nEnterKey = @game.input.keyboard.addKey Phaser.Keyboard.NUMPAD_ENTER
@@ -156,6 +163,18 @@ class Level
     @pathogens.classType = Pathogen
 
     @buildWall()
+
+
+  clickCondom: -> # player has pressed the 'c' key
+    $firstButton = ($ "#footer img[src='assets/images/icon-condom.gif']")
+    if 0 == $firstButton.length then return
+    $firstButton?.first().trigger 'click'
+
+
+  clickPill: -> # player has pressed the 'p' key
+    $firstButton = ($ "#footer img[src='assets/images/icon-pill.gif']")
+    if 0 == $firstButton.length then return
+    $firstButton?.first().trigger 'click'
 
 
   rotateWall: ->
@@ -287,7 +306,7 @@ class Level
           pathogen.loadTexture 'hiv-virus-main'
           pathogen.name = 'hiv'
           pathogen.scale.setTo 3, 3
-          if 3 == @game.step
+          if 'levelOne' == @game.state.current
             @showPopup 'Watch out for the <span class="aqua">HIV virus</span>. <br>It will infect the cell if it touches!'
             @game.step = 4
             if @isPortrait
@@ -301,7 +320,10 @@ class Level
                 x: 30
                 y: 60
           if 5 == @game.step
-            @showPopup 'Defend the cell against HIV by clicking one of the <span class="pink">condom buttons</span>.'
+            if @game.device.desktop
+              @showPopup 'Defend the cell against HIV by clicking one of the <span class="pink">condom buttons</span>, or press ‘c’.'
+            else
+              @showPopup 'Defend the cell against HIV by clicking one of the <span class="pink">condom buttons</span>.'
             @game.step = 6
 
 
@@ -363,7 +385,11 @@ class Level
       # Eighth popup message (on level 3)
       else if 7 == @game.step
         @game.step = 8
-        @showPopup 'Click on an <span class="blue">antiretroviral pill</span> to repair the cell wall.'
+        if @game.device.desktop
+          @showPopup 'Click on an <span class="blue">antiretroviral pill</span> or press ‘p’ to repair the cell wall.'
+        else
+          @showPopup 'Click on an <span class="blue">antiretroviral pill</span> to repair the cell wall.'
+          
 
     @explode pathogen
 

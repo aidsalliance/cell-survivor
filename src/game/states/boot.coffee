@@ -9,6 +9,7 @@ class Boot
   create: ->
     @game.input.maxPointers = 1
     @game.state.start 'preloader'
+    @game.furthestStep = 0
     $ '#popup-dismiss'
       .on 'click', =>
         @game.paused = false
