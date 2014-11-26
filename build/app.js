@@ -748,6 +748,10 @@ resizeLandscape = function(width, height) {
     width: (height - 20) / 7,
     height: height - 20
   });
+  $('#fb-iframe').css({
+    width: (height - 20) / 28,
+    height: (height - 20) / 28
+  });
   $('.wrap #main canvas').css({
     width: height,
     height: height
