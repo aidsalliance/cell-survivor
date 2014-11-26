@@ -22,6 +22,14 @@ resizePortrait = (width, height) ->
     .css
       width:  width
       height: width
+  $ '#textlink'
+    .css
+      top: (height - width) / 2 + (width * .5)
+      left: 0
+      width: '100%'
+  $ '#textlink a'
+    .css
+      height: width * .1
   $ '#popup-wrap'
     .css
       top: (height - width) / 2 + 40
@@ -36,6 +44,9 @@ resizePortrait = (width, height) ->
   $ '.bold-bitmap'
     .css
       'font-size': width / 25
+  $ '.bold-bitmap-small'
+    .css
+      'font-size': height / 40
 
 
 resizeLandscape = (width, height) ->
@@ -50,6 +61,14 @@ resizeLandscape = (width, height) ->
     .css
       width:  height
       height: height
+  $ '#textlink'
+    .css
+      top: height * .5
+      left: (width - height) / 2 + (height * .1)
+      width: height * .8
+  $ '#textlink a'
+    .css
+      height: height * .1
   $ '#popup-wrap'
     .css
       top: height * .1 # 10%
@@ -64,6 +83,9 @@ resizeLandscape = (width, height) ->
   $ '.bold-bitmap'
     .css
       'font-size': height / 25
+  $ '.bold-bitmap-small'
+    .css
+      'font-size': height / 40
 
 
 # Call our resize function each time the window dimensions change @todo ensure that mobile orientation change fires this event

@@ -8,13 +8,13 @@ class Preloader
     @asset.anchor.setTo 0.5, 0.5
     @load.onLoadComplete.addOnce @onLoadComplete, this
     @load.setPreloadSprite @asset
-    @load.image 'player', 'assets/images/player.png'
     @load.bitmapFont 'minecraftia', 'assets/fonts/minecraftia.png', 'assets/fonts/minecraftia.xml'
 
-    @load.atlas 'breakin', 'assets/images/breakin-v2.png', 'assets/images/breakin-v2.json'
+    # @load.atlas 'breakin', 'assets/images/breakin-v2.png', 'assets/images/breakin-v2.json'
 
     @load.image 'button-background'              , 'assets/images/button-background-v2.gif'
     @load.image 'cell-survivor-logo'             , 'assets/images/cell-survivor-logo-v1.gif'
+    @load.image 'alliance-logo'                  , 'assets/images/alliance-logo-v1.gif'
     @load.image 'cellfield'                      , 'assets/images/bkgnd-v2.jpg'
     @load.image 'vein-wall-header'               , 'assets/images/vein-wall-header.gif'
     @load.image 'vein-wall-footer'               , 'assets/images/vein-wall-footer.gif'

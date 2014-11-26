@@ -73,6 +73,7 @@ class Level
 
   create: ->
     $(window).trigger 'resize' # ensure ‘onResize()’ is run
+    $('#textlink').hide()
 
     @sfx =
       pathogen  : @game.add.audio 'pathogen'
@@ -255,13 +256,13 @@ class Level
             if @isPortrait
               pathogen.y = @world.centerY + 100
               pathogen.body.velocity =
-                x: 40
-                y: 20
+                x: 60
+                y: 30
             else
               pathogen.x = @world.centerX + 100
               pathogen.body.velocity =
-                x: 20
-                y: 40
+                x: 30
+                y: 60
           if 5 == @game.step
             @showPopup 'Defend the cell against HIV by clicking one of the <span class="pink">condom buttons</span>.'
             @game.step = 6

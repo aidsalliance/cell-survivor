@@ -8,15 +8,15 @@
   <link rel="stylesheet" href="main.css">
 </head>
 
-<body>
+<body class="hide-overflow">
   <div class="wrap">
     <div>
       <div id="header" class="frame">
         <div>
-          <span><span id="score" class="bold-bitmap">0</span><img id="score-placeholder" src="assets/images/px.gif"></span>
+          <span><span id="score-label" class="bold-bitmap-small">SCORE:</span><span id="score" class="bold-bitmap">0</span><img id="score-placeholder" src="assets/images/px.gif"></span>
           <img src="assets/images/icon-blank.gif">
-          <a title="Visit the AIDS Alliance homepage"     href="http://www.aidsalliance.org/"><img src="assets/images/icon-aa.gif"></a>
-          <a title="Follow AIDS Alliance on Facebook"     href="https://www.facebook.com/pages/International-HIVAIDS-Alliance/140226915992252"><img src="assets/images/icon-facebook.gif"></a>
+          <a title="Visit the International HIV/AIDS Alliance home page"     href="http://www.aidsalliance.org/"><img src="assets/images/icon-aa.gif"></a>
+          <a title="Follow the International HIV/AIDS Alliance on Facebook"     href="https://www.facebook.com/pages/International-HIVAIDS-Alliance/140226915992252"><img src="assets/images/icon-facebook.gif"></a>
           <a title="Tweet about Cell Survivor"            href="https://twitter.com/share" class="twitter-share-button" data-via="theaidsalliance" data-count="none" data-hashtags="CellSurvivor"><img src="assets/images/icon-twitter.gif"></a>
           <a title="Find out how Cell Survivor was built" href="https://github.com/aidsalliance/cell-survivor"><img src="assets/images/icon-github.gif"></a>
         </div>
@@ -42,6 +42,9 @@
       <div id="popup-text">Hi, this is popup text!</div>
     </div>
   </div>
+  <div id="textlink"><a href="http://www.aidsalliance.org/worldAIDSday"></a></div>
+  <div id="tou"><a title="Read the Terms of Use document" href="./tou.html">Terms of Use</a></div>
+
   <script src="app.js"></script>
   <!--<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>-->
 </body>
