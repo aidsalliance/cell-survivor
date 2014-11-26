@@ -36,6 +36,17 @@ class Preloader
     @load.image 'nucleus-infected-2'             , 'assets/images/nucleus-infected-2.gif'
     @load.image 'nucleus-infected-3'             , 'assets/images/nucleus-infected-3.gif'
 
+    @load.audio 'brick'                          , 'assets/audio/126428__cabeeno-rossley__toss-throw.wav'
+    @load.audio 'pathogen'                       , 'assets/audio/150216__killkhan__menu-move-1-short.mp3'
+    @load.audio 'shield-up'                      , 'assets/audio/ZipUp-Mark_E_B-8079_hifi.mp3'
+    @load.audio 'shield-down'                    , 'assets/audio/150218__killkhan__menu-select-2.mp3'
+    @load.audio 'pill'                           , 'assets/audio/58919__mattwasser__coin-up.mp3'
+    @load.audio 'popup'                          , 'assets/audio/181602__coby12388__enerjump.wav'
+    @load.audio 'infected'                       , 'assets/audio/150216__killkhan__menu-move-1.mp3'
+    @load.audio 'end-of-level'                   , 'assets/audio/RewardSo-Mark_E_B-8078_hifi.mp3'
+    @load.audio 'game-over'                      , 'assets/audio/43696__notchfilter__game-over01.wav'
+    @load.audio 'audio-track'                    , 'assets/audio/Glass_Boy_-_09_-_Electronic_Yerba_Mate-short.mp3'
+
   create: ->
     @asset.cropEnabled = false
 

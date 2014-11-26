@@ -168,6 +168,11 @@ __9.1__   `$ git flow feature start animation`
 __9.2__   simple animation when HIV infects the nucleus  
 __9.3__   `explode()` method works on viruses, bricks, and the nucleus  
 __9.4__   bumped version to '0.1.9-1', tracked new files, and commit  
+__9.5__   added colour to popup text  
+__9.6__   added ten sfx, for in-game actions  
+__9.7__   added background music  
+__9.8__   After a player reaches level 3, the first three popups are never shown again  
+__9.9__   bumped version to '0.1.9-2', tracked new files, and commit  
 
 
 Releases
@@ -181,6 +186,7 @@ Releases
 + 0.1.6    vein walls, frame icons, responsive layout
 + 0.1.8    powerups and popups
 + 0.1.9-1  infection and explosion animations
++ 0.1.9-2  sfx and background music
 
 
 
