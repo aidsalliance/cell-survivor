@@ -5,8 +5,7 @@ class LevelFourGameOver extends Message
     super
       title: 'Game Over'
       text: [
-        'Not easy was it with no extra help?'
-        'Now imagine if you’re young and live with HIV in a country where access to information and help to keep you healthy are very limited.'
+        'Not easy was it with no extra help? But that’s what it’s like if you’re young and living with HIV in a country where access to help to keep you healthy is limited.'
         'For more information about how the International HIV/AIDS Alliance is supporting young people, visit www.aidsalliance.org/worldAIDSday'
       ]
       textlink: true

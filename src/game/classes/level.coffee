@@ -61,6 +61,8 @@ class Level
   showPopup: (msg) ->
     if @game.suppressBasicPopups and 3 >= @game.step then return # don’t show the first three popups after the player has reached level 2
     @sfx.popup.play()
+    $ '#popup-note'
+      .html ''
     $ '#popup-text'
       .html msg + '<br><br>'
     $ '#popup-wrap'
@@ -68,6 +70,11 @@ class Level
     setTimeout (=>
       @game.paused = true)
       , 400
+    if @game.device.desktop
+      setTimeout (=>
+        $ '#popup-note'
+          .html '...press spacebar to continue...')
+        , 1800
 
 
 
@@ -190,7 +197,7 @@ class Level
     if 0 == @game.step and 80 < @game.frameCount
       @game.step = 1
       if @game.device.desktop
-        @showPopup 'Move your mouse to rotate the cell wall.'
+        @showPopup 'Move your mouse or use the arrow keys to rotate the cell wall.'
       else
         @showPopup 'Swipe in a circle to rotate the cell wall.'
 
@@ -325,7 +332,6 @@ class Level
 
     else if 6 == @game.step and 'hiv' == pathogen.name
       @game.infected = true
-      @game.step = 7
       @sfx.infected.play()
       setTimeout (=>
         @nucleus.loadTexture 'nucleus-infected-1')
@@ -339,7 +345,7 @@ class Level
         @nucleus.loadTexture 'nucleus-infected-3')
         , 1200
       setTimeout (=>
-        # @game.paused = false
+        @game.step = 7
         @game.state.start 'levelTwoComplete')
         , 1500
       return # don’t destroy the HIV 

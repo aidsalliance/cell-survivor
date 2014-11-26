@@ -8,7 +8,7 @@ class Splash extends Message
         'A cell is going about its daily business, protecting the body from intruders...'
       ]
       button: 'PLAY'
-      afterword: 'If you are under 16 years of age, please obtain a parent’s or a guardian’s permission before playing this game.'
+      afterword: 'This game may not be appropriate for younger children.'
       next: 'levelOne'
 
   create: ->
