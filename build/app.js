@@ -890,6 +890,7 @@ window.onload = function() {
   game.state.add('levelTwoComplete', require('./states/level-two-complete'));
   game.state.add('levelThree', require('./states/level-three'));
   game.state.add('levelThreeComplete', require('./states/level-three-complete'));
+  game.state.add('levelThreeGameOver', require('./states/level-three-game-over'));
   game.state.add('levelFour', require('./states/level-four'));
   game.state.add('levelFourGameOver', require('./states/level-four-game-over'));
   game.state.add('gameOver', require('./states/game-over'));
@@ -898,7 +899,7 @@ window.onload = function() {
 };
 
 
-},{"./frame/responsive":8,"./states/boot":10,"./states/game-over":11,"./states/level-four":13,"./states/level-four-game-over":12,"./states/level-one":15,"./states/level-one-complete":14,"./states/level-three":17,"./states/level-three-complete":16,"./states/level-two":19,"./states/level-two-complete":18,"./states/preloader":20,"./states/splash":21,"phaser":3}],10:[function(require,module,exports){
+},{"./frame/responsive":8,"./states/boot":10,"./states/game-over":11,"./states/level-four":13,"./states/level-four-game-over":12,"./states/level-one":15,"./states/level-one-complete":14,"./states/level-three":18,"./states/level-three-complete":16,"./states/level-three-game-over":17,"./states/level-two":20,"./states/level-two-complete":19,"./states/preloader":21,"./states/splash":22,"phaser":3}],10:[function(require,module,exports){
 var $, Boot;
 
 $ = require('jquery');
@@ -1141,6 +1142,44 @@ module.exports = LevelThreeComplete;
 
 
 },{"../classes/message":6}],17:[function(require,module,exports){
+var LevelThreeGameOver, Message,
+  __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+Message = require('../classes/message');
+
+LevelThreeGameOver = (function(_super) {
+  __extends(LevelThreeGameOver, _super);
+
+  function LevelThreeGameOver() {
+    LevelThreeGameOver.__super__.constructor.call(this, {
+      title: 'Game Over',
+      text: ['Shame you didn’t make it to the 4th and final level! Contracting HIV is not game over however - young people can be supported to lead healthy and fulfilled lives.', 'For more information about how the International HIV/AIDS Alliance is supporting young people, visit www.aidsalliance.org/worldAIDSday'],
+      textlink: true,
+      button: 'PLAY AGAIN',
+      footer: 'alliance-logo',
+      next: 'levelOne'
+    });
+  }
+
+  LevelThreeGameOver.prototype.create = function() {
+    LevelThreeGameOver.__super__.create.apply(this, arguments);
+    this.game.step = 0;
+    this.game.score = 0;
+    this.game.frameCount = 0;
+    this.game.hasDefended = false;
+    this.game.hasLostWall = false;
+    return this.game.infected = false;
+  };
+
+  return LevelThreeGameOver;
+
+})(Message);
+
+module.exports = LevelThreeGameOver;
+
+
+},{"../classes/message":6}],18:[function(require,module,exports){
 var Level, LevelThree,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -1157,6 +1196,7 @@ LevelThree = (function(_super) {
       spawnRate: .05,
       complete: 500,
       next: 'levelThreeComplete',
+      gameOver: 'levelThreeGameOver',
       powerups: ['condom', 'condom', 'condom', 'pill', 'pill', 'pill']
     });
   }
@@ -1168,7 +1208,7 @@ LevelThree = (function(_super) {
 module.exports = LevelThree;
 
 
-},{"../classes/level":5}],18:[function(require,module,exports){
+},{"../classes/level":5}],19:[function(require,module,exports){
 var LevelTwoComplete, Message,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -1181,7 +1221,7 @@ LevelTwoComplete = (function(_super) {
   function LevelTwoComplete() {
     LevelTwoComplete.__super__.constructor.call(this, {
       title: 'Level 2 Complete!',
-      text: ['Well done for using your condoms! If you’re a young person living somewhere like Burundi or Bangladesh, condoms may not be readily available.', 'Contracting HIV is not ‘game over’.  Now move on to level 3 to find out how treatment can keep people living with HIV healthy.'],
+      text: ['Well done for using your condoms! If you’re a young person living somewhere like Burundi or Bangladesh, condoms may not be readily available.', 'Now move on to level 3 to find out how treatment can keep people living with HIV healthy.'],
       button: 'START LEVEL 3',
       next: 'levelThree'
     });
@@ -1194,7 +1234,7 @@ LevelTwoComplete = (function(_super) {
 module.exports = LevelTwoComplete;
 
 
-},{"../classes/message":6}],19:[function(require,module,exports){
+},{"../classes/message":6}],20:[function(require,module,exports){
 var Level, LevelTwo,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -1227,7 +1267,7 @@ LevelTwo = (function(_super) {
 module.exports = LevelTwo;
 
 
-},{"../classes/level":5}],20:[function(require,module,exports){
+},{"../classes/level":5}],21:[function(require,module,exports){
 var Preloader;
 
 Preloader = (function() {
@@ -1301,7 +1341,7 @@ Preloader = (function() {
 module.exports = Preloader;
 
 
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 var $, Message, Splash,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };

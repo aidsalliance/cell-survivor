@@ -203,6 +203,7 @@ __10.19__ screen is kept clean during boot, hotfix 0.1.26
 __10.20__ amended Alliance header-icon link, hotfix 0.1.28  
 __10.21__ added Google Analytics  
 __10.22__ never see a popup twice, hotfix 0.1.30  
+__10.23__ added special game-over for Level three, hotfix 0.1.32  
 
 
 
@@ -227,6 +228,6 @@ Releases
 + 0.1.26   cleaner boot
 + 0.1.28   amend header link
 + 0.1.30   Google Analytics, and never see a popup twice
-
++ 0.1.32   special game-over for Level three
 
 

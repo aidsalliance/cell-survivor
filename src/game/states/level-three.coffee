@@ -8,6 +8,7 @@ class LevelThree extends Level
       spawnRate : .05
       complete  : 500 # will be added to the current score in `create()`
       next      : 'levelThreeComplete'
+      gameOver  : 'levelThreeGameOver'
       powerups  : ['condom','condom','condom','pill','pill','pill']
 
 module.exports = LevelThree
