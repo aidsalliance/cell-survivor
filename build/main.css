@@ -162,3 +162,27 @@ html, body {
   line-height: 1.4;
   text-shadow: #000 0 4px;
 }
+
+/* line 148, ../src/sass/main.scss */
+.green {
+  color: #8cc63f;
+  text-shadow: #008053 0 4px;
+}
+
+/* line 152, ../src/sass/main.scss */
+.aqua {
+  color: #009ac8;
+  text-shadow: #008053 0 4px;
+}
+
+/* line 156, ../src/sass/main.scss */
+.pink {
+  color: #f8c1d9;
+  text-shadow: #d60c8c 0 4px;
+}
+
+/* line 160, ../src/sass/main.scss */
+.blue {
+  color: #8ed8f8;
+  text-shadow: #009ac8 0 4px;
+}

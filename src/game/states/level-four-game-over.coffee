@@ -12,5 +12,14 @@ class LevelFourGameOver extends Message
       button: 'PLAY AGAIN'
       next: 'levelOne'
 
+  create: ->
+    super
+    @game.step = 0
+    @game.score = 0
+    @game.frameCount = 0
+    @game.hasDefended = false
+    @game.hasLostWall = false
+    @game.infected = false
+
 module.exports = LevelFourGameOver
 

@@ -19,6 +19,7 @@ class LevelOne extends Level
     @game.frameCount = 0
     @game.hasDefended = false
     @game.hasLostWall = false
+    @game.infected = false
     $ '#score'
       .text @game.score
 

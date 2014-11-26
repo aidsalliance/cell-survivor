@@ -146,6 +146,16 @@ Level = (function() {
 
   Level.prototype.powerup = function(el) {
     var powerup, _ref;
+    if (!{
+      'levelTwo': 1,
+      'levelThree': 1,
+      'levelFour': 1
+    }[this.game.state.current]) {
+      return;
+    }
+    if (this.game.paused) {
+      return;
+    }
     powerup = (_ref = ($(el).attr('src')).split('-')[1]) != null ? _ref.split('.')[0] : void 0;
     if ('condom' === powerup) {
       this.shieldUp();
@@ -168,11 +178,12 @@ Level = (function() {
     this.game.shield.lineStyle(2, 0x0088ff);
     this.game.shield.drawCircle(0, 0, 262);
     this.game.shield.lineStyle(2, 0x00ffff);
-    return this.game.shield.drawCircle(0, 0, 264);
+    this.game.shield.drawCircle(0, 0, 264);
+    return this.sfx.shieldUp.play();
   };
 
   Level.prototype.buildWall = function() {
-    var adjacent, angle, brick, opposite, spec, _i, _ref, _results;
+    var adjacent, angle, brick, opposite, spec, _i, _ref;
     if ((_ref = this.game.bricks) != null) {
       _ref.destroy();
     }
@@ -182,7 +193,6 @@ Level = (function() {
     this.game.bricks.classType = Brick;
     this.game.bricks.x = this.world.centerX;
     this.game.bricks.y = this.world.centerY;
-    _results = [];
     for (angle = _i = 0; _i <= 19; angle = ++_i) {
       opposite = Math.sin(angle * Math.PI / 10) * 110;
       adjacent = Math.cos(angle * Math.PI / 10) * 110;
@@ -199,20 +209,39 @@ Level = (function() {
       brick.angle = 180 + angle * -360 / 20;
       brick.smoothed = false;
       brick.anchor.setTo(.5, .5);
-      _results.push(brick.body.immovable = true);
+      brick.body.immovable = true;
     }
-    return _results;
+    return this.sfx.pill.play();
   };
 
   Level.prototype.showPopup = function(msg) {
-    this.game.paused = true;
+    if (this.game.suppressBasicPopups && 3 >= this.game.step) {
+      return;
+    }
+    this.sfx.popup.play();
     $('#popup-text').html(msg + '<br><br>');
-    return $('#popup-wrap').fadeIn();
+    $('#popup-wrap').fadeIn();
+    return setTimeout(((function(_this) {
+      return function() {
+        return _this.game.paused = true;
+      };
+    })(this)), 400);
   };
 
   Level.prototype.create = function() {
     var i, powerup, self, _base, _i, _len, _ref;
     $(window).trigger('resize');
+    this.sfx = {
+      pathogen: this.game.add.audio('pathogen'),
+      brick: this.game.add.audio('brick'),
+      shieldUp: this.game.add.audio('shield-up'),
+      shieldDown: this.game.add.audio('shield-down'),
+      pill: this.game.add.audio('pill'),
+      popup: this.game.add.audio('popup'),
+      infected: this.game.add.audio('infected'),
+      endOfLevel: this.game.add.audio('end-of-level'),
+      gameOver: this.game.add.audio('game-over')
+    };
     this.relativeComplete = this.game.score + this.opt.complete;
     self = this;
     _ref = (_base = this.opt).powerups != null ? _base.powerups : _base.powerups = [];
@@ -246,7 +275,7 @@ Level = (function() {
       this.endZone = this.world.height - 36;
     }
     this.background.scale.setTo(6, 6);
-    this.nucleus = this.add.sprite(this.world.centerX, this.world.centerY, 'nucleus-main');
+    this.nucleus = this.add.sprite(this.world.centerX, this.world.centerY, this.game.infected ? 'nucleus-infected-1' : 'nucleus-main');
     this.physics.enable(this.nucleus, Phaser.Physics.ARCADE);
     this.nucleus.smoothed = false;
     this.nucleus.scale.setTo(3, 3);
@@ -289,14 +318,17 @@ Level = (function() {
       }
     } else if (9 === this.game.step && 80 < this.game.frameCount) {
       this.game.step = 10;
-      this.showPopup('Oh no! The supply of condoms and pills has run out, this will be really challenging...');
+      this.showPopup('Oh no! The supply of <span class="pink">condoms</span> and <span class="blue">pills</span> has run out, this will be really challenging...');
     }
     if (this.isPortrait) {
       this.pathogens.forEach((function(_this) {
         return function(pathogen) {
           if ((pathogen != null ? pathogen.x : void 0) >= _this.endZone) {
             if (_this.opt.hivExit && 'hiv' === pathogen.name) {
-              _this.game.state.start(_this.opt.next);
+              _this.sfx.endOfLevel.play();
+              setTimeout((function() {
+                return _this.game.state.start(_this.opt.next);
+              }), 600);
             }
             return pathogen.destroy();
           }
@@ -307,7 +339,10 @@ Level = (function() {
         return function(pathogen) {
           if ((pathogen != null ? pathogen.y : void 0) >= _this.endZone) {
             if (_this.opt.hivExit && 'hiv' === pathogen.name) {
-              _this.game.state.start(_this.opt.next);
+              _this.sfx.endOfLevel.play();
+              setTimeout((function() {
+                return _this.game.state.start(_this.opt.next);
+              }), 600);
             }
             return pathogen.destroy();
           }
@@ -315,6 +350,7 @@ Level = (function() {
       })(this));
     }
     if ((this.game.shieldTimer != null) && 0 > --this.game.shieldTimer) {
+      this.sfx.shieldDown.play();
       delete this.game.shieldTimer;
       if ((_ref = this.game.shield) != null) {
         _ref.destroy();
@@ -324,11 +360,14 @@ Level = (function() {
       return this.pathogens.forEach((function(_this) {
         return function(pathogen) {
           var dx, dy, hyp;
-          dx = Math.abs((pathogen != null ? pathogen.x : void 0) - _this.world.centerX);
+          if (pathogen == null) {
+            return;
+          }
+          dx = Math.abs(pathogen.x - _this.world.centerX);
           if (160 < dx) {
             return;
           }
-          dy = Math.abs((pathogen != null ? pathogen.y : void 0) - _this.world.centerY);
+          dy = Math.abs(pathogen.y - _this.world.centerY);
           if (160 < dy) {
             return;
           }
@@ -336,7 +375,7 @@ Level = (function() {
           if (160 < hyp) {
             return;
           }
-          return pathogen != null ? pathogen.destroy() : void 0;
+          return _this.explode(pathogen);
         };
       })(this));
     } else {
@@ -370,7 +409,7 @@ Level = (function() {
           pathogen.name = 'hiv';
           pathogen.scale.setTo(3, 3);
           if (3 === this.game.step) {
-            this.showPopup('Watch out for the HIV virus: it will infect the cell if it touches!');
+            this.showPopup('Watch out for the <span class="aqua">HIV virus</span>. <br>It will infect the cell if it touches!');
             this.game.step = 4;
             if (this.isPortrait) {
               pathogen.y = this.world.centerY + 100;
@@ -387,7 +426,7 @@ Level = (function() {
             }
           }
           if (5 === this.game.step) {
-            this.showPopup('Defend the cell against HIV by clicking one of the condom buttons.');
+            this.showPopup('Defend the cell against HIV by clicking one of the <span class="pink">condom buttons</span>.');
             return this.game.step = 6;
           }
         }
@@ -396,42 +435,111 @@ Level = (function() {
   };
 
   Level.prototype.pathogenHitNucleus = function() {
-    var _ref;
-    return this.game.state.start((_ref = this.opt.gameOver) != null ? _ref : 'gameOver');
+    this.explode(this.nucleus);
+    this.sfx.gameOver.play();
+    return setTimeout(((function(_this) {
+      return function() {
+        var _ref;
+        return _this.game.state.start((_ref = _this.opt.gameOver) != null ? _ref : 'gameOver');
+      };
+    })(this)), 1200);
   };
 
   Level.prototype.pathogenHitBrick = function(pathogen, brick) {
+    if ('hiv' === pathogen.name) {
+      pathogen.body.bounce.set(.2);
+    }
     if (pathogen.name === brick.name) {
+      this.sfx.pathogen.play();
       this.game.score += 10;
       $('#score').text(this.game.score);
       if (!this.game.hasDefended && (1 === this.game.step || 2 === this.game.step)) {
         this.game.step = 1 === this.game.step ? 2 : 3;
         this.game.hasDefended = true;
-        this.showPopup("Well done! " + brick.name + " sections of the cell wall defend against " + pathogen.name + " viruses.");
+        this.showPopup("Well done! <span class='" + brick.name + "'>" + brick.name + "</span> sections of the cell wall defend against <span class='" + pathogen.name + "'>" + pathogen.name + "</span> viruses (and vice versa).");
       }
     } else if (6 === this.game.step && 'hiv' === pathogen.name) {
-      this.showPopup("[cell infection animation to happen now]");
+      this.game.infected = true;
       this.game.step = 7;
-      this.game.state.start('levelTwoComplete');
+      this.sfx.infected.play();
+      setTimeout(((function(_this) {
+        return function() {
+          return _this.nucleus.loadTexture('nucleus-infected-1');
+        };
+      })(this)), 400);
+      setTimeout(((function(_this) {
+        return function() {
+          _this.game.paused = true;
+          return _this.nucleus.loadTexture('nucleus-infected-2');
+        };
+      })(this)), 800);
+      setTimeout(((function(_this) {
+        return function() {
+          _this.showPopup("Now the cell has been infected with HIV, but it’s not ‘Game Over’...");
+          return _this.nucleus.loadTexture('nucleus-infected-3');
+        };
+      })(this)), 1200);
+      setTimeout(((function(_this) {
+        return function() {
+          return _this.game.state.start('levelTwoComplete');
+        };
+      })(this)), 1500);
+      return;
     } else {
-      brick.kill();
+      this.explode(brick);
+      this.sfx.brick.play();
       if (!this.game.hasLostWall && (1 === this.game.step || 2 === this.game.step)) {
         this.game.step = 1 === this.game.step ? 2 : 3;
         this.game.hasLostWall = true;
-        this.showPopup("Oh no! " + pathogen.name + " viruses destroy " + brick.name + " sections of the cell wall.");
+        this.showPopup("Oh no! <span class='" + pathogen.name + "'>" + pathogen.name + "</span> viruses destroy <span class='" + brick.name + "'>" + brick.name + "</span> sections of the cell wall (and vice versa).");
       } else if (7 === this.game.step) {
         this.game.step = 8;
-        this.showPopup('Click on an antiretroviral pill to repair the cell wall.');
+        this.showPopup('Click on an <span class="blue">antiretroviral pill</span> to repair the cell wall.');
       }
     }
-    pathogen.kill();
+    this.explode(pathogen);
     if (this.opt.complete && this.game.score >= this.relativeComplete) {
-      return this.game.state.start(this.opt.next);
+      this.sfx.endOfLevel.play();
+      return setTimeout(((function(_this) {
+        return function() {
+          return _this.game.state.start(_this.opt.next);
+        };
+      })(this)), 600);
     }
   };
 
+  Level.prototype.explode = function(sprite) {
+    var keyPrefix;
+    if ('hep-c-virus-main' === sprite.key) {
+      keyPrefix = 'hep-c-virus-explosion-';
+    } else if ('hep-c-brick-main' === sprite.key) {
+      keyPrefix = 'hep-c-brick-explosion-';
+    } else if ('herpesviridae-virus-main' === sprite.key) {
+      keyPrefix = 'herpesviridae-virus-explosion-';
+    } else if ('herpesviridae-brick-main' === sprite.key) {
+      keyPrefix = 'herpesviridae-brick-explosion-';
+    } else if ('hiv-virus-main' === sprite.key) {
+      keyPrefix = 'hiv-virus-explosion-';
+    } else if ('nucleus-main' === sprite.key) {
+      keyPrefix = 'nucleus-infected-';
+    } else if ('nucleus-infected-1' === sprite.key) {
+      keyPrefix = 'nucleus-infected-';
+    }
+    if (!keyPrefix) {
+      return;
+    }
+    setTimeout((function() {
+      return sprite.loadTexture(keyPrefix + '1');
+    }), 100);
+    setTimeout((function() {
+      return sprite.loadTexture(keyPrefix + '2');
+    }), 300);
+    return setTimeout((function() {
+      return sprite.destroy();
+    }), 500);
+  };
+
   Level.prototype.onDown = function() {
-    console.log(123);
     this.game.paused = false;
     return $('#popup-wrap').fadeOut();
   };
@@ -464,10 +572,19 @@ Message = (function() {
     $(window).trigger('resize');
     x = this.game.width / 2;
     y = 50;
-    this.titleTxt = this.add.bitmapText(x, y, 'minecraftia', this.opt.title);
-    this.titleTxt.align = 'center';
-    this.titleTxt.x = this.game.width / 2 - this.titleTxt.textWidth / 2;
-    y = y + this.titleTxt.height + 50;
+    if (this.opt.banner) {
+      this.banner = this.add.sprite(x, y, this.opt.banner);
+      this.banner.smoothed = false;
+      this.banner.scale.setTo(4, 4);
+      this.banner.anchor.setTo(0.5, 0);
+      y += this.banner.height + 10;
+    }
+    if (this.opt.title) {
+      this.titleTxt = this.add.bitmapText(x, y, 'minecraftia', this.opt.title);
+      this.titleTxt.align = 'center';
+      this.titleTxt.x = this.game.width / 2 - this.titleTxt.textWidth / 2;
+      y = y + this.titleTxt.height + 50;
+    }
     regex = '.{1,' + 45 + '}(\\s|$)' + (false ? '|.{' + 45 + '}|.+$' : '|\\S+?(\\s|$)');
     _ref = this.opt.text;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -481,9 +598,16 @@ Message = (function() {
       this.textTxt.anchor.setTo(0.5, 0);
       y = y + this.textTxt.height + 30;
     }
-    this.buttonTxt = this.add.bitmapText(x, y, 'minecraftia', this.opt.button);
-    this.buttonTxt.align = 'center';
-    this.buttonTxt.x = this.game.width / 2 - this.buttonTxt.textWidth / 2;
+    if (this.opt.button) {
+      this.buttonBackground = this.add.sprite(x, y, 'button-background');
+      this.buttonBackground.smoothed = false;
+      this.buttonBackground.scale.setTo(4, 4);
+      this.buttonBackground.anchor.setTo(0.5, 0);
+      y += 15;
+      this.buttonTxt = this.add.bitmapText(x, y, 'minecraftia', this.opt.button);
+      this.buttonTxt.align = 'center';
+      this.buttonTxt.x = this.game.width / 2 - this.buttonTxt.textWidth / 2;
+    }
     return this.input.onDown.add(this.onDown, this);
   };
 
@@ -688,6 +812,16 @@ GameOver = (function(_super) {
     });
   }
 
+  GameOver.prototype.create = function() {
+    GameOver.__super__.create.apply(this, arguments);
+    this.game.step = 0;
+    this.game.score = 0;
+    this.game.frameCount = 0;
+    this.game.hasDefended = false;
+    this.game.hasLostWall = false;
+    return this.game.infected = false;
+  };
+
   return GameOver;
 
 })(Message);
@@ -713,6 +847,16 @@ LevelFourGameOver = (function(_super) {
       next: 'levelOne'
     });
   }
+
+  LevelFourGameOver.prototype.create = function() {
+    LevelFourGameOver.__super__.create.apply(this, arguments);
+    this.game.step = 0;
+    this.game.score = 0;
+    this.game.frameCount = 0;
+    this.game.hasDefended = false;
+    this.game.hasLostWall = false;
+    return this.game.infected = false;
+  };
 
   return LevelFourGameOver;
 
@@ -768,7 +912,7 @@ LevelOneComplete = (function(_super) {
   function LevelOneComplete() {
     LevelOneComplete.__super__.constructor.call(this, {
       title: 'Level 1 Complete!',
-      text: ['Feeling under the weather? In some countries if you’re under 19 you may not even be able to take an HIV test to know whether you carry the virus.', 'There are an estimated 2.1 million young people living with HIV – many don’t know that they have the virus and are not  yet on life-saving treatment.'],
+      text: ['Feeling under the weather? In some countries if you’re under 19 you may not even be able to take an HIV test to know whether you carry the virus.', 'There are an estimated 2.1 million young people living with HIV – many don’t know that they have the virus and are not yet on life-saving treatment.'],
       button: 'START LEVEL 2',
       next: 'levelTwo'
     });
@@ -812,6 +956,7 @@ LevelOne = (function(_super) {
     this.game.frameCount = 0;
     this.game.hasDefended = false;
     this.game.hasLostWall = false;
+    this.game.infected = false;
     return $('#score').text(this.game.score);
   };
 
@@ -863,7 +1008,7 @@ LevelThree = (function(_super) {
       slowest: 70,
       fastest: 120,
       spawnRate: .05,
-      complete: 400,
+      complete: 600,
       next: 'levelThreeComplete',
       powerups: ['condom', 'condom', 'condom', 'pill', 'pill', 'pill']
     });
@@ -894,6 +1039,11 @@ LevelTwoComplete = (function(_super) {
       next: 'levelThree'
     });
   }
+
+  LevelTwoComplete.prototype.create = function() {
+    LevelTwoComplete.__super__.create.apply(this, arguments);
+    return this.game.suppressBasicPopups = true;
+  };
 
   return LevelTwoComplete;
 
@@ -953,6 +1103,8 @@ Preloader = (function() {
     this.load.image('player', 'assets/images/player.png');
     this.load.bitmapFont('minecraftia', 'assets/fonts/minecraftia.png', 'assets/fonts/minecraftia.xml');
     this.load.atlas('breakin', 'assets/images/breakin-v2.png', 'assets/images/breakin-v2.json');
+    this.load.image('button-background', 'assets/images/button-background-v2.gif');
+    this.load.image('cell-survivor-logo', 'assets/images/cell-survivor-logo-v1.gif');
     this.load.image('cellfield', 'assets/images/bkgnd-v2.jpg');
     this.load.image('vein-wall-header', 'assets/images/vein-wall-header.gif');
     this.load.image('vein-wall-footer', 'assets/images/vein-wall-footer.gif');
@@ -969,7 +1121,22 @@ Preloader = (function() {
     this.load.image('herpesviridae-virus-explosion-2', 'assets/images/herpesviridae-virus-explosion-2.gif');
     this.load.image('herpesviridae-virus-main', 'assets/images/herpesviridae-virus-main.gif');
     this.load.image('hiv-virus-main', 'assets/images/hiv-virus-main.gif');
-    return this.load.image('nucleus-main', 'assets/images/nucleus-main.gif');
+    this.load.image('hiv-virus-explosion-1', 'assets/images/hiv-virus-explosion-1.gif');
+    this.load.image('hiv-virus-explosion-2', 'assets/images/hiv-virus-explosion-2.gif');
+    this.load.image('nucleus-main', 'assets/images/nucleus-main.gif');
+    this.load.image('nucleus-infected-1', 'assets/images/nucleus-infected-1.gif');
+    this.load.image('nucleus-infected-2', 'assets/images/nucleus-infected-2.gif');
+    this.load.image('nucleus-infected-3', 'assets/images/nucleus-infected-3.gif');
+    this.load.audio('brick', 'assets/audio/126428__cabeeno-rossley__toss-throw.wav');
+    this.load.audio('pathogen', 'assets/audio/150216__killkhan__menu-move-1-short.mp3');
+    this.load.audio('shield-up', 'assets/audio/ZipUp-Mark_E_B-8079_hifi.mp3');
+    this.load.audio('shield-down', 'assets/audio/150218__killkhan__menu-select-2.mp3');
+    this.load.audio('pill', 'assets/audio/58919__mattwasser__coin-up.mp3');
+    this.load.audio('popup', 'assets/audio/181602__coby12388__enerjump.wav');
+    this.load.audio('infected', 'assets/audio/150216__killkhan__menu-move-1.mp3');
+    this.load.audio('end-of-level', 'assets/audio/RewardSo-Mark_E_B-8078_hifi.mp3');
+    this.load.audio('game-over', 'assets/audio/43696__notchfilter__game-over01.wav');
+    return this.load.audio('audio-track', 'assets/audio/Glass_Boy_-_09_-_Electronic_Yerba_Mate-short.mp3');
   };
 
   Preloader.prototype.create = function() {
@@ -1005,12 +1172,21 @@ Splash = (function(_super) {
 
   function Splash() {
     Splash.__super__.constructor.call(this, {
-      title: 'Cell Survivor',
+      banner: 'cell-survivor-logo',
       text: ['A cell is going about its daily business, protecting the body from intruders...'],
       button: 'PLAY',
       next: 'levelOne'
     });
   }
+
+  Splash.prototype.create = function() {
+    Splash.__super__.create.apply(this, arguments);
+    if (!this.game.suppressBasicPopups) {
+      this.game.suppressBasicPopups = false;
+    }
+    this.audioTrack = this.game.add.audio('audio-track');
+    return this.audioTrack.play('', 0, 1, true);
+  };
 
   return Splash;
 
