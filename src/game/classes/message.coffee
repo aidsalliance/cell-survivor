@@ -7,6 +7,11 @@ class Message
 
   constructor: (@opt) ->
 
+  wrapper: (len) ->
+    # http://james.padolsey.com/javascript/wordwrap-for-javascript/
+    regex = '.{1,' + len + '}(\\s|$)' + (if false then '|.{' + len + '}|.+$' else '|\\S+?(\\s|$)')
+    return RegExp regex, 'g'
+
   create: ->
     $(window).trigger 'resize' # ensure ‘onResize()’ is run
 
@@ -33,9 +38,6 @@ class Message
       @titleTxt.x = @game.width / 2 - @titleTxt.textWidth / 2
       y = y + @titleTxt.height + 50
 
-    # http://james.padolsey.com/javascript/wordwrap-for-javascript/
-    regex = '.{1,' + 45 + '}(\\s|$)' + (if false then '|.{' + 45 + '}|.+$' else '|\\S+?(\\s|$)')
-
     for section in @opt.text
 
       # Qik n dirty removal of ‘Well done for using your condoms! ’ where none were used
@@ -43,7 +45,7 @@ class Message
         if 3 == $('img[src="assets/images/icon-condom.gif"]').length
           section = section.substr 34
 
-      text = section.match( RegExp(regex, 'g') ).join('\n')
+      text = section.match( @wrapper 45 ).join '\n'
       @textTxt = @game.add.text x, y, text, { font: "24px Arial", fill: "#ffffff", align: "center" }
       @textTxt.anchor.setTo 0.5, 0
       y = y + @textTxt.height + 30
@@ -72,7 +74,7 @@ class Message
       y += @footer.height + 10
 
     if @opt.afterword
-      text = @opt.afterword.match( RegExp(regex, 'g') ).join('\n')
+      text = @opt.afterword.match( @wrapper 35 ).join '\n'
       @afterword = @game.add.text x, y, text, { font: "18px Arial", fill: "#ffffff", align: "center" }
       # @afterword.lineSpacing = '30px'
       @afterword.anchor.setTo 0.5, 0

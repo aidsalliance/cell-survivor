@@ -198,6 +198,7 @@ __10.14__ pink shield, hide ‘Well done for using…’ if not used
 __10.15__ hide first 3 popups if player reaches level 2  
 __10.16__ keyboard input for rotation, and dismissing popups and levels  
 __10.17__ hotfix 0.1.20, pushed to GitHub  
+__10.18__ text amends, hotfix 0.1.22, pushed to GitHub  
 
 
 
@@ -220,6 +221,7 @@ Releases
 + 0.1.16   icons, metadata, Facebook and Twitter
 + 0.1.18   minor fixes to the HTML files
 + 0.1.20   keyboard input
++ 0.1.22   text amends
 
 
 
