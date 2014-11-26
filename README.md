@@ -199,6 +199,7 @@ __10.15__ hide first 3 popups if player reaches level 2
 __10.16__ keyboard input for rotation, and dismissing popups and levels  
 __10.17__ hotfix 0.1.20, pushed to GitHub  
 __10.18__ text amends, hotfix 0.1.22, pushed to GitHub  
+__10.19__ amend Alliance header-icon link, cleaner boot, hotfix 0.1.26  
 
 
 
@@ -212,9 +213,6 @@ Releases
 + 0.1.4    some real graphics
 + 0.1.6    vein walls, frame icons, responsive layout
 + 0.1.8    powerups and popups
-+ 0.1.9-1  infection and explosion animations
-+ 0.1.9-2  sfx and background music
-+ 0.1.9-3  message button background and Cell Survivor logo
 + 0.1.10   animation, soundtrack, sfx and ‘Cell Survivor’ logo
 + 0.1.12   first round of amends before initial launch version
 + 0.1.14   hotfix ‘tou.html’ links
@@ -223,6 +221,7 @@ Releases
 + 0.1.20   keyboard input
 + 0.1.22   text amends
 + 0.1.24   qik fix
++ 0.1.26   amend header link
 
 
 

@@ -22,41 +22,48 @@ body.hide-overflow {
   overflow: hidden;
 }
 
-/* line 26, ../src/sass/main.scss */
+/* line 29, ../src/sass/main.scss */
+.wrap.loaded > div > div.frame > div {
+  opacity: 1;
+}
+
+/* line 37, ../src/sass/main.scss */
 .wrap {
   display: table;
   width: 100%;
   height: 100%;
 }
-/* line 30, ../src/sass/main.scss */
+/* line 41, ../src/sass/main.scss */
 .wrap > div {
   display: table-row;
 }
-/* line 32, ../src/sass/main.scss */
+/* line 43, ../src/sass/main.scss */
 .wrap > div > div {
   display: table-cell;
   vertical-align: top;
 }
-/* line 36, ../src/sass/main.scss */
+/* line 47, ../src/sass/main.scss */
 .wrap > div > div.frame > div {
   display: inline-block;
   padding-top: 10px;
+  opacity: 0;
+  transition: opacity 1s;
 }
-/* line 39, ../src/sass/main.scss */
+/* line 52, ../src/sass/main.scss */
 .wrap > div > div.frame > div img {
   width: 100%;
   height: auto;
 }
-/* line 44, ../src/sass/main.scss */
+/* line 57, ../src/sass/main.scss */
 .wrap > div > div.frame > div a {
   transition: opacity .5s;
   cursor: pointer;
 }
-/* line 47, ../src/sass/main.scss */
+/* line 60, ../src/sass/main.scss */
 .wrap > div > div.frame > div a:hover {
   opacity: .7;
 }
-/* line 51, ../src/sass/main.scss */
+/* line 64, ../src/sass/main.scss */
 .wrap > div > div.frame > div #fb-iframe {
   position: absolute;
   width: 50px;
@@ -67,123 +74,123 @@ body.hide-overflow {
   transform-origin: 0 0 0;
   opacity: 0;
 }
-/* line 63, ../src/sass/main.scss */
+/* line 76, ../src/sass/main.scss */
 .wrap > div > div#header {
   width: 50%;
   text-align: right;
 }
-/* line 67, ../src/sass/main.scss */
+/* line 80, ../src/sass/main.scss */
 .wrap > div > div#main {
   text-align: center;
 }
-/* line 69, ../src/sass/main.scss */
+/* line 82, ../src/sass/main.scss */
 .wrap > div > div#main canvas {
   display: inline-block !important;
   cursor: pointer;
 }
-/* line 74, ../src/sass/main.scss */
+/* line 87, ../src/sass/main.scss */
 .wrap > div > div#footer {
   width: 50%;
   text-align: left;
 }
-/* line 80, ../src/sass/main.scss */
+/* line 93, ../src/sass/main.scss */
 .wrap.portrait {
   display: block;
 }
-/* line 82, ../src/sass/main.scss */
+/* line 95, ../src/sass/main.scss */
 .wrap.portrait > div {
   display: table;
   width: 100%;
   height: 100%;
 }
-/* line 86, ../src/sass/main.scss */
+/* line 99, ../src/sass/main.scss */
 .wrap.portrait > div > div {
   display: table-row;
 }
-/* line 89, ../src/sass/main.scss */
+/* line 102, ../src/sass/main.scss */
 .wrap.portrait > div > div.frame > div {
   padding-top: 0;
   text-align: center;
   vertical-align: bottom;
 }
-/* line 93, ../src/sass/main.scss */
+/* line 106, ../src/sass/main.scss */
 .wrap.portrait > div > div.frame > div img {
   width: 54px;
 }
-/* line 99, ../src/sass/main.scss */
+/* line 112, ../src/sass/main.scss */
 .wrap.portrait > div > div#header > div {
   vertical-align: bottom;
 }
-/* line 103, ../src/sass/main.scss */
+/* line 116, ../src/sass/main.scss */
 .wrap.portrait > div > div#main {
   height: 100%;
 }
-/* line 105, ../src/sass/main.scss */
+/* line 118, ../src/sass/main.scss */
 .wrap.portrait > div > div#main > div {
   vertical-align: middle;
 }
-/* line 110, ../src/sass/main.scss */
+/* line 123, ../src/sass/main.scss */
 .wrap.portrait > div > div#footer > div {
   vertical-align: top;
 }
-/* line 114, ../src/sass/main.scss */
+/* line 127, ../src/sass/main.scss */
 .wrap.portrait > div > div > div {
   display: table-cell;
 }
 
-/* line 122, ../src/sass/main.scss */
+/* line 135, ../src/sass/main.scss */
 #score-label {
   position: absolute;
 }
 
-/* line 126, ../src/sass/main.scss */
+/* line 139, ../src/sass/main.scss */
 #score {
   position: absolute;
   padding: 14px 0 0 3px;
 }
 
-/* line 131, ../src/sass/main.scss */
+/* line 144, ../src/sass/main.scss */
 #textlink {
   position: absolute;
   display: none;
   top: 100px;
   width: 100%;
 }
-/* line 136, ../src/sass/main.scss */
+/* line 149, ../src/sass/main.scss */
 #textlink a {
   display: block;
   height: 20px;
 }
 
-/* line 142, ../src/sass/main.scss */
+/* line 155, ../src/sass/main.scss */
 #tou {
   position: absolute;
   left: 10px;
   bottom: 10px;
 }
-/* line 146, ../src/sass/main.scss */
+/* line 159, ../src/sass/main.scss */
 #tou a {
   color: gray !important;
   transition: color .4s;
 }
-/* line 149, ../src/sass/main.scss */
+/* line 162, ../src/sass/main.scss */
 #tou a:hover {
   color: #d60c8c !important;
 }
 
-/* line 155, ../src/sass/main.scss */
+/* line 168, ../src/sass/main.scss */
 .bodycopy {
   max-width: 800px;
   margin: 0 auto;
   padding: 0 15px;
 }
-/* line 159, ../src/sass/main.scss */
+/* line 172, ../src/sass/main.scss */
 .bodycopy p {
   font-size: 16px;
   line-height: 24px;
 }
 
-/* line 165, ../src/sass/main.scss */
+/* line 178, ../src/sass/main.scss */
 #play-cell-survivor {
   display: inline-block;
   margin-bottom: 40px;
@@ -193,23 +200,24 @@ body.hide-overflow {
   font-size: 18px;
   transition: background-color .4s;
 }
-/* line 173, ../src/sass/main.scss */
+/* line 186, ../src/sass/main.scss */
 #play-cell-survivor:hover {
   background-color: #d60c8c;
 }
-/* line 176, ../src/sass/main.scss */
+/* line 189, ../src/sass/main.scss */
 #play-cell-survivor a {
   color: white !important;
   text-decoration: none;
 }
 
-/* line 182, ../src/sass/main.scss */
+/* line 195, ../src/sass/main.scss */
 #popup-wrap {
   position: absolute;
   width: 100%;
   text-align: center;
+  display: none;
 }
-/* line 186, ../src/sass/main.scss */
+/* line 200, ../src/sass/main.scss */
 #popup-wrap #popup-inner {
   display: inline-block;
   width: 500px;
@@ -217,11 +225,11 @@ body.hide-overflow {
   outline: 1px solid #000;
   background-color: rgba(0, 0, 0, 0.8);
 }
-/* line 192, ../src/sass/main.scss */
+/* line 206, ../src/sass/main.scss */
 #popup-wrap #popup-inner #popup-dismiss {
   text-align: right;
 }
-/* line 194, ../src/sass/main.scss */
+/* line 208, ../src/sass/main.scss */
 #popup-wrap #popup-inner #popup-dismiss span {
   display: inline-block;
   padding: 10px 10px 0 10px;
@@ -229,16 +237,16 @@ body.hide-overflow {
   cursor: pointer;
   transition: color .2s;
 }
-/* line 200, ../src/sass/main.scss */
+/* line 214, ../src/sass/main.scss */
 #popup-wrap #popup-inner #popup-dismiss span:hover {
   color: #ed1c24;
 }
-/* line 205, ../src/sass/main.scss */
+/* line 219, ../src/sass/main.scss */
 #popup-wrap #popup-inner #popup-text {
   margin-top: -2%;
   padding: 0 20px;
 }
-/* line 209, ../src/sass/main.scss */
+/* line 223, ../src/sass/main.scss */
 #popup-wrap #popup-inner #popup-note {
   margin-top: -2em;
   padding: 2% 20px 0 20px;
@@ -246,39 +254,39 @@ body.hide-overflow {
   font-size: 50%;
 }
 
-/* line 218, ../src/sass/main.scss */
+/* line 232, ../src/sass/main.scss */
 .bold-bitmap {
   font: 32px 'Press Start 2P', cursive;
   line-height: 1.4;
   text-shadow: #000 0 4px;
 }
 
-/* line 223, ../src/sass/main.scss */
+/* line 237, ../src/sass/main.scss */
 .bold-bitmap-small {
   font: 32px 'Press Start 2P', cursive;
   line-height: 0.7;
   text-shadow: #000 0 2px;
 }
 
-/* line 229, ../src/sass/main.scss */
+/* line 243, ../src/sass/main.scss */
 .green {
   color: #8cc63f;
   text-shadow: #008053 0 4px;
 }
 
-/* line 233, ../src/sass/main.scss */
+/* line 247, ../src/sass/main.scss */
 .aqua {
   color: #009ac8;
   text-shadow: #008053 0 4px;
 }
 
-/* line 237, ../src/sass/main.scss */
+/* line 251, ../src/sass/main.scss */
 .pink {
   color: #f8c1d9;
   text-shadow: #d60c8c 0 4px;
 }
 
-/* line 241, ../src/sass/main.scss */
+/* line 255, ../src/sass/main.scss */
 .blue {
   color: #8ed8f8;
   text-shadow: #009ac8 0 4px;
