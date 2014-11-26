@@ -222,6 +222,7 @@ Releases
 + 0.1.18   minor fixes to the HTML files
 + 0.1.20   keyboard input
 + 0.1.22   text amends
++ 0.1.24   qik fix
 
 
 
