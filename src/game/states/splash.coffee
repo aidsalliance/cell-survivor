@@ -1,3 +1,4 @@
+$ = require 'jquery'
 Message = require '../classes/message'
 
 class Splash extends Message
@@ -13,6 +14,7 @@ class Splash extends Message
 
   create: ->
     super
+    $('.wrap').addClass('loaded')
 
     if not @game.suppressBasicPopups then @game.suppressBasicPopups = false # after the player reaches level 2, don’t show the first three popups
 
