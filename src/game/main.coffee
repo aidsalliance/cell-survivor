@@ -16,6 +16,7 @@ window.onload = ->
   game.state.add 'levelTwoComplete'  , require './states/level-two-complete'
   game.state.add 'levelThree'        , require './states/level-three'
   game.state.add 'levelThreeComplete', require './states/level-three-complete'
+  game.state.add 'levelThreeGameOver', require './states/level-three-game-over'
   game.state.add 'levelFour'         , require './states/level-four'
   game.state.add 'levelFourGameOver' , require './states/level-four-game-over'
   game.state.add 'gameOver'          , require './states/game-over'
