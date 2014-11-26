@@ -13,11 +13,18 @@ class Message
     x = @game.width / 2
     y = 50
 
-    @titleTxt = @add.bitmapText x, y, 'minecraftia', @opt.title
-    @titleTxt.align = 'center'
-    @titleTxt.x = @game.width / 2 - @titleTxt.textWidth / 2
+    if @opt.banner
+      @banner = @add.sprite x, y, @opt.banner
+      @banner.smoothed = false
+      @banner.scale.setTo 4, 4
+      @banner.anchor.setTo 0.5, 0
+      y += @banner.height + 10
 
-    y = y + @titleTxt.height + 50
+    if @opt.title
+      @titleTxt = @add.bitmapText x, y, 'minecraftia', @opt.title
+      @titleTxt.align = 'center'
+      @titleTxt.x = @game.width / 2 - @titleTxt.textWidth / 2
+      y = y + @titleTxt.height + 50
 
     # http://james.padolsey.com/javascript/wordwrap-for-javascript/
     regex = '.{1,' + 45 + '}(\\s|$)' + (if false then '|.{' + 45 + '}|.+$' else '|\\S+?(\\s|$)')
@@ -28,9 +35,16 @@ class Message
       @textTxt.anchor.setTo 0.5, 0
       y = y + @textTxt.height + 30
 
-    @buttonTxt = @add.bitmapText x, y, 'minecraftia', @opt.button
-    @buttonTxt.align = 'center'
-    @buttonTxt.x = @game.width / 2 - @buttonTxt.textWidth / 2
+
+    if @opt.button
+      @buttonBackground = @add.sprite x, y, 'button-background'
+      @buttonBackground.smoothed = false
+      @buttonBackground.scale.setTo 4, 4
+      @buttonBackground.anchor.setTo 0.5, 0
+      y += 15
+      @buttonTxt = @add.bitmapText x, y, 'minecraftia', @opt.button
+      @buttonTxt.align = 'center'
+      @buttonTxt.x = @game.width / 2 - @buttonTxt.textWidth / 2
 
     @input.onDown.add @onDown, @
 

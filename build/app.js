@@ -572,10 +572,19 @@ Message = (function() {
     $(window).trigger('resize');
     x = this.game.width / 2;
     y = 50;
-    this.titleTxt = this.add.bitmapText(x, y, 'minecraftia', this.opt.title);
-    this.titleTxt.align = 'center';
-    this.titleTxt.x = this.game.width / 2 - this.titleTxt.textWidth / 2;
-    y = y + this.titleTxt.height + 50;
+    if (this.opt.banner) {
+      this.banner = this.add.sprite(x, y, this.opt.banner);
+      this.banner.smoothed = false;
+      this.banner.scale.setTo(4, 4);
+      this.banner.anchor.setTo(0.5, 0);
+      y += this.banner.height + 10;
+    }
+    if (this.opt.title) {
+      this.titleTxt = this.add.bitmapText(x, y, 'minecraftia', this.opt.title);
+      this.titleTxt.align = 'center';
+      this.titleTxt.x = this.game.width / 2 - this.titleTxt.textWidth / 2;
+      y = y + this.titleTxt.height + 50;
+    }
     regex = '.{1,' + 45 + '}(\\s|$)' + (false ? '|.{' + 45 + '}|.+$' : '|\\S+?(\\s|$)');
     _ref = this.opt.text;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -589,9 +598,16 @@ Message = (function() {
       this.textTxt.anchor.setTo(0.5, 0);
       y = y + this.textTxt.height + 30;
     }
-    this.buttonTxt = this.add.bitmapText(x, y, 'minecraftia', this.opt.button);
-    this.buttonTxt.align = 'center';
-    this.buttonTxt.x = this.game.width / 2 - this.buttonTxt.textWidth / 2;
+    if (this.opt.button) {
+      this.buttonBackground = this.add.sprite(x, y, 'button-background');
+      this.buttonBackground.smoothed = false;
+      this.buttonBackground.scale.setTo(4, 4);
+      this.buttonBackground.anchor.setTo(0.5, 0);
+      y += 15;
+      this.buttonTxt = this.add.bitmapText(x, y, 'minecraftia', this.opt.button);
+      this.buttonTxt.align = 'center';
+      this.buttonTxt.x = this.game.width / 2 - this.buttonTxt.textWidth / 2;
+    }
     return this.input.onDown.add(this.onDown, this);
   };
 
@@ -796,6 +812,16 @@ GameOver = (function(_super) {
     });
   }
 
+  GameOver.prototype.create = function() {
+    GameOver.__super__.create.apply(this, arguments);
+    this.game.step = 0;
+    this.game.score = 0;
+    this.game.frameCount = 0;
+    this.game.hasDefended = false;
+    this.game.hasLostWall = false;
+    return this.game.infected = false;
+  };
+
   return GameOver;
 
 })(Message);
@@ -821,6 +847,16 @@ LevelFourGameOver = (function(_super) {
       next: 'levelOne'
     });
   }
+
+  LevelFourGameOver.prototype.create = function() {
+    LevelFourGameOver.__super__.create.apply(this, arguments);
+    this.game.step = 0;
+    this.game.score = 0;
+    this.game.frameCount = 0;
+    this.game.hasDefended = false;
+    this.game.hasLostWall = false;
+    return this.game.infected = false;
+  };
 
   return LevelFourGameOver;
 
@@ -876,7 +912,7 @@ LevelOneComplete = (function(_super) {
   function LevelOneComplete() {
     LevelOneComplete.__super__.constructor.call(this, {
       title: 'Level 1 Complete!',
-      text: ['Feeling under the weather? In some countries if you’re under 19 you may not even be able to take an HIV test to know whether you carry the virus.', 'There are an estimated 2.1 million young people living with HIV – many don’t know that they have the virus and are not  yet on life-saving treatment.'],
+      text: ['Feeling under the weather? In some countries if you’re under 19 you may not even be able to take an HIV test to know whether you carry the virus.', 'There are an estimated 2.1 million young people living with HIV – many don’t know that they have the virus and are not yet on life-saving treatment.'],
       button: 'START LEVEL 2',
       next: 'levelTwo'
     });
@@ -1067,6 +1103,8 @@ Preloader = (function() {
     this.load.image('player', 'assets/images/player.png');
     this.load.bitmapFont('minecraftia', 'assets/fonts/minecraftia.png', 'assets/fonts/minecraftia.xml');
     this.load.atlas('breakin', 'assets/images/breakin-v2.png', 'assets/images/breakin-v2.json');
+    this.load.image('button-background', 'assets/images/button-background-v2.gif');
+    this.load.image('cell-survivor-logo', 'assets/images/cell-survivor-logo-v1.gif');
     this.load.image('cellfield', 'assets/images/bkgnd-v2.jpg');
     this.load.image('vein-wall-header', 'assets/images/vein-wall-header.gif');
     this.load.image('vein-wall-footer', 'assets/images/vein-wall-footer.gif');
@@ -1134,7 +1172,7 @@ Splash = (function(_super) {
 
   function Splash() {
     Splash.__super__.constructor.call(this, {
-      title: 'Cell Survivor',
+      banner: 'cell-survivor-logo',
       text: ['A cell is going about its daily business, protecting the body from intruders...'],
       button: 'PLAY',
       next: 'levelOne'

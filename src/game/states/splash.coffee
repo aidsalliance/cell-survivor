@@ -3,7 +3,7 @@ Message = require '../classes/message'
 class Splash extends Message
   constructor: ->
     super
-      title: 'Cell Survivor'
+      banner: 'cell-survivor-logo'
       text: [
         'A cell is going about its daily business, protecting the body from intruders...'
       ]
