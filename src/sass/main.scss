@@ -48,6 +48,16 @@ body.hide-overflow {
               opacity: .7;
             }
           }
+          #fb-iframe {
+            position: absolute;
+            width: 50px; // modified by `onResize()`
+            height: 50px;
+            border-width: 0;
+            outline: 1px solid red;
+            transform: scale(4, 4); // `onResize()` will shrink by a quarter @todo cross browser
+            transform-origin: 0 0 0; // @todo cross browser
+            opacity: 0;
+          }
         }
       }
       &#header {
