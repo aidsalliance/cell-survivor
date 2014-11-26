@@ -57,6 +57,10 @@ resizeLandscape = (width, height) ->
     .css
       width:  (height - 20) / 7
       height: height - 20
+  $ '#fb-iframe'
+    .css
+      width:  (height - 20) / 28 # 7 * 4
+      height: (height - 20) / 28 # 7 * 4
   $ '.wrap #main canvas'
     .css
       width:  height
