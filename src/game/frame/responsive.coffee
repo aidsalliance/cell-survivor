@@ -18,6 +18,10 @@ resizePortrait = (width, height) ->
     .css
       width:  '100%'
       height: 54
+  $ '#fb-iframe'
+    .css
+      width:  54 / 4
+      height: 54 / 4
   $ '.wrap #main canvas'
     .css
       width:  width
@@ -43,8 +47,8 @@ resizePortrait = (width, height) ->
       width: if 350 > width then 48 else 54 # 320px width
   $ '.bold-bitmap'
     .css
-      'font-size': width / 25
-  $ '.bold-bitmap-small'
+      'font-size': width / 40 # was 25
+  $ '.bold-bitmap-small' # @todo remove this
     .css
       'font-size': height / 40
 

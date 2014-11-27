@@ -216,6 +216,7 @@ __11.4__  created ‘high-scores.html’
 __11.5__  bumped version to '0.2.1-2', tracked new files, and commit  
 __11.6__  feature finish, release 0.2.2, pushed to GitHub  
 __11.7__  better ‘SCORE:’ label, fixed relative URLs, hotfix 0.2.4  
+__11.8__  better portrait fit, fixed fb in portrait-mode, hotfix 0.2.6  
 
 
 Releases
@@ -240,9 +241,8 @@ Releases
 + 0.1.28   amend header link
 + 0.1.30   Google Analytics, and never see a popup twice
 + 0.1.32   special game-over for Level three
-+ 0.2.1-1  temporarily removed all popups
-+ 0.2.1-2  icons for ToU and High Scores, and ‘high-scores.html’
 + 0.2.2    can view High Scores
 + 0.2.4    better ‘SCORE:’ label
++ 0.2.6    better portrait-mode fit
 
 
