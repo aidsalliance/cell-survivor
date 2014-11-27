@@ -59,10 +59,11 @@ class Level
     @sfx.pill.play()
 
   showPopup: (msg) ->
-    console.log @game.furthestStep
+    # console.log @game.furthestStep
     if @game.suppressBasicPopups and 3 >= @game.step then return # don’t show the first three popups after the player has reached level 2 @todo remove this old system?
     if @game.furthestStep >= @game.step then return # don’t show the same popup twice inthe player’s session
     @game.furthestStep = Math.max @game.furthestStep, @game.step
+    return # temporarily remove all popups
     @sfx.popup.play()
     $ '#popup-note'
       .html ''
@@ -359,7 +360,7 @@ class Level
         @nucleus.loadTexture 'nucleus-infected-1')
         , 400
       setTimeout (=>
-        @game.paused = true
+#        @game.paused = true # @todo uncomment this when popups are reinstated (test the game does not mysteriously pause, the second time round in a session)
         @nucleus.loadTexture 'nucleus-infected-2')
         , 800
       setTimeout (=>

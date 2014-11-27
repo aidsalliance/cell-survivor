@@ -215,7 +215,6 @@ Level = (function() {
   };
 
   Level.prototype.showPopup = function(msg) {
-    console.log(this.game.furthestStep);
     if (this.game.suppressBasicPopups && 3 >= this.game.step) {
       return;
     }
@@ -223,6 +222,7 @@ Level = (function() {
       return;
     }
     this.game.furthestStep = Math.max(this.game.furthestStep, this.game.step);
+    return;
     this.sfx.popup.play();
     $('#popup-note').html('');
     $('#popup-text').html(msg + '<br><br>');
@@ -536,7 +536,6 @@ Level = (function() {
       })(this)), 400);
       setTimeout(((function(_this) {
         return function() {
-          _this.game.paused = true;
           return _this.nucleus.loadTexture('nucleus-infected-2');
         };
       })(this)), 800);
