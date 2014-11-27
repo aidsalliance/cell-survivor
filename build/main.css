@@ -162,62 +162,45 @@ body.hide-overflow {
   height: 20px;
 }
 
-/* line 155, ../src/sass/main.scss */
-#tou {
-  position: absolute;
-  left: 10px;
-  bottom: 10px;
-}
-/* line 159, ../src/sass/main.scss */
-#tou a {
-  color: gray !important;
-  transition: color .4s;
-}
-/* line 162, ../src/sass/main.scss */
-#tou a:hover {
-  color: #d60c8c !important;
-}
-
-/* line 168, ../src/sass/main.scss */
+/* line 156, ../src/sass/main.scss */
 .bodycopy {
   max-width: 800px;
   margin: 0 auto;
   padding: 0 15px;
 }
-/* line 172, ../src/sass/main.scss */
+/* line 160, ../src/sass/main.scss */
 .bodycopy p {
   font-size: 16px;
   line-height: 24px;
 }
 
-/* line 178, ../src/sass/main.scss */
+/* line 166, ../src/sass/main.scss */
 #play-cell-survivor {
   display: inline-block;
   margin-bottom: 40px;
-  padding: 10px 20px;
+  padding: 20px 40px;
   border-radius: 4px;
-  background-color: #808080;
-  font-size: 18px;
+  background-color: #008053;
   transition: background-color .4s;
-}
-/* line 186, ../src/sass/main.scss */
-#play-cell-survivor:hover {
-  background-color: #d60c8c;
-}
-/* line 189, ../src/sass/main.scss */
-#play-cell-survivor a {
+  font: 16px 'Press Start 2P', cursive;
+  line-height: 0.7;
+  text-shadow: #000 0 2px;
   color: white !important;
   text-decoration: none;
 }
+/* line 178, ../src/sass/main.scss */
+#play-cell-survivor:hover {
+  background-color: #009ac8;
+}
 
-/* line 195, ../src/sass/main.scss */
+/* line 183, ../src/sass/main.scss */
 #popup-wrap {
   position: absolute;
   width: 100%;
   text-align: center;
   display: none;
 }
-/* line 200, ../src/sass/main.scss */
+/* line 188, ../src/sass/main.scss */
 #popup-wrap #popup-inner {
   display: inline-block;
   width: 500px;
@@ -225,11 +208,11 @@ body.hide-overflow {
   outline: 1px solid #000;
   background-color: rgba(0, 0, 0, 0.8);
 }
-/* line 206, ../src/sass/main.scss */
+/* line 194, ../src/sass/main.scss */
 #popup-wrap #popup-inner #popup-dismiss {
   text-align: right;
 }
-/* line 208, ../src/sass/main.scss */
+/* line 196, ../src/sass/main.scss */
 #popup-wrap #popup-inner #popup-dismiss span {
   display: inline-block;
   padding: 10px 10px 0 10px;
@@ -237,16 +220,16 @@ body.hide-overflow {
   cursor: pointer;
   transition: color .2s;
 }
-/* line 214, ../src/sass/main.scss */
+/* line 202, ../src/sass/main.scss */
 #popup-wrap #popup-inner #popup-dismiss span:hover {
   color: #ed1c24;
 }
-/* line 219, ../src/sass/main.scss */
+/* line 207, ../src/sass/main.scss */
 #popup-wrap #popup-inner #popup-text {
   margin-top: -2%;
   padding: 0 20px;
 }
-/* line 223, ../src/sass/main.scss */
+/* line 211, ../src/sass/main.scss */
 #popup-wrap #popup-inner #popup-note {
   margin-top: -2em;
   padding: 2% 20px 0 20px;
@@ -254,39 +237,53 @@ body.hide-overflow {
   font-size: 50%;
 }
 
-/* line 232, ../src/sass/main.scss */
-.bold-bitmap {
+/* line 220, ../src/sass/main.scss */
+#high-scores {
+  width: 100%;
+  margin-bottom: 20px;
+  border: 2px solid #fff;
+  height: 600px;
+}
+
+@media (max-width: 600px) {
+  /* line 228, ../src/sass/main.scss */
+  #high-scores-inner .bold-bitmap {
+    font-size: 18px;
+  }
+}
+/* line 234, ../src/sass/main.scss */
+.bold-bitmap, h1 {
   font: 32px 'Press Start 2P', cursive;
   line-height: 1.4;
   text-shadow: #000 0 4px;
 }
 
-/* line 237, ../src/sass/main.scss */
+/* line 239, ../src/sass/main.scss */
 .bold-bitmap-small {
   font: 32px 'Press Start 2P', cursive;
   line-height: 0.7;
   text-shadow: #000 0 2px;
 }
 
-/* line 243, ../src/sass/main.scss */
+/* line 245, ../src/sass/main.scss */
 .green {
   color: #8cc63f;
   text-shadow: #008053 0 4px;
 }
 
-/* line 247, ../src/sass/main.scss */
+/* line 249, ../src/sass/main.scss */
 .aqua {
   color: #009ac8;
   text-shadow: #008053 0 4px;
 }
 
-/* line 251, ../src/sass/main.scss */
+/* line 253, ../src/sass/main.scss */
 .pink {
   color: #f8c1d9;
   text-shadow: #d60c8c 0 4px;
 }
 
-/* line 255, ../src/sass/main.scss */
+/* line 257, ../src/sass/main.scss */
 .blue {
   color: #8ed8f8;
   text-shadow: #009ac8 0 4px;
