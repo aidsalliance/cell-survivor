@@ -153,7 +153,7 @@ class Level
 
     @background.scale.setTo 6, 6
 
-    @nucleus = @add.sprite @world.centerX, @world.centerY, if @game.infected then 'nucleus-infected-1' else 'nucleus-main'
+    @nucleus = @add.sprite @world.centerX, @world.centerY, if @game.infected then 'nucleus-infected-2' else 'nucleus-main'
     @physics.enable @nucleus, Phaser.Physics.ARCADE
     @nucleus.smoothed = false
     @nucleus.scale.setTo 3, 3
