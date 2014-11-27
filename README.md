@@ -215,6 +215,7 @@ __11.3__  created and added icons for Terms of Use and High Scores
 __11.4__  created ‘high-scores.html’  
 __11.5__  bumped version to '0.2.1-2', tracked new files, and commit  
 __11.6__  feature finish, release 0.2.2, pushed to GitHub  
+__11.7__  better ‘SCORE:’ label, fixed relative URLs, hotfix 0.2.4  
 
 
 Releases
@@ -242,5 +243,6 @@ Releases
 + 0.2.1-1  temporarily removed all popups
 + 0.2.1-2  icons for ToU and High Scores, and ‘high-scores.html’
 + 0.2.2    can view High Scores
++ 0.2.4    better ‘SCORE:’ label
 
 

@@ -139,42 +139,43 @@ body.hide-overflow {
 }
 
 /* line 135, ../src/sass/main.scss */
-#score-label {
-  position: absolute;
-}
-
-/* line 139, ../src/sass/main.scss */
 #score {
   position: absolute;
-  padding: 14px 0 0 3px;
+  padding: 30px 0 0 8px;
 }
 
-/* line 144, ../src/sass/main.scss */
+@media (max-width: 600px) {
+  /* line 140, ../src/sass/main.scss */
+  #score {
+    padding: 20px 0 0 3px;
+  }
+}
+/* line 145, ../src/sass/main.scss */
 #textlink {
   position: absolute;
   display: none;
   top: 100px;
   width: 100%;
 }
-/* line 149, ../src/sass/main.scss */
+/* line 150, ../src/sass/main.scss */
 #textlink a {
   display: block;
   height: 20px;
 }
 
-/* line 156, ../src/sass/main.scss */
+/* line 157, ../src/sass/main.scss */
 .bodycopy {
   max-width: 800px;
   margin: 0 auto;
   padding: 0 15px;
 }
-/* line 160, ../src/sass/main.scss */
+/* line 161, ../src/sass/main.scss */
 .bodycopy p {
   font-size: 16px;
   line-height: 24px;
 }
 
-/* line 166, ../src/sass/main.scss */
+/* line 167, ../src/sass/main.scss */
 #play-cell-survivor {
   display: inline-block;
   margin-bottom: 40px;
@@ -188,19 +189,19 @@ body.hide-overflow {
   color: white !important;
   text-decoration: none;
 }
-/* line 178, ../src/sass/main.scss */
+/* line 179, ../src/sass/main.scss */
 #play-cell-survivor:hover {
   background-color: #009ac8;
 }
 
-/* line 183, ../src/sass/main.scss */
+/* line 184, ../src/sass/main.scss */
 #popup-wrap {
   position: absolute;
   width: 100%;
   text-align: center;
   display: none;
 }
-/* line 188, ../src/sass/main.scss */
+/* line 189, ../src/sass/main.scss */
 #popup-wrap #popup-inner {
   display: inline-block;
   width: 500px;
@@ -208,11 +209,11 @@ body.hide-overflow {
   outline: 1px solid #000;
   background-color: rgba(0, 0, 0, 0.8);
 }
-/* line 194, ../src/sass/main.scss */
+/* line 195, ../src/sass/main.scss */
 #popup-wrap #popup-inner #popup-dismiss {
   text-align: right;
 }
-/* line 196, ../src/sass/main.scss */
+/* line 197, ../src/sass/main.scss */
 #popup-wrap #popup-inner #popup-dismiss span {
   display: inline-block;
   padding: 10px 10px 0 10px;
@@ -220,16 +221,16 @@ body.hide-overflow {
   cursor: pointer;
   transition: color .2s;
 }
-/* line 202, ../src/sass/main.scss */
+/* line 203, ../src/sass/main.scss */
 #popup-wrap #popup-inner #popup-dismiss span:hover {
   color: #ed1c24;
 }
-/* line 207, ../src/sass/main.scss */
+/* line 208, ../src/sass/main.scss */
 #popup-wrap #popup-inner #popup-text {
   margin-top: -2%;
   padding: 0 20px;
 }
-/* line 211, ../src/sass/main.scss */
+/* line 212, ../src/sass/main.scss */
 #popup-wrap #popup-inner #popup-note {
   margin-top: -2em;
   padding: 2% 20px 0 20px;
@@ -237,7 +238,7 @@ body.hide-overflow {
   font-size: 50%;
 }
 
-/* line 220, ../src/sass/main.scss */
+/* line 221, ../src/sass/main.scss */
 #high-scores {
   width: 100%;
   margin-bottom: 20px;
@@ -246,44 +247,44 @@ body.hide-overflow {
 }
 
 @media (max-width: 600px) {
-  /* line 228, ../src/sass/main.scss */
+  /* line 229, ../src/sass/main.scss */
   #high-scores-inner .bold-bitmap {
     font-size: 18px;
   }
 }
-/* line 234, ../src/sass/main.scss */
+/* line 235, ../src/sass/main.scss */
 .bold-bitmap, h1 {
   font: 32px 'Press Start 2P', cursive;
   line-height: 1.4;
   text-shadow: #000 0 4px;
 }
 
-/* line 239, ../src/sass/main.scss */
+/* line 240, ../src/sass/main.scss */
 .bold-bitmap-small {
   font: 32px 'Press Start 2P', cursive;
   line-height: 0.7;
   text-shadow: #000 0 2px;
 }
 
-/* line 245, ../src/sass/main.scss */
+/* line 246, ../src/sass/main.scss */
 .green {
   color: #8cc63f;
   text-shadow: #008053 0 4px;
 }
 
-/* line 249, ../src/sass/main.scss */
+/* line 250, ../src/sass/main.scss */
 .aqua {
   color: #009ac8;
   text-shadow: #008053 0 4px;
 }
 
-/* line 253, ../src/sass/main.scss */
+/* line 254, ../src/sass/main.scss */
 .pink {
   color: #f8c1d9;
   text-shadow: #d60c8c 0 4px;
 }
 
-/* line 257, ../src/sass/main.scss */
+/* line 258, ../src/sass/main.scss */
 .blue {
   color: #8ed8f8;
   text-shadow: #009ac8 0 4px;
