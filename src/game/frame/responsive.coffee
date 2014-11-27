@@ -9,6 +9,8 @@ onResize = ->
 
 resizePortrait = (width, height) ->
   width = Math.min height - 108, width # don’t squash header/footer to less than 54px height
+  window.gameEdgeLength     = width
+  window.gameHalfEdgeLength = width / 2
   $ '.wrap'
     .addClass 'portrait'
   $ '.wrap .frame'
@@ -55,6 +57,8 @@ resizePortrait = (width, height) ->
 
 resizeLandscape = (width, height) ->
   height = Math.min width - 108, height # don’t squash either sidebar to less than 54px width
+  window.gameHalfEdgeLength  = height / 2  # used by `rotateWall()` in `Level`
+  window.gameTenthEdgeLength = height / 10 # used by `rotateWall()` in `Level`
   $ '.wrap'
     .removeClass 'portrait'
   $ '.wrap .frame >div'
