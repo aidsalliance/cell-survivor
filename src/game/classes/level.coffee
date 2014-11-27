@@ -360,7 +360,7 @@ class Level
   pathogenHitNucleus: ->
     @explode @nucleus
     @sfx.gameOver.play()
-    if 10 < @game.score
+    if 1000000 < @game.score
       @popupEnterInitials()
     else
       @gameOver()

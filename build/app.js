@@ -529,7 +529,7 @@ Level = (function() {
   Level.prototype.pathogenHitNucleus = function() {
     this.explode(this.nucleus);
     this.sfx.gameOver.play();
-    if (10 < this.game.score) {
+    if (1000000 < this.game.score) {
       return this.popupEnterInitials();
     } else {
       return this.gameOver();

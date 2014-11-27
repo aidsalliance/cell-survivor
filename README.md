@@ -251,5 +251,6 @@ Releases
 + 0.2.12   fix mouse/touch controls at small window sizes
 + 0.2.14   various late amends
 + 0.2.15-1 begin simple leaderboard input field
++ 0.2.16   qik update of Levels logic
 
 
