@@ -206,14 +206,15 @@ __10.22__ never see a popup twice, hotfix 0.1.30
 __10.23__ added special game-over for Level three, hotfix 0.1.32  
 
 
-11. Leaderboard display, and backend system
--------------------------------------------
+11. View and record high scores, and backend leaderboard system
+---------------------------------------------------------------
 
 __11.1__  `$ git flow feature start leaderboard`  
 __11.2__  temporarily removed all popups  
 __11.3__  created and added icons for Terms of Use and High Scores  
 __11.4__  created ‘high-scores.html’  
 __11.5__  bumped version to '0.2.1-2', tracked new files, and commit  
+__11.6__  feature finish, release 0.2.2, pushed to GitHub  
 
 
 Releases
@@ -240,5 +241,6 @@ Releases
 + 0.1.32   special game-over for Level three
 + 0.2.1-1  temporarily removed all popups
 + 0.2.1-2  icons for ToU and High Scores, and ‘high-scores.html’
++ 0.2.2    can view High Scores
 
 
