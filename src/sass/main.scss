@@ -152,18 +152,6 @@ body.hide-overflow {
   }
 }
 
-#tou {
-  position: absolute;
-  left: 10px;
-  bottom: 10px;
-  a {
-    color: #808080!important;
-    transition: color .4s;
-    &:hover {
-      color: #d60c8c!important;
-    }
-  }
-}
 
 .bodycopy {
   max-width: 800px;
@@ -178,17 +166,17 @@ body.hide-overflow {
 #play-cell-survivor {
   display: inline-block;
   margin-bottom: 40px;
-  padding: 10px 20px;
+  padding: 20px 40px;
   border-radius: 4px;
-  background-color: #808080;
-  font-size: 18px;
+  background-color: #008053;
   transition: background-color .4s;
+  font: 16px 'Press Start 2P', cursive;
+  line-height: 0.7;
+  text-shadow: #000 0 2px; // @todo cross-browser
+  color: #fff!important;
+  text-decoration: none;
   &:hover {
-    background-color: #d60c8c;
-  }
-  a {
-    color: #fff!important;
-    text-decoration: none;
+    background-color: #009ac8;
   }
 }
 
@@ -229,7 +217,21 @@ body.hide-overflow {
   }
 }
 
-.bold-bitmap {
+#high-scores {
+  width: 100%;
+  margin-bottom: 20px;
+  border: 2px solid #fff;
+  height: 600px;
+}
+@media (max-width: 600px) {
+  #high-scores-inner {
+    .bold-bitmap {
+      font-size: 18px;
+    }
+  }
+}
+
+.bold-bitmap, h1 {
   font: 32px 'Press Start 2P', cursive;
   line-height: 1.4;
   text-shadow: #000 0 4px; // @todo cross-browser
