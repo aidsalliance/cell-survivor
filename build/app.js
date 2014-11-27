@@ -796,6 +796,10 @@ resizePortrait = function(width, height) {
     width: '100%',
     height: 54
   });
+  $('#fb-iframe').css({
+    width: 54 / 4,
+    height: 54 / 4
+  });
   $('.wrap #main canvas').css({
     width: width,
     height: width
@@ -820,7 +824,7 @@ resizePortrait = function(width, height) {
     width: 350 > width ? 48 : 54
   });
   $('.bold-bitmap').css({
-    'font-size': width / 25
+    'font-size': width / 40
   });
   return $('.bold-bitmap-small').css({
     'font-size': height / 40
