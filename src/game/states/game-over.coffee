@@ -3,7 +3,7 @@ Message = require '../classes/message'
 class GameOver extends Message
   constructor: ->
     super
-      title: 'Game Over'
+      title: 'Game NOT Over'
       text: [
         'Contracting HIV is not game over - young people can be supported to lead healthy and fulfilled lives.'
         'For more information about how the International HIV/AIDS Alliance is supporting young people, visit www.aidsalliance.org/worldAIDSday'

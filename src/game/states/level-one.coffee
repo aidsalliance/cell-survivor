@@ -9,6 +9,7 @@ class LevelOne extends Level
       spawnRate : .03
       complete  : 0 # complete when first hiv exits the screen
       next      : 'levelOneComplete'
+      gameOver  : 'levelOneComplete' # doesn’t matter if the player cannot complete level 1
       powerups  : ['blank','blank','blank','blank','blank','blank']
       hivExit   : true
 

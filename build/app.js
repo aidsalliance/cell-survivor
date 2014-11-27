@@ -307,7 +307,7 @@ Level = (function() {
       this.endZone = this.world.height - 36;
     }
     this.background.scale.setTo(6, 6);
-    this.nucleus = this.add.sprite(this.world.centerX, this.world.centerY, this.game.infected ? 'nucleus-infected-1' : 'nucleus-main');
+    this.nucleus = this.add.sprite(this.world.centerX, this.world.centerY, this.game.infected ? 'nucleus-infected-2' : 'nucleus-main');
     this.physics.enable(this.nucleus, Phaser.Physics.ARCADE);
     this.nucleus.smoothed = false;
     this.nucleus.scale.setTo(3, 3);
@@ -679,7 +679,7 @@ Message = (function() {
           section = section.substr(34);
         }
       }
-      text = section.match(this.wrapper(45)).join('\n');
+      text = section.match(this.wrapper(48)).join('\n');
       this.textTxt = this.game.add.text(x, y, text, {
         font: "24px Arial",
         fill: "#ffffff",
@@ -954,7 +954,7 @@ GameOver = (function(_super) {
 
   function GameOver() {
     GameOver.__super__.constructor.call(this, {
-      title: 'Game Over',
+      title: 'Game NOT Over',
       text: ['Contracting HIV is not game over - young people can be supported to lead healthy and fulfilled lives.', 'For more information about how the International HIV/AIDS Alliance is supporting young people, visit www.aidsalliance.org/worldAIDSday'],
       textlink: true,
       button: 'PLAY AGAIN',
@@ -992,8 +992,8 @@ LevelFourGameOver = (function(_super) {
 
   function LevelFourGameOver() {
     LevelFourGameOver.__super__.constructor.call(this, {
-      title: 'Game Over',
-      text: ['Not easy was it with no extra help? But that’s what it’s like if you’re young and living with HIV in a country where access to help to keep you healthy is limited.', 'For more information about how the International HIV/AIDS Alliance is supporting young people, visit www.aidsalliance.org/worldAIDSday'],
+      title: 'Game NOT Over',
+      text: ['Not easy was it with no extra help? Young people living with HIV can be supported to lead healthy and fulfilled lives if they have access to services, treatment, care and support.', 'For more information about how the International HIV/AIDS Alliance is supporting young people, visit www.aidsalliance.org/worldAIDSday'],
       textlink: true,
       button: 'PLAY AGAIN',
       footer: 'alliance-logo',
@@ -1102,6 +1102,7 @@ LevelOne = (function(_super) {
       spawnRate: .03,
       complete: 0,
       next: 'levelOneComplete',
+      gameOver: 'levelOneComplete',
       powerups: ['blank', 'blank', 'blank', 'blank', 'blank', 'blank'],
       hivExit: true
     });
@@ -1163,7 +1164,7 @@ LevelThreeGameOver = (function(_super) {
 
   function LevelThreeGameOver() {
     LevelThreeGameOver.__super__.constructor.call(this, {
-      title: 'Game Over',
+      title: 'Game NOT Over',
       text: ['Shame you didn’t make it to the 4th and final level! Contracting HIV is not game over however - young people can be supported to lead healthy and fulfilled lives.', 'For more information about how the International HIV/AIDS Alliance is supporting young people, visit www.aidsalliance.org/worldAIDSday'],
       textlink: true,
       button: 'PLAY AGAIN',
