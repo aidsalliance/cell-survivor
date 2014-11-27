@@ -81,6 +81,24 @@ class Level
         , 1800
 
 
+  popupEnterInitials: ->
+    @sfx.popup.play()
+    $ '#popup-note'
+      .html ''
+    $ '#popup-text'
+      .html "You scored<br>
+            #{@game.score} points!<br>
+            <form>
+              <input type='text'>
+            </form>
+      "
+    $ '#popup-wrap'
+      .fadeIn()
+    setTimeout (=>
+      @game.paused = true)
+      , 400
+
+
   create: ->
     $(window).trigger 'resize' # ensure ‘onResize()’ is run
     $('#textlink').hide()
@@ -333,12 +351,19 @@ class Level
             @game.step = 6
 
 
-  pathogenHitNucleus: ->
-    @explode @nucleus
-    @sfx.gameOver.play()
+  gameOver: ->
     setTimeout (=>
       @game.state.start @opt.gameOver ? 'gameOver')
       , 1200
+
+
+  pathogenHitNucleus: ->
+    @explode @nucleus
+    @sfx.gameOver.play()
+    if 10 < @game.score
+      @popupEnterInitials()
+    else
+      @gameOver()
 
 
   pathogenHitBrick: (pathogen, brick) ->

@@ -219,6 +219,8 @@ __11.7__  better ‘SCORE:’ label, fixed relative URLs, hotfix 0.2.4
 __11.8__  better portrait fit, fixed fb in portrait-mode, hotfix 0.2.10  
 __11.9__  fixed mouse/touch controls at small window sizes, hotfix 0.2.12  
 __11.10__ “Game NOT Over”, sicker nucleus, always go to L2, hotfix 0.2.14  
+__11.11__ feature leaderboard again, began simple ‘High Score’ popup form  
+__11.12__ Changed Level 2 game-over go to Level 2 complete, instead  
 
 
 Releases
@@ -248,5 +250,6 @@ Releases
 + 0.2.10   better portrait-mode fit
 + 0.2.12   fix mouse/touch controls at small window sizes
 + 0.2.14   various late amends
++ 0.2.15-1 begin simple leaderboard input field
 
 
