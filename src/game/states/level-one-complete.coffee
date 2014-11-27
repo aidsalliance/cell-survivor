@@ -6,7 +6,7 @@ class LevelOneComplete extends Message
       title: 'Level 1 Complete!'
       text: [
         'Feeling under the weather?'
-        'Worldwide, there are an estimated 2.1 million young people living with HIV – many don’t know that they have the virus and are not on life-saving treatment yet.'
+        'Worldwide, there are an estimated 2.1 million adolescents living with HIV – many don’t know that they have the virus and are not on life-saving treatment yet.'
         'Now move on to level 2 and use your condoms to help prevent infection.'
       ]
       button: 'START LEVEL 2'

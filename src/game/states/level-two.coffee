@@ -8,6 +8,7 @@ class LevelTwo extends Level
       spawnRate : .03
       complete  : 0 # completed when cell is touched by HIV
       next      : 'levelTwoComplete'
+      gameOver  : 'levelTwoComplete' # doesn’t matter if the player cannot complete level 1
       powerups  : ['condom','condom','condom','blank','blank','blank']
 
   create: ->

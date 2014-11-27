@@ -241,6 +241,18 @@ Level = (function() {
     }
   };
 
+  Level.prototype.popupEnterInitials = function() {
+    this.sfx.popup.play();
+    $('#popup-note').html('');
+    $('#popup-text').html("You scored<br> " + this.game.score + " points!<br> <form> <input type='text'> </form>");
+    $('#popup-wrap').fadeIn();
+    return setTimeout(((function(_this) {
+      return function() {
+        return _this.game.paused = true;
+      };
+    })(this)), 400);
+  };
+
   Level.prototype.create = function() {
     var i, powerup, self, _base, _i, _len, _ref;
     $(window).trigger('resize');
@@ -505,15 +517,23 @@ Level = (function() {
     }
   };
 
-  Level.prototype.pathogenHitNucleus = function() {
-    this.explode(this.nucleus);
-    this.sfx.gameOver.play();
+  Level.prototype.gameOver = function() {
     return setTimeout(((function(_this) {
       return function() {
         var _ref;
         return _this.game.state.start((_ref = _this.opt.gameOver) != null ? _ref : 'gameOver');
       };
     })(this)), 1200);
+  };
+
+  Level.prototype.pathogenHitNucleus = function() {
+    this.explode(this.nucleus);
+    this.sfx.gameOver.play();
+    if (1000000 < this.game.score) {
+      return this.popupEnterInitials();
+    } else {
+      return this.gameOver();
+    }
   };
 
   Level.prototype.pathogenHitBrick = function(pathogen, brick) {
@@ -1065,7 +1085,7 @@ LevelOneComplete = (function(_super) {
   function LevelOneComplete() {
     LevelOneComplete.__super__.constructor.call(this, {
       title: 'Level 1 Complete!',
-      text: ['Feeling under the weather?', 'Worldwide, there are an estimated 2.1 million young people living with HIV – many don’t know that they have the virus and are not on life-saving treatment yet.', 'Now move on to level 2 and use your condoms to help prevent infection.'],
+      text: ['Feeling under the weather?', 'Worldwide, there are an estimated 2.1 million adolescents living with HIV – many don’t know that they have the virus and are not on life-saving treatment yet.', 'Now move on to level 2 and use your condoms to help prevent infection.'],
       button: 'START LEVEL 2',
       next: 'levelTwo'
     });
@@ -1262,6 +1282,7 @@ LevelTwo = (function(_super) {
       spawnRate: .03,
       complete: 0,
       next: 'levelTwoComplete',
+      gameOver: 'levelTwoComplete',
       powerups: ['condom', 'condom', 'condom', 'blank', 'blank', 'blank']
     });
   }
