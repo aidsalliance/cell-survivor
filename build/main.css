@@ -69,9 +69,10 @@ body.hide-overflow {
   width: 50px;
   height: 50px;
   border-width: 0;
+  outline: 1px solid red;
   transform: scale(4, 4);
   transform-origin: 0 0 0;
-  opacity: .5;
+  opacity: 0;
 }
 /* line 76, ../src/sass/main.scss */
 .wrap > div > div#header {
