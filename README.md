@@ -217,6 +217,7 @@ __11.5__  bumped version to '0.2.1-2', tracked new files, and commit
 __11.6__  feature finish, release 0.2.2, pushed to GitHub  
 __11.7__  better ‘SCORE:’ label, fixed relative URLs, hotfix 0.2.4  
 __11.8__  better portrait fit, fixed fb in portrait-mode, hotfix 0.2.10  
+__11.9__  fixed mouse/touch controls at small window sizes, hotfix 0.2.12  
 
 
 Releases
@@ -244,5 +245,6 @@ Releases
 + 0.2.2    can view High Scores
 + 0.2.4    better ‘SCORE:’ label
 + 0.2.10   better portrait-mode fit
++ 0.2.12   fix mouse/touch controls at small window sizes
 
 
