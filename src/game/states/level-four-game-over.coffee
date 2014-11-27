@@ -3,9 +3,9 @@ Message = require '../classes/message'
 class LevelFourGameOver extends Message
   constructor: ->
     super
-      title: 'Game Over'
+      title: 'Game NOT Over'
       text: [
-        'Not easy was it with no extra help? But that’s what it’s like if you’re young and living with HIV in a country where access to help to keep you healthy is limited.'
+        'Not easy was it with no extra help? Young people living with HIV can be supported to lead healthy and fulfilled lives if they have access to services, treatment, care and support.'
         'For more information about how the International HIV/AIDS Alliance is supporting young people, visit www.aidsalliance.org/worldAIDSday'
       ]
       textlink: true

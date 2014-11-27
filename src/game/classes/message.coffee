@@ -45,7 +45,7 @@ class Message
         if 3 == $('img[src="assets/images/icon-condom.gif"]').length
           section = section.substr 34
 
-      text = section.match( @wrapper 45 ).join '\n'
+      text = section.match( @wrapper 48 ).join '\n'
       @textTxt = @game.add.text x, y, text, { font: "24px Arial", fill: "#ffffff", align: "center" }
       @textTxt.anchor.setTo 0.5, 0
       y = y + @textTxt.height + 30
