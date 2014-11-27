@@ -257,22 +257,24 @@ Level = (function() {
       gameOver: this.game.add.audio('game-over')
     };
     this.relativeComplete = this.game.score + this.opt.complete;
-    this.upKey = this.game.input.keyboard.addKey(Phaser.Keyboard.UP);
-    this.downKey = this.game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
-    this.leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
-    this.rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
-    this.lastInputPosX = 0;
-    this.lastInputPosY = 0;
-    this.cKey = this.game.input.keyboard.addKey(Phaser.Keyboard.C);
-    this.pKey = this.game.input.keyboard.addKey(Phaser.Keyboard.P);
-    this.cKey.onDown.add(this.clickCondom, this);
-    this.pKey.onDown.add(this.clickPill, this);
-    this.enterKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
-    this.nEnterKey = this.game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_ENTER);
-    this.spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-    this.enterKey.onDown.add(this.onDown, this);
-    this.nEnterKey.onDown.add(this.onDown, this);
-    this.spaceKey.onDown.add(this.onDown, this);
+    this.lastInputPosX = -9999;
+    this.lastInputPosY = -9999;
+    if (this.game.device.desktop) {
+      this.upKey = this.game.input.keyboard.addKey(Phaser.Keyboard.UP);
+      this.downKey = this.game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
+      this.leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
+      this.rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+      this.cKey = this.game.input.keyboard.addKey(Phaser.Keyboard.C);
+      this.pKey = this.game.input.keyboard.addKey(Phaser.Keyboard.P);
+      this.cKey.onDown.add(this.clickCondom, this);
+      this.pKey.onDown.add(this.clickPill, this);
+      this.enterKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+      this.nEnterKey = this.game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_ENTER);
+      this.spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+      this.enterKey.onDown.add(this.onDown, this);
+      this.nEnterKey.onDown.add(this.onDown, this);
+      this.spaceKey.onDown.add(this.onDown, this);
+    }
     self = this;
     _ref = (_base = this.opt).powerups != null ? _base.powerups : _base.powerups = [];
     for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
@@ -338,33 +340,34 @@ Level = (function() {
   };
 
   Level.prototype.rotateWall = function() {
-    var angle, cx, cy, dx, dy, hyp, keyPower, x, y;
+    var angle, dx, dy, half, keyPower, tenth, x, y;
     x = this.input.position.x;
     y = this.input.position.y;
     keyPower = false;
-    if (this.downKey.isDown) {
-      keyPower = 2.5;
-    } else if (this.upKey.isDown) {
-      keyPower = -2.5;
-    } else if (this.rightKey.isDown) {
-      keyPower = .8;
-    } else if (this.leftKey.isDown) {
-      keyPower = -.8;
+    if (this.game.device.desktop) {
+      if (this.downKey.isDown) {
+        keyPower = 2.5;
+      } else if (this.upKey.isDown) {
+        keyPower = -2.5;
+      } else if (this.rightKey.isDown) {
+        keyPower = .8;
+      } else if (this.leftKey.isDown) {
+        keyPower = -.8;
+      }
     }
     if (keyPower) {
       this.game.bricks.angle += keyPower;
       this.lastInputPosX = x;
       return this.lastInputPosY = y;
     } else if (this.lastInputPosX !== x && this.lastInputPosY !== y) {
-      cx = this.world.centerX;
-      cy = this.world.centerY;
-      dx = Math.abs(x - cx);
-      dy = Math.abs(y - cy);
-      hyp = Math.sqrt(dx * dx + dy * dy);
-      if (130 > hyp) {
+      half = window.gameHalfEdgeLength;
+      tenth = window.gameTenthEdgeLength;
+      dx = x - half;
+      dy = y - half;
+      if ((-tenth < dx && dx < tenth) && (-tenth < dy && dy < tenth)) {
         return;
       }
-      angle = Math.atan2(y - cy, x - cx) * (180 / Math.PI);
+      angle = Math.atan2(dy, dx) * (180 / Math.PI);
       return this.game.bricks.angle = angle;
     }
   };
@@ -788,6 +791,8 @@ onResize = function() {
 
 resizePortrait = function(width, height) {
   width = Math.min(height - 108, width);
+  window.gameEdgeLength = width;
+  window.gameHalfEdgeLength = width / 2;
   $('.wrap').addClass('portrait');
   $('.wrap .frame').css({
     height: (height - width) / 2
@@ -833,6 +838,8 @@ resizePortrait = function(width, height) {
 
 resizeLandscape = function(width, height) {
   height = Math.min(width - 108, height);
+  window.gameHalfEdgeLength = height / 2;
+  window.gameTenthEdgeLength = height / 10;
   $('.wrap').removeClass('portrait');
   $('.wrap .frame >div').css({
     width: (height - 20) / 7,

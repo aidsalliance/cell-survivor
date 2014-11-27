@@ -98,24 +98,27 @@ class Level
 
     @relativeComplete = @game.score + @opt.complete
 
-    @upKey     = @game.input.keyboard.addKey Phaser.Keyboard.UP
-    @downKey   = @game.input.keyboard.addKey Phaser.Keyboard.DOWN
-    @leftKey   = @game.input.keyboard.addKey Phaser.Keyboard.LEFT
-    @rightKey  = @game.input.keyboard.addKey Phaser.Keyboard.RIGHT
-    @lastInputPosX = 0
-    @lastInputPosY = 0
+    @lastInputPosX = -9999
+    @lastInputPosY = -9999
 
-    @cKey      = @game.input.keyboard.addKey Phaser.Keyboard.C
-    @pKey      = @game.input.keyboard.addKey Phaser.Keyboard.P
-    @cKey.onDown.add @clickCondom, @
-    @pKey.onDown.add @clickPill, @
+    if @game.device.desktop
+      @upKey     = @game.input.keyboard.addKey Phaser.Keyboard.UP
+      @downKey   = @game.input.keyboard.addKey Phaser.Keyboard.DOWN
+      @leftKey   = @game.input.keyboard.addKey Phaser.Keyboard.LEFT
+      @rightKey  = @game.input.keyboard.addKey Phaser.Keyboard.RIGHT
 
-    @enterKey  = @game.input.keyboard.addKey Phaser.Keyboard.ENTER
-    @nEnterKey = @game.input.keyboard.addKey Phaser.Keyboard.NUMPAD_ENTER
-    @spaceKey  = @game.input.keyboard.addKey Phaser.Keyboard.SPACEBAR
-    @enterKey.onDown.add  @onDown, @
-    @nEnterKey.onDown.add @onDown, @
-    @spaceKey.onDown.add  @onDown, @
+      @cKey      = @game.input.keyboard.addKey Phaser.Keyboard.C
+      @pKey      = @game.input.keyboard.addKey Phaser.Keyboard.P
+      @cKey.onDown.add @clickCondom, @
+      @pKey.onDown.add @clickPill, @
+
+      @enterKey  = @game.input.keyboard.addKey Phaser.Keyboard.ENTER
+      @nEnterKey = @game.input.keyboard.addKey Phaser.Keyboard.NUMPAD_ENTER
+      @spaceKey  = @game.input.keyboard.addKey Phaser.Keyboard.SPACEBAR
+      @enterKey.onDown.add  @onDown, @
+      @nEnterKey.onDown.add @onDown, @
+      @spaceKey.onDown.add  @onDown, @
+
 
     # Add powerups, if specified
     self = @
@@ -178,34 +181,36 @@ class Level
     $firstButton?.first().trigger 'click'
 
 
-  rotateWall: ->
+  rotateWall: -> # @todo touchscreen-specific alternate function, to avoid `if @game.device.desktop` etc
     x = @input.position.x
     y = @input.position.y
 
     keyPower = false
-    if @downKey.isDown
-      keyPower = 2.5
-    else if @upKey.isDown
-      keyPower = -2.5
-    else if @rightKey.isDown
-      keyPower = .8
-    else if @leftKey.isDown
-      keyPower = -.8
+    if @game.device.desktop
+      if @downKey.isDown
+        keyPower = 2.5
+      else if @upKey.isDown
+        keyPower = -2.5
+      else if @rightKey.isDown
+        keyPower = .8
+      else if @leftKey.isDown
+        keyPower = -.8
 
     if keyPower
       @game.bricks.angle += keyPower
       @lastInputPosX = x
       @lastInputPosY = y
     else if @lastInputPosX != x and @lastInputPosY != y
-      cx = @world.centerX
-      cy = @world.centerY
 
-      dx = Math.abs x - cx
-      dy = Math.abs y - cy
-      hyp = Math.sqrt dx * dx + dy * dy
-      if 130 > hyp then return # too close to nucleus
+      half  = window.gameHalfEdgeLength # @world.centerX an Y are only useful at 100% scale
+      tenth = window.gameTenthEdgeLength
 
-      angle = Math.atan2(y - cy, x - cx) * (180 / Math.PI)
+      dx = x - half
+      dy = y - half
+
+      if -tenth < dx < tenth and -tenth < dy < tenth then return # too close to nucleus
+
+      angle = Math.atan2(dy, dx) * (180 / Math.PI)
       @game.bricks.angle = angle
 
   update: ->
