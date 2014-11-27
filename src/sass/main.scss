@@ -132,13 +132,14 @@ body.hide-overflow {
   }
 }
 
-#score-label {
-  position: absolute;
-}
-
 #score {
   position: absolute;
-  padding: 14px 0 0 3px;
+  padding: 30px 0 0 8px;
+}
+@media (max-width: 600px) {
+  #score {
+    padding: 20px 0 0 3px;
+  }
 }
 
 #textlink {
