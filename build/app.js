@@ -954,7 +954,7 @@ GameOver = (function(_super) {
 
   function GameOver() {
     GameOver.__super__.constructor.call(this, {
-      title: 'Game Over',
+      title: 'Game NOT Over',
       text: ['Contracting HIV is not game over - young people can be supported to lead healthy and fulfilled lives.', 'For more information about how the International HIV/AIDS Alliance is supporting young people, visit www.aidsalliance.org/worldAIDSday'],
       textlink: true,
       button: 'PLAY AGAIN',
@@ -992,7 +992,7 @@ LevelFourGameOver = (function(_super) {
 
   function LevelFourGameOver() {
     LevelFourGameOver.__super__.constructor.call(this, {
-      title: 'Game Over',
+      title: 'Game NOT Over',
       text: ['Not easy was it with no extra help? But that’s what it’s like if you’re young and living with HIV in a country where access to help to keep you healthy is limited.', 'For more information about how the International HIV/AIDS Alliance is supporting young people, visit www.aidsalliance.org/worldAIDSday'],
       textlink: true,
       button: 'PLAY AGAIN',
@@ -1163,7 +1163,7 @@ LevelThreeGameOver = (function(_super) {
 
   function LevelThreeGameOver() {
     LevelThreeGameOver.__super__.constructor.call(this, {
-      title: 'Game Over',
+      title: 'Game NOT Over',
       text: ['Shame you didn’t make it to the 4th and final level! Contracting HIV is not game over however - young people can be supported to lead healthy and fulfilled lives.', 'For more information about how the International HIV/AIDS Alliance is supporting young people, visit www.aidsalliance.org/worldAIDSday'],
       textlink: true,
       button: 'PLAY AGAIN',
