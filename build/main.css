@@ -180,10 +180,11 @@ body.hide-overflow {
 }
 
 /* line 172, ../src/sass/main.scss */
-#play-cell-survivor {
+#play-cell-survivor, button {
   display: inline-block;
   margin-bottom: 40px;
   padding: 10px 20px;
+  border-width: 0;
   border-radius: 4px;
   background-color: #008053;
   transition: background-color .4s;
@@ -192,20 +193,21 @@ body.hide-overflow {
   text-shadow: #000 0 2px;
   color: white !important;
   text-decoration: none;
+  cursor: pointer;
 }
-/* line 184, ../src/sass/main.scss */
-#play-cell-survivor:hover {
+/* line 186, ../src/sass/main.scss */
+#play-cell-survivor:hover, button:hover {
   background-color: #009ac8;
 }
 
-/* line 189, ../src/sass/main.scss */
+/* line 191, ../src/sass/main.scss */
 #popup-wrap {
   position: absolute;
   width: 100%;
   text-align: center;
   display: none;
 }
-/* line 194, ../src/sass/main.scss */
+/* line 196, ../src/sass/main.scss */
 #popup-wrap #popup-inner {
   display: inline-block;
   width: 500px;
@@ -213,11 +215,11 @@ body.hide-overflow {
   outline: 1px solid #000;
   background-color: rgba(0, 0, 0, 0.8);
 }
-/* line 200, ../src/sass/main.scss */
+/* line 202, ../src/sass/main.scss */
 #popup-wrap #popup-inner #popup-dismiss {
   text-align: right;
 }
-/* line 202, ../src/sass/main.scss */
+/* line 204, ../src/sass/main.scss */
 #popup-wrap #popup-inner #popup-dismiss span {
   display: inline-block;
   padding: 10px 10px 0 10px;
@@ -225,16 +227,16 @@ body.hide-overflow {
   cursor: pointer;
   transition: color .2s;
 }
-/* line 208, ../src/sass/main.scss */
+/* line 210, ../src/sass/main.scss */
 #popup-wrap #popup-inner #popup-dismiss span:hover {
   color: #ed1c24;
 }
-/* line 213, ../src/sass/main.scss */
+/* line 215, ../src/sass/main.scss */
 #popup-wrap #popup-inner #popup-text {
   margin-top: -2%;
   padding: 0 20px;
 }
-/* line 217, ../src/sass/main.scss */
+/* line 219, ../src/sass/main.scss */
 #popup-wrap #popup-inner #popup-note {
   margin-top: -2em;
   padding: 2% 20px 0 20px;
@@ -242,7 +244,39 @@ body.hide-overflow {
   font-size: 50%;
 }
 
-/* line 226, ../src/sass/main.scss */
+/* line 230, ../src/sass/main.scss */
+#high-score-form .error {
+  background-color: #f8c1d9;
+  font: 12px 'Press Start 2P', cursive;
+  line-height: 2;
+  color: #d60c8c;
+}
+/* line 236, ../src/sass/main.scss */
+#high-score-form .success {
+  background-color: #8cc63f;
+  font: 12px 'Press Start 2P', cursive;
+  line-height: 2;
+  color: #008053;
+}
+/* line 242, ../src/sass/main.scss */
+#high-score-form input {
+  margin-top: 1em;
+  width: 3em;
+  padding: 3px 10px 2px 10px;
+  border: 2px solid #fff;
+  outline-width: 0;
+  background: transparent;
+  color: #fff;
+  text-align: center;
+  text-transform: uppercase;
+}
+/* line 253, ../src/sass/main.scss */
+#high-score-form button {
+  display: block;
+  margin: 10px auto;
+}
+
+/* line 261, ../src/sass/main.scss */
 #high-scores {
   width: 100%;
   margin-bottom: 20px;
@@ -251,49 +285,49 @@ body.hide-overflow {
 }
 
 @media (max-width: 600px) {
-  /* line 233, ../src/sass/main.scss */
+  /* line 268, ../src/sass/main.scss */
   #high-scores {
     height: 350px;
   }
 
-  /* line 237, ../src/sass/main.scss */
+  /* line 272, ../src/sass/main.scss */
   #high-scores-inner .bold-bitmap {
     font-size: 18px;
   }
 }
-/* line 243, ../src/sass/main.scss */
+/* line 278, ../src/sass/main.scss */
 .bold-bitmap, h1 {
   font: 32px 'Press Start 2P', cursive;
   line-height: 1.4;
   text-shadow: #000 0 4px;
 }
 
-/* line 248, ../src/sass/main.scss */
+/* line 283, ../src/sass/main.scss */
 .bold-bitmap-small {
   font: 32px 'Press Start 2P', cursive;
   line-height: 0.7;
   text-shadow: #000 0 2px;
 }
 
-/* line 254, ../src/sass/main.scss */
+/* line 289, ../src/sass/main.scss */
 .green {
   color: #8cc63f;
   text-shadow: #008053 0 4px;
 }
 
-/* line 258, ../src/sass/main.scss */
+/* line 293, ../src/sass/main.scss */
 .aqua {
   color: #009ac8;
   text-shadow: #008053 0 4px;
 }
 
-/* line 262, ../src/sass/main.scss */
+/* line 297, ../src/sass/main.scss */
 .pink {
   color: #f8c1d9;
   text-shadow: #d60c8c 0 4px;
 }
 
-/* line 266, ../src/sass/main.scss */
+/* line 301, ../src/sass/main.scss */
 .blue {
   color: #8ed8f8;
   text-shadow: #009ac8 0 4px;

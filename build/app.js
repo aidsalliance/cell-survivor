@@ -906,6 +906,64 @@ onResize();
 
 
 },{"jquery":2}],9:[function(require,module,exports){
+var $, clearMessages, onFail, onResponse, onSubmitHighScore, showError, showSuccess;
+
+$ = require('jquery');
+
+clearMessages = function() {
+  $('#high-score-form .success').html('');
+  return $('#high-score-form .error').html('');
+};
+
+showSuccess = function(msg) {
+  $('#high-score-form .success').html("&nbsp; " + msg + " &nbsp;");
+  $('#high-score-form .error').html('');
+  window.gameRef.score = 0;
+  return $('#high-score-form input, #high-score-form button').fadeOut(200);
+};
+
+showError = function(msg) {
+  $('#high-score-form .success').html('');
+  $('#high-score-form .error').html("&nbsp; " + msg + " &nbsp;");
+  return $('#high-score-form input').focus();
+};
+
+onResponse = function(data, textStatus, jqXHR) {
+  if ('made-top-ten!' === data) {
+    return showSuccess('Congratulations! You made <a href="./high-scores.html">this month’s top ten!</a>');
+  } else if ('missed-out!' === data) {
+    return showSuccess('Sorry, you didn’t score enough to reach <a href="./high-scores.html">this month’s top ten!</a>');
+  } else {
+    return showError(data);
+  }
+};
+
+onFail = function(msg) {
+  console.log('server error details:', msg);
+  return showError('Sorry there was a server error. See console.log for details :-(');
+};
+
+onSubmitHighScore = function(evt) {
+  var $form, $initials, jqxhr;
+  clearMessages();
+  window.gameRef.score = 3000;
+  evt.preventDefault();
+  $form = $('#high-score-form');
+  $initials = $('#high-score-form input[name="initials"]');
+  return jqxhr = $.ajax({
+    type: $form.attr('method'),
+    url: $form.attr('action'),
+    data: {
+      initials: $initials.val(),
+      score: window.gameRef.score
+    }
+  }).done(onResponse).fail(onFail);
+};
+
+$($('#high-score-form button[type="submit"]').click(onSubmitHighScore));
+
+
+},{"jquery":2}],10:[function(require,module,exports){
 window.onload = function() {
   'use strict';
   var Phaser, game;
@@ -925,11 +983,13 @@ window.onload = function() {
   game.state.add('levelFourGameOver', require('./states/level-four-game-over'));
   game.state.add('gameOver', require('./states/game-over'));
   require('./frame/responsive');
+  require('./frame/submit-high-score');
+  window.gameRef = game;
   return game.state.start('boot');
 };
 
 
-},{"./frame/responsive":8,"./states/boot":10,"./states/game-over":11,"./states/level-four":13,"./states/level-four-game-over":12,"./states/level-one":15,"./states/level-one-complete":14,"./states/level-three":18,"./states/level-three-complete":16,"./states/level-three-game-over":17,"./states/level-two":20,"./states/level-two-complete":19,"./states/preloader":21,"./states/splash":22,"phaser":3}],10:[function(require,module,exports){
+},{"./frame/responsive":8,"./frame/submit-high-score":9,"./states/boot":11,"./states/game-over":12,"./states/level-four":14,"./states/level-four-game-over":13,"./states/level-one":16,"./states/level-one-complete":15,"./states/level-three":19,"./states/level-three-complete":17,"./states/level-three-game-over":18,"./states/level-two":21,"./states/level-two-complete":20,"./states/preloader":22,"./states/splash":23,"phaser":3}],11:[function(require,module,exports){
 var $, Boot;
 
 $ = require('jquery');
@@ -962,7 +1022,7 @@ Boot = (function() {
 module.exports = Boot;
 
 
-},{"jquery":2}],11:[function(require,module,exports){
+},{"jquery":2}],12:[function(require,module,exports){
 var GameOver, Message,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -1000,7 +1060,7 @@ GameOver = (function(_super) {
 module.exports = GameOver;
 
 
-},{"../classes/message":6}],12:[function(require,module,exports){
+},{"../classes/message":6}],13:[function(require,module,exports){
 var LevelFourGameOver, Message,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -1038,7 +1098,7 @@ LevelFourGameOver = (function(_super) {
 module.exports = LevelFourGameOver;
 
 
-},{"../classes/message":6}],13:[function(require,module,exports){
+},{"../classes/message":6}],14:[function(require,module,exports){
 var Level, LevelFour,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -1072,7 +1132,7 @@ LevelFour = (function(_super) {
 module.exports = LevelFour;
 
 
-},{"../classes/level":5}],14:[function(require,module,exports){
+},{"../classes/level":5}],15:[function(require,module,exports){
 var LevelOneComplete, Message,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -1103,7 +1163,7 @@ LevelOneComplete = (function(_super) {
 module.exports = LevelOneComplete;
 
 
-},{"../classes/message":6}],15:[function(require,module,exports){
+},{"../classes/message":6}],16:[function(require,module,exports){
 var $, Level, LevelOne,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -1146,7 +1206,7 @@ LevelOne = (function(_super) {
 module.exports = LevelOne;
 
 
-},{"../classes/level":5,"jquery":2}],16:[function(require,module,exports){
+},{"../classes/level":5,"jquery":2}],17:[function(require,module,exports){
 var LevelThreeComplete, Message,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -1172,7 +1232,7 @@ LevelThreeComplete = (function(_super) {
 module.exports = LevelThreeComplete;
 
 
-},{"../classes/message":6}],17:[function(require,module,exports){
+},{"../classes/message":6}],18:[function(require,module,exports){
 var LevelThreeGameOver, Message,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -1210,7 +1270,7 @@ LevelThreeGameOver = (function(_super) {
 module.exports = LevelThreeGameOver;
 
 
-},{"../classes/message":6}],18:[function(require,module,exports){
+},{"../classes/message":6}],19:[function(require,module,exports){
 var Level, LevelThree,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -1239,7 +1299,7 @@ LevelThree = (function(_super) {
 module.exports = LevelThree;
 
 
-},{"../classes/level":5}],19:[function(require,module,exports){
+},{"../classes/level":5}],20:[function(require,module,exports){
 var LevelTwoComplete, Message,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -1265,7 +1325,7 @@ LevelTwoComplete = (function(_super) {
 module.exports = LevelTwoComplete;
 
 
-},{"../classes/message":6}],20:[function(require,module,exports){
+},{"../classes/message":6}],21:[function(require,module,exports){
 var Level, LevelTwo,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -1299,7 +1359,7 @@ LevelTwo = (function(_super) {
 module.exports = LevelTwo;
 
 
-},{"../classes/level":5}],21:[function(require,module,exports){
+},{"../classes/level":5}],22:[function(require,module,exports){
 var Preloader;
 
 Preloader = (function() {
@@ -1373,7 +1433,7 @@ Preloader = (function() {
 module.exports = Preloader;
 
 
-},{}],22:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 var $, Message, Splash,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -1412,4 +1472,4 @@ Splash = (function(_super) {
 module.exports = Splash;
 
 
-},{"../classes/message":6,"jquery":2}]},{},[9])
+},{"../classes/message":6,"jquery":2}]},{},[10])

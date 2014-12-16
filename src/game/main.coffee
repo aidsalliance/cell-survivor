@@ -21,8 +21,10 @@ window.onload = ->
   game.state.add 'levelFourGameOver' , require './states/level-four-game-over'
   game.state.add 'gameOver'          , require './states/game-over'
 
-  # Responsive
+  # Helpers
   require './frame/responsive'
+  require './frame/submit-high-score'
+  window.gameRef = game # for 'onSubmitHighScore()'
 
   # Initialise the game
   game.state.start 'boot'
