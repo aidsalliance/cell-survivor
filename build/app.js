@@ -661,6 +661,45 @@ Message = (function() {
     this.opt = opt;
   }
 
+  Message.prototype.showMessage = function() {
+    var cache, msg, section, _i, _len, _ref;
+    this.sfx.popup.play();
+    msg = [];
+    if (this.opt.banner) {
+      cache = this.game.cache._images[this.opt.banner];
+      msg.push("<div><img style=\"width:50%; height:auto;\" src=\"" + cache.url + "\"></div>");
+    }
+    if (this.opt.title) {
+      msg.push("<h1>" + this.opt.title + "</h1>");
+    }
+    _ref = this.opt.text;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      section = _ref[_i];
+      if (-1 !== section.indexOf('Well done for using your condoms! ')) {
+        if (3 === $('img[src="assets/images/icon-condom.gif"]').length) {
+          section = section.substr(34);
+        }
+      }
+      msg.push("<p>" + section + "</p>");
+    }
+    $('#popup-dismiss').off().on('click', (function(_this) {
+      return function() {
+        return _this.onDown();
+      };
+    })(this));
+    $('#popup-note').html('');
+    $('#popup-text').html(msg.join('\n'));
+    $('#popup-wrap').fadeIn();
+    if (this.game.device.desktop) {
+      setTimeout(((function(_this) {
+        return function() {
+          return $('#popup-note').html('...press spacebar to continue...');
+        };
+      })(this)), 1800);
+    }
+    return $(window).trigger('resize');
+  };
+
   Message.prototype.wrapper = function(len) {
     var regex;
     regex = '.{1,' + len + '}(\\s|$)' + (false ? '|.{' + len + '}|.+$' : '|\\S+?(\\s|$)');
@@ -669,13 +708,17 @@ Message = (function() {
 
   Message.prototype.create = function() {
     var section, text, x, y, _i, _len, _ref;
-    $(window).trigger('resize');
+    this.sfx = {
+      popup: this.game.add.audio('popup')
+    };
     this.enterKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
     this.nEnterKey = this.game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_ENTER);
     this.spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     this.enterKey.onDown.add(this.onDown, this);
     this.nEnterKey.onDown.add(this.onDown, this);
     this.spaceKey.onDown.add(this.onDown, this);
+    this.showMessage();
+    return;
     x = this.game.width / 2;
     y = 50;
     if (this.opt.banner) {
@@ -747,6 +790,7 @@ Message = (function() {
   Message.prototype.update = function() {};
 
   Message.prototype.onDown = function() {
+    $('#popup-wrap').fadeOut();
     return this.game.state.start(this.opt.next);
   };
 
@@ -799,9 +843,13 @@ var $, onResize, resizeLandscape, resizePortrait;
 $ = require('jquery');
 
 onResize = function() {
-  var height, width;
+  var height, width, _ref, _ref1;
   width = $(window).width();
   height = $(window).height();
+  console.log((_ref = $('.skiptranslate')[0]) != null ? _ref.style.display : void 0);
+  if (0 < $('.goog-te-banner-frame').length && 'none' !== ((_ref1 = $('.skiptranslate')[0]) != null ? _ref1.style.display : void 0)) {
+    height -= $('.goog-te-banner-frame').height();
+  }
   if (1 > width / height) {
     return resizePortrait(width, height);
   } else {
@@ -838,12 +886,14 @@ resizePortrait = function(width, height) {
     height: width * .1
   });
   $('#popup-wrap').css({
-    top: (height - width) / 2 + 40,
+    top: (height - $('#popup-inner').height()) * .4,
+    bottom: (height - width) / 2,
     left: 0,
-    width: '100%'
+    width: '100%',
+    'font-size': '150%'
   });
   $('#popup-inner').css({
-    width: '80%'
+    width: '90%'
   });
   $('.wrap .frame >div img').css({
     width: 350 > width ? 48 : 54
@@ -882,9 +932,11 @@ resizeLandscape = function(width, height) {
     height: height * .1
   });
   $('#popup-wrap').css({
-    top: height * .1,
+    top: (height - $('#popup-inner').height()) * .4,
+    bottom: 0,
     left: (width - height) / 2 + (height * .1),
-    width: height * .8
+    width: height * .8,
+    'font-size': '200%'
   });
   $('#popup-inner').css({
     width: height * .8
@@ -1006,12 +1058,6 @@ Boot = (function() {
     this.game.input.maxPointers = 1;
     this.game.state.start('preloader');
     this.game.furthestStep = 0;
-    $('#popup-dismiss').on('click', (function(_this) {
-      return function() {
-        _this.game.paused = false;
-        return $('#popup-wrap').fadeOut();
-      };
-    })(this));
     return $('#popup-wrap').hide();
   };
 
@@ -1376,7 +1422,7 @@ Preloader = (function() {
     this.load.setPreloadSprite(this.asset);
     this.load.bitmapFont('minecraftia', 'assets/fonts/minecraftia.png', 'assets/fonts/minecraftia.xml');
     this.load.image('button-background', 'assets/images/button-background-v2.gif');
-    this.load.image('cell-survivor-logo', 'assets/images/cell-survivor-logo-v1.gif');
+    this.load.image('cell-survivor-logo', 'assets/images/cell-survivor-logo-v2.gif');
     this.load.image('alliance-logo', 'assets/images/alliance-logo-v1.gif');
     this.load.image('cellfield', 'assets/images/bkgnd-v2.jpg');
     this.load.image('vein-wall-header', 'assets/images/vein-wall-header.gif');

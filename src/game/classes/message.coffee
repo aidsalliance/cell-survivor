@@ -7,13 +7,54 @@ class Message
 
   constructor: (@opt) ->
 
+  showMessage: () ->
+    # return # temporarily remove all popups
+    @sfx.popup.play()
+    msg = []
+
+    if @opt.banner
+      cache = @game.cache._images[@opt.banner] # @todo find less hacky way to retrieve the image meta
+      msg.push "<div><img style=\"width:50%; height:auto;\" src=\"#{cache.url}\"></div>"
+
+    if @opt.title
+      msg.push "<h1>#{@opt.title}</h1>"
+
+    for section in @opt.text
+      if -1 != section.indexOf('Well done for using your condoms! ') # qik n dirty removal of ‘Well done for using your condoms! ’ where none were used
+        if 3 == $('img[src="assets/images/icon-condom.gif"]').length
+          section = section.substr 34
+      msg.push "<p>#{section}</p>"
+
+    $ '#popup-dismiss'
+      .off() # clear all previous click handlers
+      .on 'click', =>
+        @onDown()
+        # @game.paused = false
+        # $ '#popup-wrap'
+        #   .fadeOut()
+    $ '#popup-note'
+      .html ''
+    $ '#popup-text'
+      .html msg.join '\n'
+    $ '#popup-wrap'
+      .fadeIn()
+    if @game.device.desktop
+      setTimeout (=>
+        $ '#popup-note'
+          .html '...press spacebar to continue...')
+        , 1800
+
+    $(window).trigger 'resize' # ensure ‘onResize()’ is run
+
   wrapper: (len) ->
     # http://james.padolsey.com/javascript/wordwrap-for-javascript/
     regex = '.{1,' + len + '}(\\s|$)' + (if false then '|.{' + len + '}|.+$' else '|\\S+?(\\s|$)')
     return RegExp regex, 'g'
 
   create: ->
-    $(window).trigger 'resize' # ensure ‘onResize()’ is run
+
+    @sfx =
+      popup: @game.add.audio 'popup'
 
     @enterKey  = @game.input.keyboard.addKey Phaser.Keyboard.ENTER
     @nEnterKey = @game.input.keyboard.addKey Phaser.Keyboard.NUMPAD_ENTER
@@ -21,6 +62,9 @@ class Message
     @enterKey.onDown.add  @onDown, @
     @nEnterKey.onDown.add @onDown, @
     @spaceKey.onDown.add  @onDown, @
+
+    @showMessage()
+    return
 
     x = @game.width / 2
     y = 50
@@ -85,6 +129,8 @@ class Message
   update: ->
 
   onDown: ->
+    $ '#popup-wrap'
+      .fadeOut()
     @game.state.start @opt.next
 
 

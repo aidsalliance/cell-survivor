@@ -13,7 +13,7 @@ class Preloader
     # @load.atlas 'breakin', 'assets/images/breakin-v2.png', 'assets/images/breakin-v2.json'
 
     @load.image 'button-background'              , 'assets/images/button-background-v2.gif'
-    @load.image 'cell-survivor-logo'             , 'assets/images/cell-survivor-logo-v1.gif'
+    @load.image 'cell-survivor-logo'             , 'assets/images/cell-survivor-logo-v2.gif'
     @load.image 'alliance-logo'                  , 'assets/images/alliance-logo-v1.gif'
     @load.image 'cellfield'                      , 'assets/images/bkgnd-v2.jpg'
     @load.image 'vein-wall-header'               , 'assets/images/vein-wall-header.gif'
