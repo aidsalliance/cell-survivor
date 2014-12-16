@@ -687,7 +687,7 @@ Message = (function() {
     }
     if (this.opt.button) {
       cache = this.game.cache._images['button-background'];
-      msg.push("<h2 class=\"down-button\" style=\"background-image:url(../" + cache.url + ")\"><a onclick=\"this.onDown\">" + this.opt.button + "</a></h2>");
+      msg.push("<h2 class=\"down-button\" style=\"background-image:url(" + cache.url + ")\"><a onclick=\"this.onDown\">" + this.opt.button + "</a></h2>");
     }
     if (this.opt.footer) {
       cache = this.game.cache._images[this.opt.footer];

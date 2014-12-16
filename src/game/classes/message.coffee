@@ -29,7 +29,7 @@ class Message
 
     if @opt.button
       cache = @game.cache._images['button-background'] # @todo find less hacky way to retrieve the image meta
-      msg.push "<h2 class=\"down-button\" style=\"background-image:url(../#{cache.url})\"><a onclick=\"this.onDown\">#{@opt.button}</a></h2>"
+      msg.push "<h2 class=\"down-button\" style=\"background-image:url(#{cache.url})\"><a onclick=\"this.onDown\">#{@opt.button}</a></h2>"
 
     if @opt.footer
       cache = @game.cache._images[@opt.footer] # @todo find less hacky way to retrieve the image meta
