@@ -169,10 +169,11 @@ body.hide-overflow {
   }
 }
 
-#play-cell-survivor {
+#play-cell-survivor, button {
   display: inline-block;
   margin-bottom: 40px;
   padding: 10px 20px;
+  border-width: 0;
   border-radius: 4px;
   background-color: #008053;
   transition: background-color .4s;
@@ -181,6 +182,7 @@ body.hide-overflow {
   text-shadow: #000 0 2px; // @todo cross-browser
   color: #fff!important;
   text-decoration: none;
+  cursor: pointer;
   &:hover {
     background-color: #009ac8;
   }
@@ -222,6 +224,39 @@ body.hide-overflow {
     }
   }
 }
+
+#high-score-form {
+  
+  .error {
+    background-color: #f8c1d9;
+    font: 12px 'Press Start 2P', cursive;
+    line-height: 2;
+    color: #d60c8c;
+  }
+  .success {
+    background-color: #8cc63f;
+    font: 12px 'Press Start 2P', cursive;
+    line-height: 2;
+    color: #008053;
+  }
+  input {
+    margin-top: 1em;
+    width: 3em;
+    padding: 3px 10px 2px 10px;
+    border: 2px solid #fff;
+    outline-width: 0;
+    background: transparent;
+    color: #fff;
+    text-align: center;
+    text-transform: uppercase;
+  }
+  button {
+    display: block;
+    margin: 10px auto;
+
+  }
+}
+
 
 #high-scores {
   width: 100%;

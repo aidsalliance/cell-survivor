@@ -220,7 +220,11 @@ __11.8__  better portrait fit, fixed fb in portrait-mode, hotfix 0.2.10
 __11.9__  fixed mouse/touch controls at small window sizes, hotfix 0.2.12  
 __11.10__ “Game NOT Over”, sicker nucleus, always go to L2, hotfix 0.2.14  
 __11.11__ feature leaderboard again, began simple ‘High Score’ popup form  
-__11.12__ Changed Level 2 game-over go to Level 2 complete, instead  
+__11.12__ changed Level 2 game-over go to Level 2 complete, instead  
+__11.13__ continued ‘High Score’ popup form  
+__11.14__ bumped version to '0.2.16', tracked new files, and commit  
+
+
 
 
 Releases
