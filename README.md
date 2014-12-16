@@ -269,5 +269,6 @@ Releases
 + 0.2.16   qik update of Levels logic
 + 0.2.17   Google Translate
 + 0.3.0    Google Translate
++ 0.3.1    hotfix button url
 
 
