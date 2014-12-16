@@ -3,6 +3,9 @@ $ = require 'jquery'
 onResize = ->
   width = $(window).width()
   height = $(window).height()
+  console.log $('.skiptranslate')[0]?.style.display
+  if 0 < $('.goog-te-banner-frame').length and 'none' != $('.skiptranslate')[0]?.style.display
+    height -= $('.goog-te-banner-frame').height()
   if 1 > width / height then resizePortrait(width, height) else resizeLandscape(width, height)
 
 # @todo fix for square-ish window shape
@@ -38,12 +41,15 @@ resizePortrait = (width, height) ->
       height: width * .1
   $ '#popup-wrap'
     .css
-      top: (height - width) / 2 + 40
+      top: ( height - $('#popup-inner').height() ) * .4
+      # top: (height - width) / 2
+      bottom: (height - width) / 2
       left: 0
       width: '100%'
+      'font-size': '150%'
   $ '#popup-inner'
     .css
-      width: '80%'
+      width: '90%'
   $ '.wrap .frame >div img'
     .css
       width: if 350 > width then 48 else 54 # 320px width
@@ -83,9 +89,12 @@ resizeLandscape = (width, height) ->
       height: height * .1
   $ '#popup-wrap'
     .css
-      top: height * .1 # 10%
+      # top: height * .1 # 10%
+      top: ( height - $('#popup-inner').height() ) * .4
+      bottom: 0
       left: (width - height) / 2 + (height * .1)
       width: height * .8
+      'font-size': '200%'
   $ '#popup-inner'
     .css
       width: height * .8 # 80%

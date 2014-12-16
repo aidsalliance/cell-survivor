@@ -139,11 +139,11 @@ body.hide-overflow {
 
 #score {
   position: absolute;
-  padding: 30px 0 0 8px;
+  padding: 50px 0 0 8px;
 }
 @media (max-width: 600px) {
   #score {
-    padding: 20px 0 0 3px;
+    padding: 30px 0 0 3px;
   }
 }
 
@@ -190,14 +190,14 @@ body.hide-overflow {
 
 #popup-wrap {
   position: absolute;
+  display: none;
   width: 100%;
   text-align: center;
-  display: none;
+  font-size: 200%;
   #popup-inner {
     display: inline-block;
     width: 500px;
     padding-bottom: 20px;
-    outline: 1px solid #000;
     background-color: rgba(0,0,0,.8);
     #popup-dismiss {
       text-align: right;
@@ -215,12 +215,40 @@ body.hide-overflow {
     #popup-text {
       margin-top: -2%;
       padding: 0 20px;
+      p, h6 {
+        font-family: arial, sans-serif;
+        a {
+          color: #fff;
+          text-decoration: underline;
+        }
+      }
+      h6 {
+        margin: 1em 0;
+        font-weight: normal;
+      }
+      a {
+        transition: opacity .5s;
+        &:hover {
+          opacity: .7;
+        }
+      }
+      .down-button {
+        height: 64px;
+        background-repeat: no-repeat;
+        background-position: center 0;
+        margin-bottom: 0;
+        padding-top: .8em;
+        cursor: pointer;
+        transition: opacity .5s;
+        &:hover {
+          opacity: .7;
+        }
+      }
     }
     #popup-note {
-      margin-top: -2em;
+      margin-top: -1em;
       padding: 2% 20px 0 20px;
       color: #808080;
-      font-size: 50%;
     }
   }
 }
@@ -285,6 +313,10 @@ body.hide-overflow {
   line-height: 0.7;
   text-shadow: #000 0 2px; // @todo cross-browser
 }
+h2 {
+  font: 24px 'Press Start 2P', cursive;
+  text-shadow: #000 0 2px; // @todo cross-browser
+}
 
 .green {
   color: #8cc63f;
@@ -302,3 +334,10 @@ body.hide-overflow {
   color: #8ed8f8;
   text-shadow: #009ac8 0 4px; // @todo cross-browser
 }
+
+#google_translate_element {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
