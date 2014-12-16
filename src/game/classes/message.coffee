@@ -23,28 +23,43 @@ class Message
       if -1 != section.indexOf('Well done for using your condoms! ') # qik n dirty removal of ‘Well done for using your condoms! ’ where none were used
         if 3 == $('img[src="assets/images/icon-condom.gif"]').length
           section = section.substr 34
+      if -1 != startPos = section.indexOf('www.aidsalliance.org/worldAIDSday')
+        section = section.substr(0, startPos) + '<a title=\"Find out about World AIDS Day\" href="http://www.aidsalliance.org/worldAIDSday">www.aidsalliance.org/worldAIDSday</a>' + section.substr(startPos + 33)
       msg.push "<p>#{section}</p>"
 
+    if @opt.button
+      cache = @game.cache._images['button-background'] # @todo find less hacky way to retrieve the image meta
+      msg.push "<h2 class=\"down-button\" style=\"background-image:url(../#{cache.url})\"><a onclick=\"this.onDown\">#{@opt.button}</a></h2>"
+
+    if @opt.footer
+      cache = @game.cache._images[@opt.footer] # @todo find less hacky way to retrieve the image meta
+      msg.push "<div><a title=\"Find out about World AIDS Day\" href=\"http://www.aidsalliance.org/worldAIDSday\"><img style=\"width:50%; height:auto;\" src=\"#{cache.url}\"></a></div>"
+
+    if @opt.afterword
+      msg.push "<h6>#{@opt.afterword}</h6>"
+
+    $ '#popup-text'
+      .html msg.join '\n'
     $ '#popup-dismiss'
       .off() # clear all previous click handlers
       .on 'click', =>
         @onDown()
-        # @game.paused = false
-        # $ '#popup-wrap'
-        #   .fadeOut()
+      .css 'display', 'none'
+    $ '.down-button'
+      .off() # clear all previous click handlers
+      .on 'click', =>
+        @onDown()
     $ '#popup-note'
       .html ''
-    $ '#popup-text'
-      .html msg.join '\n'
     $ '#popup-wrap'
       .fadeIn()
     if @game.device.desktop
       setTimeout (=>
         $ '#popup-note'
-          .html '...press spacebar to continue...')
+          .html '<h6>...press spacebar to continue...</h6>')
         , 1800
 
-    $(window).trigger 'resize' # ensure ‘onResize()’ is run
+    $(window).trigger 'resize' # center the popup vertically
 
   wrapper: (len) ->
     # http://james.padolsey.com/javascript/wordwrap-for-javascript/

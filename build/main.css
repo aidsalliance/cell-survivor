@@ -145,13 +145,13 @@ body.hide-overflow {
 /* line 140, ../src/sass/main.scss */
 #score {
   position: absolute;
-  padding: 30px 0 0 8px;
+  padding: 50px 0 0 8px;
 }
 
 @media (max-width: 600px) {
   /* line 145, ../src/sass/main.scss */
   #score {
-    padding: 20px 0 0 3px;
+    padding: 30px 0 0 3px;
   }
 }
 /* line 150, ../src/sass/main.scss */
@@ -237,32 +237,63 @@ body.hide-overflow {
   padding: 0 20px;
 }
 /* line 218, ../src/sass/main.scss */
-#popup-wrap #popup-inner #popup-text p {
+#popup-wrap #popup-inner #popup-text p, #popup-wrap #popup-inner #popup-text h6 {
   font-family: arial, sans-serif;
 }
-/* line 222, ../src/sass/main.scss */
+/* line 220, ../src/sass/main.scss */
+#popup-wrap #popup-inner #popup-text p a, #popup-wrap #popup-inner #popup-text h6 a {
+  color: #fff;
+  text-decoration: underline;
+}
+/* line 225, ../src/sass/main.scss */
+#popup-wrap #popup-inner #popup-text h6 {
+  margin: 1em 0;
+  font-weight: normal;
+}
+/* line 229, ../src/sass/main.scss */
+#popup-wrap #popup-inner #popup-text a {
+  transition: opacity .5s;
+}
+/* line 231, ../src/sass/main.scss */
+#popup-wrap #popup-inner #popup-text a:hover {
+  opacity: .7;
+}
+/* line 235, ../src/sass/main.scss */
+#popup-wrap #popup-inner #popup-text .down-button {
+  height: 64px;
+  background-repeat: no-repeat;
+  background-position: center 0;
+  margin-bottom: 0;
+  padding-top: .8em;
+  cursor: pointer;
+  transition: opacity .5s;
+}
+/* line 243, ../src/sass/main.scss */
+#popup-wrap #popup-inner #popup-text .down-button:hover {
+  opacity: .7;
+}
+/* line 248, ../src/sass/main.scss */
 #popup-wrap #popup-inner #popup-note {
   margin-top: -1em;
   padding: 2% 20px 0 20px;
   color: #808080;
-  font-size: 50%;
 }
 
-/* line 233, ../src/sass/main.scss */
+/* line 258, ../src/sass/main.scss */
 #high-score-form .error {
   background-color: #f8c1d9;
   font: 12px 'Press Start 2P', cursive;
   line-height: 2;
   color: #d60c8c;
 }
-/* line 239, ../src/sass/main.scss */
+/* line 264, ../src/sass/main.scss */
 #high-score-form .success {
   background-color: #8cc63f;
   font: 12px 'Press Start 2P', cursive;
   line-height: 2;
   color: #008053;
 }
-/* line 245, ../src/sass/main.scss */
+/* line 270, ../src/sass/main.scss */
 #high-score-form input {
   margin-top: 1em;
   width: 3em;
@@ -274,13 +305,13 @@ body.hide-overflow {
   text-align: center;
   text-transform: uppercase;
 }
-/* line 256, ../src/sass/main.scss */
+/* line 281, ../src/sass/main.scss */
 #high-score-form button {
   display: block;
   margin: 10px auto;
 }
 
-/* line 264, ../src/sass/main.scss */
+/* line 289, ../src/sass/main.scss */
 #high-scores {
   width: 100%;
   margin-bottom: 20px;
@@ -289,55 +320,61 @@ body.hide-overflow {
 }
 
 @media (max-width: 600px) {
-  /* line 271, ../src/sass/main.scss */
+  /* line 296, ../src/sass/main.scss */
   #high-scores {
     height: 350px;
   }
 
-  /* line 275, ../src/sass/main.scss */
+  /* line 300, ../src/sass/main.scss */
   #high-scores-inner .bold-bitmap {
     font-size: 18px;
   }
 }
-/* line 281, ../src/sass/main.scss */
+/* line 306, ../src/sass/main.scss */
 .bold-bitmap, h1 {
   font: 32px 'Press Start 2P', cursive;
   line-height: 1.4;
   text-shadow: #000 0 4px;
 }
 
-/* line 286, ../src/sass/main.scss */
+/* line 311, ../src/sass/main.scss */
 .bold-bitmap-small {
   font: 32px 'Press Start 2P', cursive;
   line-height: 0.7;
   text-shadow: #000 0 2px;
 }
 
-/* line 292, ../src/sass/main.scss */
+/* line 316, ../src/sass/main.scss */
+h2 {
+  font: 24px 'Press Start 2P', cursive;
+  text-shadow: #000 0 2px;
+}
+
+/* line 321, ../src/sass/main.scss */
 .green {
   color: #8cc63f;
   text-shadow: #008053 0 4px;
 }
 
-/* line 296, ../src/sass/main.scss */
+/* line 325, ../src/sass/main.scss */
 .aqua {
   color: #009ac8;
   text-shadow: #008053 0 4px;
 }
 
-/* line 300, ../src/sass/main.scss */
+/* line 329, ../src/sass/main.scss */
 .pink {
   color: #f8c1d9;
   text-shadow: #d60c8c 0 4px;
 }
 
-/* line 304, ../src/sass/main.scss */
+/* line 333, ../src/sass/main.scss */
 .blue {
   color: #8ed8f8;
   text-shadow: #009ac8 0 4px;
 }
 
-/* line 309, ../src/sass/main.scss */
+/* line 338, ../src/sass/main.scss */
 #google_translate_element {
   position: absolute;
   top: 0;
