@@ -232,8 +232,8 @@ __12.1__  `$ git flow feature start translate`
 __12.2__  added http://translate.google.com/translate_tools to all HTMLs  
 __12.3__  ‘message.coffee’ now uses HTML instead of canvas-text  
 __12.4__  bumped version to '0.2.17', tracked new files, and commit  
-
-
+__12.5__  `$ git flow feature finish translate`  
+__12.6__  `$ git flow release start 0.3.0`  
 
 
 
@@ -268,5 +268,6 @@ Releases
 + 0.2.15-1 begin simple leaderboard input field
 + 0.2.16   qik update of Levels logic
 + 0.2.17   Google Translate
++ 0.3.0    Google Translate
 
 

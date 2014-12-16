@@ -662,7 +662,7 @@ Message = (function() {
   }
 
   Message.prototype.showMessage = function() {
-    var cache, msg, section, _i, _len, _ref;
+    var cache, msg, section, startPos, _i, _len, _ref;
     this.sfx.popup.play();
     msg = [];
     if (this.opt.banner) {
@@ -680,20 +680,39 @@ Message = (function() {
           section = section.substr(34);
         }
       }
+      if (-1 !== (startPos = section.indexOf('www.aidsalliance.org/worldAIDSday'))) {
+        section = section.substr(0, startPos) + '<a title=\"Find out about World AIDS Day\" href="http://www.aidsalliance.org/worldAIDSday">www.aidsalliance.org/worldAIDSday</a>' + section.substr(startPos + 33);
+      }
       msg.push("<p>" + section + "</p>");
     }
+    if (this.opt.button) {
+      cache = this.game.cache._images['button-background'];
+      msg.push("<h2 class=\"down-button\" style=\"background-image:url(../" + cache.url + ")\"><a onclick=\"this.onDown\">" + this.opt.button + "</a></h2>");
+    }
+    if (this.opt.footer) {
+      cache = this.game.cache._images[this.opt.footer];
+      msg.push("<div><a title=\"Find out about World AIDS Day\" href=\"http://www.aidsalliance.org/worldAIDSday\"><img style=\"width:50%; height:auto;\" src=\"" + cache.url + "\"></a></div>");
+    }
+    if (this.opt.afterword) {
+      msg.push("<h6>" + this.opt.afterword + "</h6>");
+    }
+    $('#popup-text').html(msg.join('\n'));
     $('#popup-dismiss').off().on('click', (function(_this) {
+      return function() {
+        return _this.onDown();
+      };
+    })(this)).css('display', 'none');
+    $('.down-button').off().on('click', (function(_this) {
       return function() {
         return _this.onDown();
       };
     })(this));
     $('#popup-note').html('');
-    $('#popup-text').html(msg.join('\n'));
     $('#popup-wrap').fadeIn();
     if (this.game.device.desktop) {
       setTimeout(((function(_this) {
         return function() {
-          return $('#popup-note').html('...press spacebar to continue...');
+          return $('#popup-note').html('<h6>...press spacebar to continue...</h6>');
         };
       })(this)), 1800);
     }
@@ -1082,7 +1101,6 @@ GameOver = (function(_super) {
     GameOver.__super__.constructor.call(this, {
       title: 'Game NOT Over',
       text: ['Contracting HIV is not game over - young people can be supported to lead healthy and fulfilled lives.', 'For more information about how the International HIV/AIDS Alliance is supporting young people, visit www.aidsalliance.org/worldAIDSday'],
-      textlink: true,
       button: 'PLAY AGAIN',
       footer: 'alliance-logo',
       next: 'levelOne'
@@ -1120,7 +1138,6 @@ LevelFourGameOver = (function(_super) {
     LevelFourGameOver.__super__.constructor.call(this, {
       title: 'Game NOT Over',
       text: ['Not easy was it with no extra help? Young people living with HIV can be supported to lead healthy and fulfilled lives if they have access to services, treatment, care and support.', 'For more information about how the International HIV/AIDS Alliance is supporting young people, visit www.aidsalliance.org/worldAIDSday'],
-      textlink: true,
       button: 'PLAY AGAIN',
       footer: 'alliance-logo',
       next: 'levelOne'
@@ -1292,7 +1309,6 @@ LevelThreeGameOver = (function(_super) {
     LevelThreeGameOver.__super__.constructor.call(this, {
       title: 'Game NOT Over',
       text: ['Shame you didn’t make it to the 4th and final level! Contracting HIV is not game over however - young people can be supported to lead healthy and fulfilled lives.', 'For more information about how the International HIV/AIDS Alliance is supporting young people, visit www.aidsalliance.org/worldAIDSday'],
-      textlink: true,
       button: 'PLAY AGAIN',
       footer: 'alliance-logo',
       next: 'levelOne'
@@ -1421,9 +1437,9 @@ Preloader = (function() {
     this.load.onLoadComplete.addOnce(this.onLoadComplete, this);
     this.load.setPreloadSprite(this.asset);
     this.load.bitmapFont('minecraftia', 'assets/fonts/minecraftia.png', 'assets/fonts/minecraftia.xml');
-    this.load.image('button-background', 'assets/images/button-background-v2.gif');
+    this.load.image('button-background', 'assets/images/button-background-v3.gif');
     this.load.image('cell-survivor-logo', 'assets/images/cell-survivor-logo-v2.gif');
-    this.load.image('alliance-logo', 'assets/images/alliance-logo-v1.gif');
+    this.load.image('alliance-logo', 'assets/images/alliance-logo-v2.gif');
     this.load.image('cellfield', 'assets/images/bkgnd-v2.jpg');
     this.load.image('vein-wall-header', 'assets/images/vein-wall-header.gif');
     this.load.image('vein-wall-footer', 'assets/images/vein-wall-footer.gif');

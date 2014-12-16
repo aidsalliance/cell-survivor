@@ -8,7 +8,6 @@ class GameOver extends Message
         'Contracting HIV is not game over - young people can be supported to lead healthy and fulfilled lives.'
         'For more information about how the International HIV/AIDS Alliance is supporting young people, visit www.aidsalliance.org/worldAIDSday'
       ]
-      textlink: true
       button: 'PLAY AGAIN'
       footer: 'alliance-logo'
       next: 'levelOne'
