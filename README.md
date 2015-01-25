@@ -236,6 +236,13 @@ __12.5__  `$ git flow feature finish translate`
 __12.6__  `$ git flow release start 0.3.0`  
 
 
+13. Fix Google Translate on Firefox
+-----------------------------------
+
+__13.1__  `$ git flow feature start translate-fix`  
+__13.2__  bumped version to '0.3.1-1' and commit  
+
+
 
 
 Releases
