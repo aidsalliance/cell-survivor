@@ -241,6 +241,8 @@ __12.6__  `$ git flow release start 0.3.0`
 
 __13.1__  `$ git flow feature start translate-fix`  
 __13.2__  bumped version to '0.3.1-1' and commit  
+__13.3__  `<base target="_blank">` becomes `<base target="_self">`  
+__13.4__  bumped version to '0.3.1-2' and commit  
 
 
 
@@ -277,5 +279,6 @@ Releases
 + 0.2.17   Google Translate
 + 0.3.0    Google Translate
 + 0.3.1    hotfix button url
++ 0.3.1-2  fix Google Translate on Firefox
 
 
