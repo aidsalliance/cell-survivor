@@ -246,6 +246,13 @@ __13.4__  bumped version to '0.3.1-2' and commit
 __13.5__  `$ git flow feature finish translate-fix`, `$ git flow release start 0.3.2`  
 
 
+14. Slow Down Level 2
+-----------------------------------
+
+__14.1__  `$ git flow feature start slow-down-level-2`  
+__14.2__  bumped version to '0.3.3-1' and commit  
+
+
 
 
 Releases
