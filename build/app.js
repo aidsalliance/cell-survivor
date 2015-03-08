@@ -184,6 +184,7 @@ Level = (function() {
 
   Level.prototype.buildWall = function() {
     var adjacent, angle, brick, opposite, spec, _i, _ref;
+    this.game.damage = 0;
     if ((_ref = this.game.bricks) != null) {
       _ref.destroy();
     }
@@ -483,7 +484,7 @@ Level = (function() {
         }
         pathogen.scale.setTo(2, 2);
         pathogen.smoothed = false;
-        if (3 <= this.game.step && 4 !== this.game.step && !this.rnd.between(0, (3 === this.game.step ? 5 : 15))) {
+        if (6 < this.game.damage && 3 <= this.game.step && 4 !== this.game.step && !this.rnd.between(0, (3 === this.game.step ? 5 : 15))) {
           pathogen.loadTexture('hiv-virus-main');
           pathogen.name = 'hiv';
           pathogen.scale.setTo(3, 3);
@@ -578,6 +579,7 @@ Level = (function() {
     } else {
       this.explode(brick);
       this.sfx.brick.play();
+      this.game.damage++;
       if (!this.game.hasLostWall && (1 === this.game.step || 2 === this.game.step)) {
         this.game.step = 1 === this.game.step ? 2 : 3;
         this.game.hasLostWall = true;

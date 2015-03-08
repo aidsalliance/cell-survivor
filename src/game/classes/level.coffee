@@ -35,6 +35,7 @@ class Level
     @sfx.shieldUp.play()
     
   buildWall: () ->
+    @game.damage = 0
     @game.bricks?.destroy()
 
     @game.bricks = @add.group()
@@ -326,7 +327,7 @@ class Level
         pathogen.smoothed = false
 
         # Possibly convert the pathogen to an HIV virus
-        if 3 <= @game.step and 4 != @game.step and not @rnd.between 0, (if 3 == @game.step then 5 else 15)
+        if 6 < @game.damage and 3 <= @game.step and 4 != @game.step and not @rnd.between 0, (if 3 == @game.step then 5 else 15)
           pathogen.loadTexture 'hiv-virus-main'
           pathogen.name = 'hiv'
           pathogen.scale.setTo 3, 3
@@ -406,6 +407,7 @@ class Level
     else
       @explode brick
       @sfx.brick.play()
+      @game.damage++
 
       # Second or third popup message (on level 1)
       if not @game.hasLostWall and (1 == @game.step or 2 == @game.step)
