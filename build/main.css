@@ -279,21 +279,39 @@ body.hide-overflow {
   color: #808080;
 }
 
-/* line 258, ../src/sass/main.scss */
+/* line 256, ../src/sass/main.scss */
+#high-score-form {
+  z-index: 9999;
+  position: absolute;
+  display: none;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.9);
+}
+/* line 266, ../src/sass/main.scss */
+#high-score-form > div {
+  display: inline-block;
+  max-width: 800px;
+  margin-top: 100px;
+}
+/* line 271, ../src/sass/main.scss */
 #high-score-form .error {
   background-color: #f8c1d9;
   font: 12px 'Press Start 2P', cursive;
   line-height: 2;
   color: #d60c8c;
 }
-/* line 264, ../src/sass/main.scss */
+/* line 277, ../src/sass/main.scss */
 #high-score-form .success {
   background-color: #8cc63f;
   font: 12px 'Press Start 2P', cursive;
   line-height: 2;
   color: #008053;
 }
-/* line 270, ../src/sass/main.scss */
+/* line 283, ../src/sass/main.scss */
 #high-score-form input {
   margin-top: 1em;
   width: 3em;
@@ -305,13 +323,13 @@ body.hide-overflow {
   text-align: center;
   text-transform: uppercase;
 }
-/* line 281, ../src/sass/main.scss */
+/* line 294, ../src/sass/main.scss */
 #high-score-form button {
   display: block;
   margin: 10px auto;
 }
 
-/* line 289, ../src/sass/main.scss */
+/* line 302, ../src/sass/main.scss */
 #high-scores {
   width: 100%;
   margin-bottom: 20px;
@@ -320,61 +338,61 @@ body.hide-overflow {
 }
 
 @media (max-width: 600px) {
-  /* line 296, ../src/sass/main.scss */
+  /* line 309, ../src/sass/main.scss */
   #high-scores {
     height: 350px;
   }
 
-  /* line 300, ../src/sass/main.scss */
+  /* line 313, ../src/sass/main.scss */
   #high-scores-inner .bold-bitmap {
     font-size: 18px;
   }
 }
-/* line 306, ../src/sass/main.scss */
+/* line 319, ../src/sass/main.scss */
 .bold-bitmap, h1 {
   font: 32px 'Press Start 2P', cursive;
   line-height: 1.4;
   text-shadow: #000 0 4px;
 }
 
-/* line 311, ../src/sass/main.scss */
+/* line 324, ../src/sass/main.scss */
 .bold-bitmap-small {
   font: 32px 'Press Start 2P', cursive;
   line-height: 0.7;
   text-shadow: #000 0 2px;
 }
 
-/* line 316, ../src/sass/main.scss */
+/* line 329, ../src/sass/main.scss */
 h2 {
   font: 24px 'Press Start 2P', cursive;
   text-shadow: #000 0 2px;
 }
 
-/* line 321, ../src/sass/main.scss */
+/* line 334, ../src/sass/main.scss */
 .green {
   color: #8cc63f;
   text-shadow: #008053 0 4px;
 }
 
-/* line 325, ../src/sass/main.scss */
+/* line 338, ../src/sass/main.scss */
 .aqua {
   color: #009ac8;
   text-shadow: #008053 0 4px;
 }
 
-/* line 329, ../src/sass/main.scss */
+/* line 342, ../src/sass/main.scss */
 .pink {
   color: #f8c1d9;
   text-shadow: #d60c8c 0 4px;
 }
 
-/* line 333, ../src/sass/main.scss */
+/* line 346, ../src/sass/main.scss */
 .blue {
   color: #8ed8f8;
   text-shadow: #009ac8 0 4px;
 }
 
-/* line 338, ../src/sass/main.scss */
+/* line 351, ../src/sass/main.scss */
 #google_translate_element {
   position: absolute;
   top: 0;

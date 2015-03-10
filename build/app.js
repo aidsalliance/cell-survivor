@@ -242,20 +242,9 @@ Level = (function() {
     }
   };
 
-  Level.prototype.popupEnterInitials = function() {
-    this.sfx.popup.play();
-    $('#popup-note').html('');
-    $('#popup-text').html("You scored<br> " + this.game.score + " points!<br> <form> <input type='text'> </form>");
-    $('#popup-wrap').fadeIn();
-    return setTimeout(((function(_this) {
-      return function() {
-        return _this.game.paused = true;
-      };
-    })(this)), 400);
-  };
-
   Level.prototype.create = function() {
     var i, powerup, self, _base, _i, _len, _ref;
+    this.levelFrameCount = 0;
     $(window).trigger('resize');
     $('#textlink').hide();
     this.sfx = {
@@ -387,16 +376,16 @@ Level = (function() {
 
   Level.prototype.update = function() {
     var doSpawn, pathogen, _ref;
-    this.game.frameCount++;
+    this.levelFrameCount++;
     this.rotateWall();
-    if (0 === this.game.step && 80 < this.game.frameCount) {
+    if (0 === this.game.step && 80 < this.levelFrameCount) {
       this.game.step = 1;
       if (this.game.device.desktop) {
         this.showPopup('Move your mouse or use the arrow keys to rotate the cell wall.');
       } else {
         this.showPopup('Swipe in a circle to rotate the cell wall.');
       }
-    } else if (9 === this.game.step && 80 < this.game.frameCount) {
+    } else if (9 === this.game.step && 80 < this.levelFrameCount) {
       this.game.step = 10;
       this.showPopup('Oh no! The supply of <span class="pink">condoms</span> and <span class="blue">pills</span> has run out, this will be really challenging...');
     }
@@ -461,12 +450,14 @@ Level = (function() {
     } else {
       this.physics.arcade.collide(this.pathogens, this.nucleus, this.pathogenHitNucleus, null, this);
       this.physics.arcade.collide(this.pathogens, this.game.bricks, this.pathogenHitBrick, null, this);
-      if (1 === this.game.frameCount) {
+      if (1 === this.levelFrameCount) {
         doSpawn = true;
-      } else if (50 > this.game.frameCount) {
-        doSpawn = !this.rnd.between(0, 10 / this.opt.spawnRate);
+      } else if (50 > this.levelFrameCount) {
+        doSpawn = !this.rnd.between(0, (this.pathogens.length * 5) / this.opt.spawnRate);
+        document.title = (this.pathogens.length * 5) / this.opt.spawnRate;
       } else {
-        doSpawn = !this.rnd.between(0, 1 / this.opt.spawnRate);
+        doSpawn = !this.rnd.between(0, this.pathogens.length / (this.opt.spawnRate + (this.levelFrameCount * 0.00005)));
+        document.title = this.levelFrameCount + ' ' + this.pathogens.length / (this.opt.spawnRate + (this.levelFrameCount * 0.00005));
       }
       if (doSpawn) {
         if (this.isPortrait) {
@@ -484,7 +475,7 @@ Level = (function() {
         }
         pathogen.scale.setTo(2, 2);
         pathogen.smoothed = false;
-        if (6 < this.game.damage && 3 <= this.game.step && 4 !== this.game.step && !this.rnd.between(0, (3 === this.game.step ? 5 : 15))) {
+        if (6 < this.game.damage && 3 <= this.game.step && 4 !== this.game.step && !this.rnd.between(0, (3 === this.game.step ? 4 : 10))) {
           pathogen.loadTexture('hiv-virus-main');
           pathogen.name = 'hiv';
           pathogen.scale.setTo(3, 3);
@@ -530,11 +521,7 @@ Level = (function() {
   Level.prototype.pathogenHitNucleus = function() {
     this.explode(this.nucleus);
     this.sfx.gameOver.play();
-    if (1000000 < this.game.score) {
-      return this.popupEnterInitials();
-    } else {
-      return this.gameOver();
-    }
+    return this.gameOver();
   };
 
   Level.prototype.pathogenHitBrick = function(pathogen, brick) {
@@ -662,6 +649,13 @@ Message = (function() {
   function Message(opt) {
     this.opt = opt;
   }
+
+  Message.prototype.popupEnterInitials = function() {
+    $('#high-score-form').css('display', 'block');
+    $('#high-score-form-score').text(window.gameRef.score);
+    $('#high-score-form input').focus();
+    return $('#high-score-form input, #high-score-form h4, #high-score-form button').fadeIn(200);
+  };
 
   Message.prototype.showMessage = function() {
     var cache, msg, section, startPos, _i, _len, _ref;
@@ -979,7 +973,7 @@ onResize();
 
 
 },{"jquery":2}],9:[function(require,module,exports){
-var $, clearMessages, onFail, onResponse, onSubmitHighScore, showError, showSuccess;
+var $, clearMessages, onFail, onResponse, onSubmitHighScore, resetEnterInitials, showError, showSuccess;
 
 $ = require('jquery');
 
@@ -992,34 +986,40 @@ showSuccess = function(msg) {
   $('#high-score-form .success').html("&nbsp; " + msg + " &nbsp;");
   $('#high-score-form .error').html('');
   window.gameRef.score = 0;
-  return $('#high-score-form input, #high-score-form button').fadeOut(200);
+  return $('#high-score-form input, #high-score-form h4, #high-score-form button').fadeOut(200);
 };
 
 showError = function(msg) {
   $('#high-score-form .success').html('');
   $('#high-score-form .error').html("&nbsp; " + msg + " &nbsp;");
-  return $('#high-score-form input').focus();
+  return $('#high-score-form input, #high-score-form h4, #high-score-form button').fadeOut(200);
 };
 
 onResponse = function(data, textStatus, jqXHR) {
   if ('made-top-ten!' === data) {
-    return showSuccess('Congratulations! You made <a href="./high-scores.html">this month’s top ten!</a>');
+    showSuccess('Congratulations! You made <a href="./high-scores.html">this month’s top ten!</a>');
   } else if ('missed-out!' === data) {
-    return showSuccess('Sorry, you didn’t score enough to reach <a href="./high-scores.html">this month’s top ten!</a>');
+    showSuccess('Sorry, you didn’t score enough to reach <a href="./high-scores.html">this month’s top ten!</a>');
   } else {
-    return showError(data);
+    showError(data);
   }
+  return setTimeout(resetEnterInitials, 2000);
 };
 
 onFail = function(msg) {
   console.log('server error details:', msg);
-  return showError('Sorry there was a server error. See console.log for details :-(');
+  showError('Sorry there was a server error. See console.log for details :-(');
+  return setTimeout(resetEnterInitials, 2000);
+};
+
+resetEnterInitials = function() {
+  $('#high-score-form').css('display', 'none');
+  return $('#high-score-form-score').text('');
 };
 
 onSubmitHighScore = function(evt) {
   var $form, $initials, jqxhr;
   clearMessages();
-  window.gameRef.score = 3000;
   evt.preventDefault();
   $form = $('#high-score-form');
   $initials = $('#high-score-form input[name="initials"]');
@@ -1041,7 +1041,7 @@ window.onload = function() {
   'use strict';
   var Phaser, game;
   Phaser = require('phaser');
-  game = new Phaser.Game(600, 600, Phaser.AUTO, 'cell-survivor');
+  window.gameRef = game = new Phaser.Game(600, 600, Phaser.AUTO, 'cell-survivor');
   game.state.add('boot', require('./states/boot'));
   game.state.add('preloader', require('./states/preloader'));
   game.state.add('splash', require('./states/splash'));
@@ -1057,7 +1057,6 @@ window.onload = function() {
   game.state.add('gameOver', require('./states/game-over'));
   require('./frame/responsive');
   require('./frame/submit-high-score');
-  window.gameRef = game;
   return game.state.start('boot');
 };
 
@@ -1111,6 +1110,9 @@ GameOver = (function(_super) {
 
   GameOver.prototype.create = function() {
     GameOver.__super__.create.apply(this, arguments);
+    if (2000 <= this.game.score) {
+      this.popupEnterInitials();
+    }
     this.game.step = 0;
     this.game.score = 0;
     this.game.frameCount = 0;
@@ -1148,6 +1150,9 @@ LevelFourGameOver = (function(_super) {
 
   LevelFourGameOver.prototype.create = function() {
     LevelFourGameOver.__super__.create.apply(this, arguments);
+    if (2000 <= this.game.score) {
+      this.popupEnterInitials();
+    }
     this.game.step = 0;
     this.game.score = 0;
     this.game.frameCount = 0;
@@ -1177,7 +1182,7 @@ LevelFour = (function(_super) {
     LevelFour.__super__.constructor.call(this, {
       slowest: 80,
       fastest: 130,
-      spawnRate: .06,
+      spawnRate: .05,
       complete: 0,
       gameOver: 'levelFourGameOver',
       powerups: ['blank', 'blank', 'blank', 'blank', 'blank', 'blank']
@@ -1244,7 +1249,7 @@ LevelOne = (function(_super) {
     LevelOne.__super__.constructor.call(this, {
       slowest: 55,
       fastest: 75,
-      spawnRate: .03,
+      spawnRate: .04,
       complete: 0,
       next: 'levelOneComplete',
       gameOver: 'levelOneComplete',
