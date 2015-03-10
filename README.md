@@ -246,6 +246,19 @@ __13.4__  bumped version to '0.3.1-2' and commit
 __13.5__  `$ git flow feature finish translate-fix`, `$ git flow release start 0.3.2`  
 
 
+14. Slow down level 2, and regularise pathogen appearance
+---------------------------------------------------------
+
+__14.1__  `$ git flow feature start slow-down-level-2`  
+__14.2__  bumped version to '0.3.3-1' and commit  
+__14.3__  `@game.damage` (bricks destroyed) delays HIV appearance  
+__14.4__  bumped version to '0.3.3-2' and commit  
+__14.5__  `@pathogens.length` and `@levelFrameCount` modify `@opt.spawnRate`  
+__14.6__  bumped version to '0.3.3-3' and commit  
+__14.7__  `$ git flow feature finish slow-down-level-2`, `$ git flow release start 0.3.4`  
+
+
+
 
 
 Releases
@@ -282,5 +295,9 @@ Releases
 + 0.3.1    hotfix button url
 + 0.3.1-2  fix Google Translate on Firefox
 + 0.3.2    fix Google Translate on Firefox
++ 0.3.3-1  begin simple slowing down level 2
++ 0.3.3-2  HIV cannot appear until 6 bricks destroyed
++ 0.3.3-3  Regularise the frequency of pathogen appearance
++ 0.3.4    better pathogen appearance
 
 

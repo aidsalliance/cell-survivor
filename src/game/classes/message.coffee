@@ -7,6 +7,17 @@ class Message
 
   constructor: (@opt) ->
 
+  popupEnterInitials: ->
+    $ '#high-score-form'
+      .css 'display', 'block'
+    $ '#high-score-form-score'
+      .text window.gameRef.score
+    $ '#high-score-form input'
+      .focus()
+    $ '#high-score-form input, #high-score-form h4, #high-score-form button'
+      .fadeIn 200
+    #@todo temporarily disable keyboard shortcuts
+
   showMessage: () ->
     # return # temporarily remove all popups
     @sfx.popup.play()

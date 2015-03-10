@@ -35,6 +35,7 @@ class Level
     @sfx.shieldUp.play()
     
   buildWall: () ->
+    @game.damage = 0
     @game.bricks?.destroy()
 
     @game.bricks = @add.group()
@@ -81,25 +82,9 @@ class Level
         , 1800
 
 
-  popupEnterInitials: ->
-    @sfx.popup.play()
-    $ '#popup-note'
-      .html ''
-    $ '#popup-text'
-      .html "You scored<br>
-            #{@game.score} points!<br>
-            <form>
-              <input type='text'>
-            </form>
-      "
-    $ '#popup-wrap'
-      .fadeIn()
-    setTimeout (=>
-      @game.paused = true)
-      , 400
-
-
   create: ->
+    @levelFrameCount = 0 # a frame-count which resets each level
+
     $(window).trigger 'resize' # ensure ‘onResize()’ is run
     $('#textlink').hide()
 
@@ -232,12 +217,12 @@ class Level
       @game.bricks.angle = angle
 
   update: ->
-    @game.frameCount++
+    @levelFrameCount++
 
     @rotateWall()
 
     # First popup message
-    if 0 == @game.step and 80 < @game.frameCount
+    if 0 == @game.step and 80 < @levelFrameCount
       @game.step = 1
       if @game.device.desktop
         @showPopup 'Move your mouse or use the arrow keys to rotate the cell wall.'
@@ -245,7 +230,7 @@ class Level
         @showPopup 'Swipe in a circle to rotate the cell wall.'
 
     # Ninth popup message
-    else if 9 == @game.step and 80 < @game.frameCount
+    else if 9 == @game.step and 80 < @levelFrameCount
       @game.step = 10
       @showPopup 'Oh no! The supply of <span class="pink">condoms</span> and <span class="blue">pills</span> has run out, this will be really challenging...'
 
@@ -302,12 +287,14 @@ class Level
       @physics.arcade.collide @pathogens, @game.bricks, @pathogenHitBrick  , null, @
 
       # Decide whether to add a new green or blue virus
-      if 1 == @game.frameCount
+      if 1 == @levelFrameCount
         doSpawn = true # always spawn on frame 1 of a level
-      else if 50 > @game.frameCount
-        doSpawn = not @rnd.between 0, 10 / @opt.spawnRate # spawn less at the start of a level
+      else if 50 > @levelFrameCount
+        doSpawn = not @rnd.between 0, (@pathogens.length * 5) / @opt.spawnRate # spawn less at the start of a level
+        document.title = (@pathogens.length * 5) / @opt.spawnRate
       else
-        doSpawn = not @rnd.between 0, 1 / @opt.spawnRate
+        doSpawn = not @rnd.between 0, @pathogens.length / (@opt.spawnRate + (@levelFrameCount * 0.00005))
+        document.title = @levelFrameCount + ' ' + @pathogens.length / (@opt.spawnRate + (@levelFrameCount * 0.00005))
 
       # Possibly add a new green or blue virus
       if doSpawn # call `newPathogen()` if `between()` returns zero
@@ -326,7 +313,7 @@ class Level
         pathogen.smoothed = false
 
         # Possibly convert the pathogen to an HIV virus
-        if 3 <= @game.step and 4 != @game.step and not @rnd.between 0, (if 3 == @game.step then 5 else 15)
+        if 6 < @game.damage and 3 <= @game.step and 4 != @game.step and not @rnd.between 0, (if 3 == @game.step then 4 else 10)
           pathogen.loadTexture 'hiv-virus-main'
           pathogen.name = 'hiv'
           pathogen.scale.setTo 3, 3
@@ -360,10 +347,7 @@ class Level
   pathogenHitNucleus: ->
     @explode @nucleus
     @sfx.gameOver.play()
-    if 1000000 < @game.score
-      @popupEnterInitials()
-    else
-      @gameOver()
+    @gameOver()
 
 
   pathogenHitBrick: (pathogen, brick) ->
@@ -406,6 +390,7 @@ class Level
     else
       @explode brick
       @sfx.brick.play()
+      @game.damage++
 
       # Second or third popup message (on level 1)
       if not @game.hasLostWall and (1 == @game.step or 2 == @game.step)

@@ -6,7 +6,7 @@ class LevelOne extends Level
     super
       slowest   : 55
       fastest   : 75
-      spawnRate : .03
+      spawnRate : .04
       complete  : 0 # complete when first hiv exits the screen
       next      : 'levelOneComplete'
       gameOver  : 'levelOneComplete' # doesn’t matter if the player cannot complete level 1

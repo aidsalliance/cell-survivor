@@ -14,6 +14,7 @@ class LevelOneComplete extends Message
 
   create: ->
     super
+
     @game.suppressBasicPopups = true # don’t show the first three popups
 
 module.exports = LevelOneComplete
