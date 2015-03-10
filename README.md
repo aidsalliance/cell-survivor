@@ -255,6 +255,7 @@ __14.3__  `@game.damage` (bricks destroyed) delays HIV appearance
 __14.4__  bumped version to '0.3.3-2' and commit  
 __14.5__  `@pathogens.length` and `@levelFrameCount` modify `@opt.spawnRate`  
 __14.6__  bumped version to '0.3.3-3' and commit  
+__14.7__  `$ git flow feature finish slow-down-level-2`, `$ git flow release start 0.3.4`  
 
 
 
@@ -297,5 +298,6 @@ Releases
 + 0.3.3-1  begin simple slowing down level 2
 + 0.3.3-2  HIV cannot appear until 6 bricks destroyed
 + 0.3.3-3  Regularise the frequency of pathogen appearance
++ 0.3.4    better pathogen appearance
 
 
