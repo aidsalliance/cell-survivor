@@ -299,5 +299,6 @@ Releases
 + 0.3.3-2  HIV cannot appear until 6 bricks destroyed
 + 0.3.3-3  Regularise the frequency of pathogen appearance
 + 0.3.4    better pathogen appearance
++ 0.3.6    hotfix high-scores URL
 
 
