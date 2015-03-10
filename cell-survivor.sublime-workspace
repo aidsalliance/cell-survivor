@@ -7,6 +7,13 @@
 	},
 	"buffers":
 	[
+		{
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -36,6 +43,7 @@
 	},
 	"file_history":
 	[
+		"/Users/richa/Documents/Work/2015-Work/Developing Dreams/cell-survivor/README.md",
 		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/cell-survivor/README.md",
 		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/cell-survivor/src/sass/main.scss",
 		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/cell-survivor/src/game/classes/message.coffee",
@@ -160,8 +168,34 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],

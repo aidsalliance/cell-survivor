@@ -14,6 +14,10 @@ class LevelFourGameOver extends Message
 
   create: ->
     super
+
+    if 2000 <= @game.score
+      @popupEnterInitials()
+
     @game.step = 0
     @game.score = 0
     @game.frameCount = 0

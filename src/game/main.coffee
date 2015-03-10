@@ -3,7 +3,7 @@ window.onload = ->
 
   Phaser = require 'phaser'
 
-  game = new Phaser.Game 600, 600, Phaser.AUTO, 'cell-survivor'
+  window.gameRef = game = new Phaser.Game 600, 600, Phaser.AUTO, 'cell-survivor' # for 'onSubmitHighScore()'
 
   # Game states
   game.state.add 'boot'              , require './states/boot'
@@ -24,7 +24,6 @@ window.onload = ->
   # Helpers
   require './frame/responsive'
   require './frame/submit-high-score'
-  window.gameRef = game # for 'onSubmitHighScore()'
 
   # Initialise the game
   game.state.start 'boot'

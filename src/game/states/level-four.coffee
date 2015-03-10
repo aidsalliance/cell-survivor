@@ -5,7 +5,7 @@ class LevelFour extends Level
     super
       slowest   : 80
       fastest   : 130
-      spawnRate : .06
+      spawnRate : .05
       complete  : 0
       gameOver  : 'levelFourGameOver'
       powerups  : ['blank','blank','blank','blank','blank','blank']
