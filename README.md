@@ -258,6 +258,13 @@ __14.6__  bumped version to '0.3.3-3' and commit
 __14.7__  `$ git flow feature finish slow-down-level-2`, `$ git flow release start 0.3.4`  
 
 
+15. Instructions Icon
+---------------------
+
+__15.1__  `$ git flow feature start instructions-icon`  
+__15.2__  bumped version to '0.3.7-1' and commit  
+
+
 
 
 
@@ -300,5 +307,5 @@ Releases
 + 0.3.3-3  Regularise the frequency of pathogen appearance
 + 0.3.4    better pathogen appearance
 + 0.3.6    hotfix high-scores URL
-
++ 0.3.7-1  begin instructions-icon
 
