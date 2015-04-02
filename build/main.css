@@ -368,31 +368,37 @@ h2 {
   text-shadow: #000 0 2px;
 }
 
-/* line 334, ../src/sass/main.scss */
+/* line 333, ../src/sass/main.scss */
+h4 {
+  font: 18px/24px 'Press Start 2P', cursive;
+  text-shadow: #000 0 2px;
+}
+
+/* line 338, ../src/sass/main.scss */
 .green {
   color: #8cc63f;
   text-shadow: #008053 0 4px;
 }
 
-/* line 338, ../src/sass/main.scss */
+/* line 342, ../src/sass/main.scss */
 .aqua {
   color: #009ac8;
   text-shadow: #008053 0 4px;
 }
 
-/* line 342, ../src/sass/main.scss */
+/* line 346, ../src/sass/main.scss */
 .pink {
   color: #f8c1d9;
   text-shadow: #d60c8c 0 4px;
 }
 
-/* line 346, ../src/sass/main.scss */
+/* line 350, ../src/sass/main.scss */
 .blue {
   color: #8ed8f8;
   text-shadow: #009ac8 0 4px;
 }
 
-/* line 351, ../src/sass/main.scss */
+/* line 355, ../src/sass/main.scss */
 #google_translate_element {
   position: absolute;
   top: 0;

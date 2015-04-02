@@ -3,17 +3,30 @@
 	{
 		"selected_items":
 		[
+			[
+				"margin",
+				"margin-top"
+			],
+			[
+				"inli",
+				"inline-block"
+			],
+			[
+				"mar",
+				"margin-left"
+			],
+			[
+				"back",
+				"background-color"
+			],
+			[
+				"fram",
+				"frameCount"
+			]
 		]
 	},
 	"buffers":
 	[
-		{
-			"settings":
-			{
-				"buffer_size": 0,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -44,6 +57,25 @@
 	"file_history":
 	[
 		"/Users/richa/Documents/Work/2015-Work/Developing Dreams/cell-survivor/README.md",
+		"/Users/richa/Documents/Work/2015-Work/Developing Dreams/cell-survivor/cell-survivor.sublime-project",
+		"/Users/richa/Documents/Work/2015-Work/Developing Dreams/cell-survivor/bower.json",
+		"/Users/richa/Documents/Work/2015-Work/Developing Dreams/cell-survivor/package.json",
+		"/Users/richa/Documents/Work/2015-Work/Developing Dreams/cell-survivor/src/game/frame/submit-high-score.coffee",
+		"/Users/richa/Documents/Work/2015-Work/Developing Dreams/cell-survivor/build/index.html",
+		"/Users/richa/Documents/Work/2015-Work/Developing Dreams/cell-survivor/src/index.html",
+		"/Users/richa/Documents/Work/2015-Work/Developing Dreams/cell-survivor/index.html",
+		"/Users/richa/Documents/Work/2015-Work/Developing Dreams/cell-survivor/src/game/states/level-one-complete.coffee",
+		"/Users/richa/Documents/Work/2015-Work/Developing Dreams/cell-survivor/src/game/states/game-over.coffee",
+		"/Users/richa/Documents/Work/2015-Work/Developing Dreams/cell-survivor/src/game/classes/message.coffee",
+		"/Users/richa/Documents/Work/2015-Work/Developing Dreams/cell-survivor/src/game/main.coffee",
+		"/Users/richa/Documents/Work/2015-Work/Developing Dreams/cell-survivor/src/sass/main.scss",
+		"/Users/richa/Documents/Work/2015-Work/Developing Dreams/cell-survivor/src/game/classes/level.coffee",
+		"/Users/richa/Documents/Work/2015-Work/Developing Dreams/cell-survivor/src/game/states/level-four-game-over.coffee",
+		"/Users/richa/Documents/Work/2015-Work/Developing Dreams/cell-survivor/build/app.js",
+		"/Users/richa/Documents/Work/2015-Work/Developing Dreams/cell-survivor/src/game/states/level-four.coffee",
+		"/Users/richa/Documents/Work/2015-Work/Developing Dreams/cell-survivor/src/game/states/level-two.coffee",
+		"/Users/richa/Documents/Work/2015-Work/Developing Dreams/cell-survivor/src/game/states/level-one.coffee",
+		"/Users/richa/Documents/Work/2015-Work/Developing Dreams/cell-survivor/src/game/states/splash.coffee",
 		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/cell-survivor/README.md",
 		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/cell-survivor/src/sass/main.scss",
 		"/Volumes/RICH 2TB LACIE/2014-Work/Developing Dreams/World AIDS Day 2014 Game/cell-survivor/src/game/classes/message.coffee",
@@ -105,6 +137,44 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"git flow hotfix start",
+			"hotfix",
+			"key",
+			"rgba",
+			"ok",
+			"gameOver",
+			"popupEnterInitials",
+			"rgba(",
+			"gameOver",
+			"showSuccess",
+			"onResponse",
+			"window.gameRef",
+			"popupEnterInitials",
+			"adasadsdasdasads",
+			"onSubmitHighScore",
+			"popupEnterInitials",
+			"high-score-form",
+			"score",
+			"oc3e",
+			"hiv",
+			"rameCount",
+			"levelFrameCount",
+			"@game.frameCount",
+			"@levelFrameCount",
+			"@createFrameCount",
+			"@game.frameCount",
+			"@pathogenCount",
+			"@explode",
+			"destro",
+			"hiv",
+			"@pathogens",
+			"8 <",
+			"@game.damage",
+			"buildWall",
+			"@game.step = 5",
+			"@game.step",
+			"time",
+			"hiv",
 			"@world.",
 			"collideWorldBounds",
 			"wad14-game",
@@ -142,6 +212,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"@levelFrameCount",
 			"pathogen",
 			"ball",
 			"brick",
@@ -168,34 +239,8 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"settings":
-					{
-						"buffer_size": 0,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		}
 	],

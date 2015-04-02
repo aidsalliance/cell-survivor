@@ -22,6 +22,7 @@ window.onload = ->
   game.state.add 'gameOver'          , require './states/game-over'
 
   # Helpers
+  require './frame/help-toggle'
   require './frame/responsive'
   require './frame/submit-high-score'
 

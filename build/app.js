@@ -223,10 +223,12 @@ Level = (function() {
       return;
     }
     this.game.furthestStep = Math.max(this.game.furthestStep, this.game.step);
-    return;
+    if (!this.game.showHelp) {
+      return;
+    }
     this.sfx.popup.play();
     $('#popup-note').html('');
-    $('#popup-text').html(msg + '<br><br>');
+    $('#popup-text').html(msg + '<br>');
     $('#popup-wrap').fadeIn();
     setTimeout(((function(_this) {
       return function() {
@@ -261,7 +263,12 @@ Level = (function() {
     this.relativeComplete = this.game.score + this.opt.complete;
     this.lastInputPosX = -9999;
     this.lastInputPosY = -9999;
-    if (this.game.device.desktop) {
+    self = this;
+    if (!this.game.device.desktop) {
+      $('#popup-inner').on('click', function() {
+        return self.onDown();
+      });
+    } else {
       this.upKey = this.game.input.keyboard.addKey(Phaser.Keyboard.UP);
       this.downKey = this.game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
       this.leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
@@ -277,7 +284,6 @@ Level = (function() {
       this.nEnterKey.onDown.add(this.onDown, this);
       this.spaceKey.onDown.add(this.onDown, this);
     }
-    self = this;
     _ref = (_base = this.opt).powerups != null ? _base.powerups : _base.powerups = [];
     for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
       powerup = _ref[i];
@@ -381,13 +387,13 @@ Level = (function() {
     if (0 === this.game.step && 80 < this.levelFrameCount) {
       this.game.step = 1;
       if (this.game.device.desktop) {
-        this.showPopup('Move your mouse or use the arrow keys to rotate the cell wall.');
+        this.showPopup('<h4>Move your mouse or use the arrow keys to rotate the cell wall.</h4>');
       } else {
-        this.showPopup('Swipe in a circle to rotate the cell wall.');
+        this.showPopup('<h4>Swipe in a circle to rotate the cell wall.</h4>');
       }
     } else if (9 === this.game.step && 80 < this.levelFrameCount) {
       this.game.step = 10;
-      this.showPopup('Oh no! The supply of <span class="pink">condoms</span> and <span class="blue">pills</span> has run out, this will be really challenging...');
+      this.showPopup('<h4>Oh no! The supply of <span class="pink">condoms</span> and <span class="blue">pills</span> has run out, this will be really challenging...</h4>');
     }
     if (this.isPortrait) {
       this.pathogens.forEach((function(_this) {
@@ -454,10 +460,8 @@ Level = (function() {
         doSpawn = true;
       } else if (50 > this.levelFrameCount) {
         doSpawn = !this.rnd.between(0, (this.pathogens.length * 5) / this.opt.spawnRate);
-        document.title = (this.pathogens.length * 5) / this.opt.spawnRate;
       } else {
         doSpawn = !this.rnd.between(0, this.pathogens.length / (this.opt.spawnRate + (this.levelFrameCount * 0.00005)));
-        document.title = this.levelFrameCount + ' ' + this.pathogens.length / (this.opt.spawnRate + (this.levelFrameCount * 0.00005));
       }
       if (doSpawn) {
         if (this.isPortrait) {
@@ -480,7 +484,7 @@ Level = (function() {
           pathogen.name = 'hiv';
           pathogen.scale.setTo(3, 3);
           if ('levelOne' === this.game.state.current) {
-            this.showPopup('Watch out for the <span class="aqua">HIV virus</span>. <br>It will infect the cell if it touches!');
+            this.showPopup('<h4>Watch out for the <span class="aqua">HIV virus</span>. <br>It will infect the cell if it touches!</h4>');
             this.game.step = 4;
             if (this.isPortrait) {
               pathogen.y = this.world.centerY + 100;
@@ -498,9 +502,9 @@ Level = (function() {
           }
           if (5 === this.game.step) {
             if (this.game.device.desktop) {
-              this.showPopup('Defend the cell against HIV by clicking one of the <span class="pink">condom buttons</span>, or press ‘c’.');
+              this.showPopup('<h4>Defend the cell against HIV by clicking one of the <span class="pink">condom buttons</span>, or press ‘c’.</h4>');
             } else {
-              this.showPopup('Defend the cell against HIV by clicking one of the <span class="pink">condom buttons</span>.');
+              this.showPopup('<h4>Defend the cell against HIV by clicking one of the <span class="pink">condom buttons</span>.</h4>');
             }
             return this.game.step = 6;
           }
@@ -535,7 +539,7 @@ Level = (function() {
       if (!this.game.hasDefended && (1 === this.game.step || 2 === this.game.step)) {
         this.game.step = 1 === this.game.step ? 2 : 3;
         this.game.hasDefended = true;
-        this.showPopup("Well done! <span class='" + brick.name + "'>" + brick.name + "</span> sections of the cell wall defend against <span class='" + pathogen.name + "'>" + pathogen.name + "</span> viruses (and vice versa).");
+        this.showPopup("<h4>Well done! <span class='" + brick.name + "'>" + brick.name + "</span> sections of the cell wall defend against <span class='" + pathogen.name + "'>" + pathogen.name + "</span> viruses (and vice versa).</h4>");
       }
     } else if (6 === this.game.step && 'hiv' === pathogen.name) {
       this.game.infected = true;
@@ -547,12 +551,13 @@ Level = (function() {
       })(this)), 400);
       setTimeout(((function(_this) {
         return function() {
+          _this.game.paused = true;
           return _this.nucleus.loadTexture('nucleus-infected-2');
         };
       })(this)), 800);
       setTimeout(((function(_this) {
         return function() {
-          _this.showPopup("Now the cell has been infected with HIV, but it’s not ‘Game Over’...");
+          _this.showPopup("<h4>Now the cell has been infected with HIV, but it’s not ‘Game Over’...</h4>");
           return _this.nucleus.loadTexture('nucleus-infected-3');
         };
       })(this)), 1200);
@@ -570,13 +575,13 @@ Level = (function() {
       if (!this.game.hasLostWall && (1 === this.game.step || 2 === this.game.step)) {
         this.game.step = 1 === this.game.step ? 2 : 3;
         this.game.hasLostWall = true;
-        this.showPopup("Oh no! <span class='" + pathogen.name + "'>" + pathogen.name + "</span> viruses destroy <span class='" + brick.name + "'>" + brick.name + "</span> sections of the cell wall (and vice versa).");
+        this.showPopup("<h4>Oh no! <span class='" + pathogen.name + "'>" + pathogen.name + "</span> viruses destroy <span class='" + brick.name + "'>" + brick.name + "</span> sections of the cell wall (and vice versa).</h4>");
       } else if (7 === this.game.step) {
         this.game.step = 8;
         if (this.game.device.desktop) {
-          this.showPopup('Click on an <span class="blue">antiretroviral pill</span> or press ‘p’ to repair the cell wall.');
+          this.showPopup('<h4>Click on an <span class="blue">antiretroviral pill</span> or press ‘p’ to repair the cell wall.</h4>');
         } else {
-          this.showPopup('Click on an <span class="blue">antiretroviral pill</span> to repair the cell wall.');
+          this.showPopup('<h4>Click on an <span class="blue">antiretroviral pill</span> to repair the cell wall.</h4>');
         }
       }
     }
@@ -853,6 +858,26 @@ module.exports = Pathogen;
 
 
 },{}],8:[function(require,module,exports){
+var $, onHelpToggle;
+
+$ = require('jquery');
+
+onHelpToggle = function(evt) {
+  if (window.gameRef.showHelp) {
+    window.gameRef.showHelp = false;
+    $('#help-toggle').attr('title', 'Click to show help popups');
+    return $('#help-toggle img').attr('src', 'assets/images/icon-help-off.gif');
+  } else {
+    window.gameRef.showHelp = true;
+    $('#help-toggle').attr('title', 'Click to hide help popups');
+    return $('#help-toggle img').attr('src', 'assets/images/icon-help-on.gif');
+  }
+};
+
+$($('#help-toggle').click(onHelpToggle));
+
+
+},{"jquery":2}],9:[function(require,module,exports){
 var $, onResize, resizeLandscape, resizePortrait;
 
 $ = require('jquery');
@@ -972,7 +997,7 @@ $(window).resize(onResize);
 onResize();
 
 
-},{"jquery":2}],9:[function(require,module,exports){
+},{"jquery":2}],10:[function(require,module,exports){
 var $, clearMessages, onFail, onResponse, onSubmitHighScore, resetEnterInitials, showError, showSuccess;
 
 $ = require('jquery');
@@ -1036,7 +1061,7 @@ onSubmitHighScore = function(evt) {
 $($('#high-score-form button[type="submit"]').click(onSubmitHighScore));
 
 
-},{"jquery":2}],10:[function(require,module,exports){
+},{"jquery":2}],11:[function(require,module,exports){
 window.onload = function() {
   'use strict';
   var Phaser, game;
@@ -1055,13 +1080,14 @@ window.onload = function() {
   game.state.add('levelFour', require('./states/level-four'));
   game.state.add('levelFourGameOver', require('./states/level-four-game-over'));
   game.state.add('gameOver', require('./states/game-over'));
+  require('./frame/help-toggle');
   require('./frame/responsive');
   require('./frame/submit-high-score');
   return game.state.start('boot');
 };
 
 
-},{"./frame/responsive":8,"./frame/submit-high-score":9,"./states/boot":11,"./states/game-over":12,"./states/level-four":14,"./states/level-four-game-over":13,"./states/level-one":16,"./states/level-one-complete":15,"./states/level-three":19,"./states/level-three-complete":17,"./states/level-three-game-over":18,"./states/level-two":21,"./states/level-two-complete":20,"./states/preloader":22,"./states/splash":23,"phaser":3}],11:[function(require,module,exports){
+},{"./frame/help-toggle":8,"./frame/responsive":9,"./frame/submit-high-score":10,"./states/boot":12,"./states/game-over":13,"./states/level-four":15,"./states/level-four-game-over":14,"./states/level-one":17,"./states/level-one-complete":16,"./states/level-three":20,"./states/level-three-complete":18,"./states/level-three-game-over":19,"./states/level-two":22,"./states/level-two-complete":21,"./states/preloader":23,"./states/splash":24,"phaser":3}],12:[function(require,module,exports){
 var $, Boot;
 
 $ = require('jquery');
@@ -1088,7 +1114,7 @@ Boot = (function() {
 module.exports = Boot;
 
 
-},{"jquery":2}],12:[function(require,module,exports){
+},{"jquery":2}],13:[function(require,module,exports){
 var GameOver, Message,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -1128,7 +1154,7 @@ GameOver = (function(_super) {
 module.exports = GameOver;
 
 
-},{"../classes/message":6}],13:[function(require,module,exports){
+},{"../classes/message":6}],14:[function(require,module,exports){
 var LevelFourGameOver, Message,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -1168,7 +1194,7 @@ LevelFourGameOver = (function(_super) {
 module.exports = LevelFourGameOver;
 
 
-},{"../classes/message":6}],14:[function(require,module,exports){
+},{"../classes/message":6}],15:[function(require,module,exports){
 var Level, LevelFour,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -1202,7 +1228,7 @@ LevelFour = (function(_super) {
 module.exports = LevelFour;
 
 
-},{"../classes/level":5}],15:[function(require,module,exports){
+},{"../classes/level":5}],16:[function(require,module,exports){
 var LevelOneComplete, Message,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -1233,7 +1259,7 @@ LevelOneComplete = (function(_super) {
 module.exports = LevelOneComplete;
 
 
-},{"../classes/message":6}],16:[function(require,module,exports){
+},{"../classes/message":6}],17:[function(require,module,exports){
 var $, Level, LevelOne,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -1276,7 +1302,7 @@ LevelOne = (function(_super) {
 module.exports = LevelOne;
 
 
-},{"../classes/level":5,"jquery":2}],17:[function(require,module,exports){
+},{"../classes/level":5,"jquery":2}],18:[function(require,module,exports){
 var LevelThreeComplete, Message,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -1302,7 +1328,7 @@ LevelThreeComplete = (function(_super) {
 module.exports = LevelThreeComplete;
 
 
-},{"../classes/message":6}],18:[function(require,module,exports){
+},{"../classes/message":6}],19:[function(require,module,exports){
 var LevelThreeGameOver, Message,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -1339,7 +1365,7 @@ LevelThreeGameOver = (function(_super) {
 module.exports = LevelThreeGameOver;
 
 
-},{"../classes/message":6}],19:[function(require,module,exports){
+},{"../classes/message":6}],20:[function(require,module,exports){
 var Level, LevelThree,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -1368,7 +1394,7 @@ LevelThree = (function(_super) {
 module.exports = LevelThree;
 
 
-},{"../classes/level":5}],20:[function(require,module,exports){
+},{"../classes/level":5}],21:[function(require,module,exports){
 var LevelTwoComplete, Message,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -1394,7 +1420,7 @@ LevelTwoComplete = (function(_super) {
 module.exports = LevelTwoComplete;
 
 
-},{"../classes/message":6}],21:[function(require,module,exports){
+},{"../classes/message":6}],22:[function(require,module,exports){
 var Level, LevelTwo,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -1428,7 +1454,7 @@ LevelTwo = (function(_super) {
 module.exports = LevelTwo;
 
 
-},{"../classes/level":5}],22:[function(require,module,exports){
+},{"../classes/level":5}],23:[function(require,module,exports){
 var Preloader;
 
 Preloader = (function() {
@@ -1502,7 +1528,7 @@ Preloader = (function() {
 module.exports = Preloader;
 
 
-},{}],23:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 var $, Message, Splash,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -1541,4 +1567,4 @@ Splash = (function(_super) {
 module.exports = Splash;
 
 
-},{"../classes/message":6,"jquery":2}]},{},[10])
+},{"../classes/message":6,"jquery":2}]},{},[11])

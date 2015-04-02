@@ -64,12 +64,12 @@ class Level
     if @game.suppressBasicPopups and 3 >= @game.step then return # don’t show the first three popups after the player has reached level 2 @todo remove this old system?
     if @game.furthestStep >= @game.step then return # don’t show the same popup twice inthe player’s session
     @game.furthestStep = Math.max @game.furthestStep, @game.step
-    return # temporarily remove all popups
+    if ! @game.showHelp then return # comment-out to always remove all popups
     @sfx.popup.play()
     $ '#popup-note'
       .html ''
     $ '#popup-text'
-      .html msg + '<br><br>'
+      .html msg + '<br>'
     $ '#popup-wrap'
       .fadeIn()
     setTimeout (=>
@@ -104,7 +104,12 @@ class Level
     @lastInputPosX = -9999
     @lastInputPosY = -9999
 
-    if @game.device.desktop
+    self = @
+
+    if ! @game.device.desktop
+      $ '#popup-inner'
+        .on 'click', -> self.onDown()
+    else
       @upKey     = @game.input.keyboard.addKey Phaser.Keyboard.UP
       @downKey   = @game.input.keyboard.addKey Phaser.Keyboard.DOWN
       @leftKey   = @game.input.keyboard.addKey Phaser.Keyboard.LEFT
@@ -124,7 +129,6 @@ class Level
 
 
     # Add powerups, if specified
-    self = @
     for powerup, i in @opt.powerups ?= [] # conditional assignment
       if !powerup then continue # skip a `null` powerup
       $ "#powerup-#{i} img"
@@ -225,14 +229,14 @@ class Level
     if 0 == @game.step and 80 < @levelFrameCount
       @game.step = 1
       if @game.device.desktop
-        @showPopup 'Move your mouse or use the arrow keys to rotate the cell wall.'
+        @showPopup '<h4>Move your mouse or use the arrow keys to rotate the cell wall.</h4>'
       else
-        @showPopup 'Swipe in a circle to rotate the cell wall.'
+        @showPopup '<h4>Swipe in a circle to rotate the cell wall.</h4>'
 
     # Ninth popup message
     else if 9 == @game.step and 80 < @levelFrameCount
       @game.step = 10
-      @showPopup 'Oh no! The supply of <span class="pink">condoms</span> and <span class="blue">pills</span> has run out, this will be really challenging...'
+      @showPopup '<h4>Oh no! The supply of <span class="pink">condoms</span> and <span class="blue">pills</span> has run out, this will be really challenging...</h4>'
 
     # Remove pathogens which have traversed the screen
     if @isPortrait
@@ -291,10 +295,8 @@ class Level
         doSpawn = true # always spawn on frame 1 of a level
       else if 50 > @levelFrameCount
         doSpawn = not @rnd.between 0, (@pathogens.length * 5) / @opt.spawnRate # spawn less at the start of a level
-        document.title = (@pathogens.length * 5) / @opt.spawnRate
       else
         doSpawn = not @rnd.between 0, @pathogens.length / (@opt.spawnRate + (@levelFrameCount * 0.00005))
-        document.title = @levelFrameCount + ' ' + @pathogens.length / (@opt.spawnRate + (@levelFrameCount * 0.00005))
 
       # Possibly add a new green or blue virus
       if doSpawn # call `newPathogen()` if `between()` returns zero
@@ -318,7 +320,7 @@ class Level
           pathogen.name = 'hiv'
           pathogen.scale.setTo 3, 3
           if 'levelOne' == @game.state.current
-            @showPopup 'Watch out for the <span class="aqua">HIV virus</span>. <br>It will infect the cell if it touches!'
+            @showPopup '<h4>Watch out for the <span class="aqua">HIV virus</span>. <br>It will infect the cell if it touches!</h4>'
             @game.step = 4
             if @isPortrait
               pathogen.y = @world.centerY + 100
@@ -332,9 +334,9 @@ class Level
                 y: 60
           if 5 == @game.step
             if @game.device.desktop
-              @showPopup 'Defend the cell against HIV by clicking one of the <span class="pink">condom buttons</span>, or press ‘c’.'
+              @showPopup '<h4>Defend the cell against HIV by clicking one of the <span class="pink">condom buttons</span>, or press ‘c’.</h4>'
             else
-              @showPopup 'Defend the cell against HIV by clicking one of the <span class="pink">condom buttons</span>.'
+              @showPopup '<h4>Defend the cell against HIV by clicking one of the <span class="pink">condom buttons</span>.</h4>'
             @game.step = 6
 
 
@@ -365,7 +367,7 @@ class Level
       if not @game.hasDefended and (1 == @game.step or 2 == @game.step)
         @game.step = if 1 == @game.step then 2 else 3
         @game.hasDefended = true
-        @showPopup "Well done! <span class='#{brick.name}'>#{brick.name}</span> sections of the cell wall defend against <span class='#{pathogen.name}'>#{pathogen.name}</span> viruses (and vice versa)."
+        @showPopup "<h4>Well done! <span class='#{brick.name}'>#{brick.name}</span> sections of the cell wall defend against <span class='#{pathogen.name}'>#{pathogen.name}</span> viruses (and vice versa).</h4>"
 
     else if 6 == @game.step and 'hiv' == pathogen.name
       @game.infected = true
@@ -374,11 +376,11 @@ class Level
         @nucleus.loadTexture 'nucleus-infected-1')
         , 400
       setTimeout (=>
-#        @game.paused = true # @todo uncomment this when popups are reinstated (test the game does not mysteriously pause, the second time round in a session)
+        @game.paused = true # comment this out to hide popups @todo test the game does not mysteriously pause, the second time round in a session
         @nucleus.loadTexture 'nucleus-infected-2')
         , 800
       setTimeout (=>
-        @showPopup "Now the cell has been infected with HIV, but it’s not ‘Game Over’..."
+        @showPopup "<h4>Now the cell has been infected with HIV, but it’s not ‘Game Over’...</h4>"
         @nucleus.loadTexture 'nucleus-infected-3')
         , 1200
       setTimeout (=>
@@ -396,15 +398,15 @@ class Level
       if not @game.hasLostWall and (1 == @game.step or 2 == @game.step)
         @game.step = if 1 == @game.step then 2 else 3
         @game.hasLostWall = true
-        @showPopup "Oh no! <span class='#{pathogen.name}'>#{pathogen.name}</span> viruses destroy <span class='#{brick.name}'>#{brick.name}</span> sections of the cell wall (and vice versa)."
+        @showPopup "<h4>Oh no! <span class='#{pathogen.name}'>#{pathogen.name}</span> viruses destroy <span class='#{brick.name}'>#{brick.name}</span> sections of the cell wall (and vice versa).</h4>"
 
       # Eighth popup message (on level 3)
       else if 7 == @game.step
         @game.step = 8
         if @game.device.desktop
-          @showPopup 'Click on an <span class="blue">antiretroviral pill</span> or press ‘p’ to repair the cell wall.'
+          @showPopup '<h4>Click on an <span class="blue">antiretroviral pill</span> or press ‘p’ to repair the cell wall.</h4>'
         else
-          @showPopup 'Click on an <span class="blue">antiretroviral pill</span> to repair the cell wall.'
+          @showPopup '<h4>Click on an <span class="blue">antiretroviral pill</span> to repair the cell wall.</h4>'
           
 
     @explode pathogen
