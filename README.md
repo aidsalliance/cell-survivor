@@ -265,6 +265,7 @@ __15.1__  `$ git flow feature start instructions-icon`
 __15.2__  bumped version to '0.3.7-1' and commit  
 __15.3__  added `help-toggle.coffee` to enable the new help icon  
 __15.4__  bumped version to '0.3.7-2' and commit  
+__15.5__  `$ git flow feature finish instructions-icon`, `$ git flow release start 0.3.8`  
 
 
 
