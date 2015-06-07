@@ -312,4 +312,6 @@ Releases
 + 0.3.6    hotfix high-scores URL
 + 0.3.7-1  begin instructions-icon
 + 0.3.7-2  with `help-toggle.coffee` and help icon
++ 1.0.0-1  begin lib-upgrade
++ 1.0.0    lib-upgrade
 
