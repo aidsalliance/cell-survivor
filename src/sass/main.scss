@@ -82,6 +82,8 @@ body.hide-overflow {
         canvas {
           display: inline-block!important;
           cursor: pointer;
+          width:  100%!important;
+          height: 100%!important;
         }
       }
       &#footer {
@@ -139,12 +141,6 @@ body.hide-overflow {
 
 #score {
   position: absolute;
-  padding: 50px 0 0 8px;
-}
-@media (max-width: 600px) {
-  #score {
-    padding: 30px 0 0 3px;
-  }
 }
 
 #textlink {

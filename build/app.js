@@ -138,12 +138,12 @@ Level = (function() {
   }
 
   Level.prototype.createVeinWall = function(name, angle, x, y) {
-    this.veinWall = this.add.tileSprite(0, 48, 15, 600, name);
+    this.veinWall = this.add.tileSprite(0, 96, 30, 600, name);
     this.veinWall.angle = angle;
     this.veinWall.x = x;
     this.veinWall.y = y;
     this.veinWall.autoScroll(0, this.opt.slowest / 4);
-    return this.veinWall.scale.setTo(2, 2);
+    return this.veinWall.scale.setTo(1, 1);
   };
 
   Level.prototype.powerup = function(el) {
@@ -249,7 +249,6 @@ Level = (function() {
   Level.prototype.create = function() {
     var base, i, j, len, powerup, ref, self;
     this.levelFrameCount = 0;
-    $(window).trigger('resize');
     $('#textlink').hide();
     this.sfx = {
       pathogen: this.game.add.audio('pathogen'),
@@ -305,15 +304,15 @@ Level = (function() {
       this.game.world.setBounds(0, 0, 744, 600);
       this.game.camera.x = 72;
       this.background = this.add.tileSprite(72, 0, 600, 600, 'cellfield');
-      this.createVeinWall('vein-wall-header', -90, 672, 0);
-      this.createVeinWall('vein-wall-footer', -90, 672, 570);
+      this.createVeinWall('vein-wall-header', 90, 672, 0);
+      this.createVeinWall('vein-wall-footer', 90, 672, 570);
       this.endZone = this.world.width - 36;
     } else {
       this.game.world.setBounds(0, 0, 600, 744);
       this.game.camera.y = 72;
       this.background = this.add.tileSprite(0, 72, 600, 600, 'cellfield');
-      this.createVeinWall('vein-wall-header', 0, 0, 0);
-      this.createVeinWall('vein-wall-footer', 0, 570, 0);
+      this.createVeinWall('vein-wall-header', 0, 0, 72);
+      this.createVeinWall('vein-wall-footer', 0, 570, 72);
       this.endZone = this.world.height - 36;
     }
     this.background.scale.setTo(6, 6);
@@ -730,7 +729,6 @@ Message = (function() {
   };
 
   Message.prototype.create = function() {
-    var i, len1, ref, section, text, x, y;
     this.sfx = {
       popup: this.game.add.audio('popup')
     };
@@ -740,74 +738,7 @@ Message = (function() {
     this.enterKey.onDown.add(this.onDown, this);
     this.nEnterKey.onDown.add(this.onDown, this);
     this.spaceKey.onDown.add(this.onDown, this);
-    this.showMessage();
-    return;
-    x = this.game.width / 2;
-    y = 50;
-    if (this.opt.banner) {
-      this.banner = this.add.sprite(x, y, this.opt.banner);
-      this.banner.smoothed = false;
-      this.banner.scale.setTo(4, 4);
-      this.banner.anchor.setTo(0.5, 0);
-      y += this.banner.height + 10;
-    }
-    if (this.opt.title) {
-      this.titleTxt = this.add.bitmapText(x, y, 'minecraftia', this.opt.title);
-      this.titleTxt.align = 'center';
-      this.titleTxt.x = this.game.width / 2 - this.titleTxt.textWidth / 2;
-      y = y + this.titleTxt.height + 50;
-    }
-    ref = this.opt.text;
-    for (i = 0, len1 = ref.length; i < len1; i++) {
-      section = ref[i];
-      if (-1 !== section.indexOf('Well done for using your condoms! ')) {
-        if (3 === $('img[src="assets/images/icon-condom.gif"]').length) {
-          section = section.substr(34);
-        }
-      }
-      text = section.match(this.wrapper(48)).join('\n');
-      this.textTxt = this.game.add.text(x, y, text, {
-        font: "24px Arial",
-        fill: "#ffffff",
-        align: "center"
-      });
-      this.textTxt.anchor.setTo(0.5, 0);
-      y = y + this.textTxt.height + 30;
-    }
-    if (this.opt.textlink) {
-      $('#textlink').show();
-    } else {
-      $('#textlink').hide();
-    }
-    if (this.opt.button) {
-      this.buttonBackground = this.add.sprite(x, y, 'button-background');
-      this.buttonBackground.smoothed = false;
-      this.buttonBackground.scale.setTo(4, 4);
-      this.buttonBackground.anchor.setTo(0.5, 0);
-      y += 15;
-      this.buttonTxt = this.add.bitmapText(x, y, 'minecraftia', this.opt.button);
-      this.buttonTxt.align = 'center';
-      this.buttonTxt.x = this.game.width / 2 - this.buttonTxt.textWidth / 2;
-      y += this.buttonBackground.height + 10;
-    }
-    if (this.opt.footer) {
-      this.footer = this.add.sprite(x, y, this.opt.footer);
-      this.footer.smoothed = false;
-      this.footer.scale.setTo(1, 1);
-      this.footer.anchor.setTo(0.5, 0);
-      y += this.footer.height + 10;
-    }
-    if (this.opt.afterword) {
-      text = this.opt.afterword.match(this.wrapper(35)).join('\n');
-      this.afterword = this.game.add.text(x, y, text, {
-        font: "18px Arial",
-        fill: "#ffffff",
-        align: "center"
-      });
-      this.afterword.anchor.setTo(0.5, 0);
-      y = y + this.afterword.height + 30;
-    }
-    return this.input.onDown.add(this.onDown, this);
+    return this.showMessage();
   };
 
   Message.prototype.update = function() {};
@@ -871,15 +802,17 @@ onHelpToggle = function(evt) {
   if (window.gameRef.showHelp) {
     window.gameRef.showHelp = false;
     $('#help-toggle').attr('title', 'Click to show help popups');
-    return $('#help-toggle img').attr('src', 'assets/images/icon-help-off.gif');
+    return $('#help-toggle img').attr('src', 'assets/images/icon-help-off.gif').attr('class', 'help-off');
   } else {
     window.gameRef.showHelp = true;
     $('#help-toggle').attr('title', 'Click to hide help popups');
-    return $('#help-toggle img').attr('src', 'assets/images/icon-help-on.gif');
+    return $('#help-toggle img').attr('src', 'assets/images/icon-help-on.gif').attr('class', 'help-on');
   }
 };
 
 $($('#help-toggle').click(onHelpToggle));
+
+onHelpToggle();
 
 
 
@@ -889,11 +822,10 @@ var $, onResize, resizeLandscape, resizePortrait;
 $ = require('jquery');
 
 onResize = function() {
-  var height, ref, ref1, width;
+  var height, ref, width;
   width = $(window).width();
   height = $(window).height();
-  console.log((ref = $('.skiptranslate')[0]) != null ? ref.style.display : void 0);
-  if (0 < $('.goog-te-banner-frame').length && 'none' !== ((ref1 = $('.skiptranslate')[0]) != null ? ref1.style.display : void 0)) {
+  if (0 < $('.goog-te-banner-frame').length && 'none' !== ((ref = $('.skiptranslate')[0]) != null ? ref.style.display : void 0)) {
     height -= $('.goog-te-banner-frame').height();
   }
   if (1 > width / height) {
@@ -919,7 +851,7 @@ resizePortrait = function(width, height) {
     width: 54 / 4,
     height: 54 / 4
   });
-  $('.wrap #main canvas').css({
+  $('.wrap #main #cell-survivor').css({
     width: width,
     height: width
   });
@@ -953,6 +885,7 @@ resizePortrait = function(width, height) {
 };
 
 resizeLandscape = function(width, height) {
+  console.log(width, height);
   height = Math.min(width - 108, height);
   window.gameHalfEdgeLength = height / 2;
   window.gameTenthEdgeLength = height / 10;
@@ -965,7 +898,7 @@ resizeLandscape = function(width, height) {
     width: (height - 20) / 28,
     height: (height - 20) / 28
   });
-  $('.wrap #main canvas').css({
+  $('.wrap #main #cell-survivor').css({
     width: height,
     height: height
   });
@@ -1494,8 +1427,8 @@ Preloader = (function() {
     this.load.image('cell-survivor-logo', 'assets/images/cell-survivor-logo-v2.gif');
     this.load.image('alliance-logo', 'assets/images/alliance-logo-v2.gif');
     this.load.image('cellfield', 'assets/images/bkgnd-v2.jpg');
-    this.load.image('vein-wall-header', 'assets/images/vein-wall-header.gif');
-    this.load.image('vein-wall-footer', 'assets/images/vein-wall-footer.gif');
+    this.load.image('vein-wall-header', 'assets/images/vein-wall-header-v2.gif');
+    this.load.image('vein-wall-footer', 'assets/images/vein-wall-footer-v2.gif');
     this.load.image('hep-c-brick-main', 'assets/images/hep-c-brick-main.gif');
     this.load.image('hep-c-brick-explosion-1', 'assets/images/hep-c-brick-explosion-1.gif');
     this.load.image('hep-c-brick-explosion-2', 'assets/images/hep-c-brick-explosion-2.gif');
