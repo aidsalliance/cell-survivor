@@ -6,12 +6,12 @@ class Level
   constructor: (@opt) ->
 
   createVeinWall: (name, angle, x, y) ->
-    @veinWall = @add.tileSprite 0, 48, 15, 600, name
+    @veinWall = @add.tileSprite 0, 96, 30, 600, name
     @veinWall.angle = angle
     @veinWall.x = x
     @veinWall.y = y
     @veinWall.autoScroll 0, @opt.slowest / 4
-    @veinWall.scale.setTo 2, 2
+    @veinWall.scale.setTo 1, 1
 
   powerup: (el) ->
     if not ({ 'levelTwo':1, 'levelThree':1, 'levelFour':1  })[@game.state.current] then return
@@ -85,7 +85,7 @@ class Level
   create: ->
     @levelFrameCount = 0 # a frame-count which resets each level
 
-    $(window).trigger 'resize' # ensure ‘onResize()’ is run
+    #$(window).trigger 'resize' # ensure ‘onResize()’ is run
     $('#textlink').hide()
 
     @sfx =
@@ -147,15 +147,15 @@ class Level
       @game.world.setBounds 0, 0, 744, 600
       @game.camera.x = 72
       @background = @add.tileSprite 72, 0, 600, 600, 'cellfield'
-      @createVeinWall 'vein-wall-header', -90, 672, 0
-      @createVeinWall 'vein-wall-footer', -90, 672, 570
+      @createVeinWall 'vein-wall-header', 90, 672, 0
+      @createVeinWall 'vein-wall-footer', 90, 672, 570
       @endZone = @world.width - 36 # width of widest pathogen
     else
       @game.world.setBounds 0, 0, 600, 744
       @game.camera.y = 72
       @background = @add.tileSprite 0, 72, 600, 600, 'cellfield'
-      @createVeinWall 'vein-wall-header', 0,   0, 0
-      @createVeinWall 'vein-wall-footer', 0, 570, 0
+      @createVeinWall 'vein-wall-header', 0,   0, 72
+      @createVeinWall 'vein-wall-footer', 0, 570, 72
       @endZone = @world.height - 36 # height of highest pathogen
 
     @background.scale.setTo 6, 6

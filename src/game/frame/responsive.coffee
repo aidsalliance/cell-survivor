@@ -3,7 +3,7 @@ $ = require 'jquery'
 onResize = ->
   width = $(window).width()
   height = $(window).height()
-  console.log $('.skiptranslate')[0]?.style.display
+  #console.log $('.skiptranslate')[0]?.style.display
   if 0 < $('.goog-te-banner-frame').length and 'none' != $('.skiptranslate')[0]?.style.display
     height -= $('.goog-te-banner-frame').height()
   if 1 > width / height then resizePortrait(width, height) else resizeLandscape(width, height)
@@ -27,7 +27,7 @@ resizePortrait = (width, height) ->
     .css
       width:  54 / 4
       height: 54 / 4
-  $ '.wrap #main canvas'
+  $ '.wrap #main #cell-survivor'
     .css
       width:  width
       height: width
@@ -62,6 +62,7 @@ resizePortrait = (width, height) ->
 
 
 resizeLandscape = (width, height) ->
+  console.log width, height
   height = Math.min width - 108, height # don’t squash either sidebar to less than 54px width
   window.gameHalfEdgeLength  = height / 2  # used by `rotateWall()` in `Level`
   window.gameTenthEdgeLength = height / 10 # used by `rotateWall()` in `Level`
@@ -75,7 +76,7 @@ resizeLandscape = (width, height) ->
     .css
       width:  (height - 20) / 28 # 7 * 4
       height: (height - 20) / 28 # 7 * 4
-  $ '.wrap #main canvas'
+  $ '.wrap #main #cell-survivor'
     .css
       width:  height
       height: height
