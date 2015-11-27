@@ -47,9 +47,9 @@ resizePortrait = (width, height) ->
       left: 0
       width: '100%'
       'font-size': '150%'
-  $ '#popup-inner'
-    .css
-      width: '90%'
+  # $ '#popup-inner'
+  #   .css
+  #     width: '90%'
   $ '.wrap .frame >div img'
     .css
       width: if 350 > width then 48 else 54 # 320px width
@@ -93,12 +93,12 @@ resizeLandscape = (width, height) ->
       # top: height * .1 # 10%
       top: ( height - $('#popup-inner').height() ) * .4
       bottom: 0
-      left: (width - height) / 2 + (height * .1)
-      width: height * .8
+      left: (width - height) / 2
+      width: height
       'font-size': '200%'
-  $ '#popup-inner'
-    .css
-      width: height * .8 # 80%
+  # $ '#popup-inner'
+  #   .css
+  #     width: '100%' #height * .8 # 80%
   $ '.wrap .frame >div img'
     .css
       width: '100%'

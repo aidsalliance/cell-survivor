@@ -34,6 +34,15 @@ body.hide-overflow {
   }
 }
 
+.portrait-only,
+.wrap.portrait .not-portrait {
+  display: none;
+}
+.not-portrait,
+.wrap.portrait .portrait-only {
+  display: inline;
+}
+
 .wrap {
   display: table;
   width: 100%;
@@ -209,8 +218,11 @@ body.hide-overflow {
       }
     }
     #popup-text {
-      margin-top: -2%;
+      max-width: 500px;
       padding: 0 20px;
+      margin-top: -2%;
+      margin-left: auto;
+      margin-right: auto;
       p, h6 {
         font-family: arial, sans-serif;
         a {
@@ -245,6 +257,88 @@ body.hide-overflow {
       margin-top: -1em;
       padding: 2% 20px 0 20px;
       color: #808080;
+    }
+  }
+}
+#popup-wrap #popup-inner {
+  padding: 20px 0 40px 0;
+  width: 100%;
+  background-image: -webkit-linear-gradient(top,       rgba(0,0,0,0), rgba(0,0,0,.8) 10%, rgba(0,0,0,.8) 90%, rgba(0,0,0,0)); /* For Chrome 25 and Safari 6, iOS 6.1, Android 4.3 */
+  background-image:    -moz-linear-gradient(top,       rgba(0,0,0,0), rgba(0,0,0,.8) 10%, rgba(0,0,0,.8) 90%, rgba(0,0,0,0)); /* For Firefox (3.6 to 15) */
+  background-image:      -o-linear-gradient(top,       rgba(0,0,0,0), rgba(0,0,0,.8) 10%, rgba(0,0,0,.8) 90%, rgba(0,0,0,0));
+  background:               linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,.8) 10%, rgba(0,0,0,.8) 90%, rgba(0,0,0,0));
+}
+
+@media (max-width: 414px) { /* iPhone 6+ P full-UI no-kbd */
+  #popup-wrap {
+    #popup-inner {
+      width: 100%!important; 
+      #popup-text {
+        .down-button {
+          height: 35px;
+          margin-bottom: 0.5em;
+          font-size: 18px;
+          background-size: 100% 100%;
+        }
+        h1 {
+          font-size: 20px;
+        }
+        h2 {
+          font-size: 18px;
+        }
+        p {
+          margin-top: 0;
+          font-size: 14px!important;
+        }
+      }
+      #popup-note {
+        margin-top: -1.5em;
+      }
+    }
+  }
+}
+
+
+@media (max-height: 414px) { /* iPhone 6+ L min-UI no-kbd */
+  #popup-wrap {
+    top: 10px!important;
+    #popup-inner {
+      width: 100%!important; 
+      #popup-text {
+        .down-button {
+          height: 35px;
+          margin-bottom: 0.5em;
+          font-size: 18px;
+          background-size: 100% 100%;
+        }
+        h1 {
+          font-size: 18px;
+        }
+        h2 {
+          font-size: 16px;
+        }
+        p {
+          margin-top: 0;
+          font-size: 13px!important;
+        }
+      }
+      #popup-note {
+        margin-top: -1.5em;
+        font-size: 13px!important;
+      }
+    }
+  }
+}
+
+@media (max-height: 375px) { /* iPhone 6 L min-UI no-kbd */
+  #popup-wrap {
+    top: -5px!important;
+    #popup-inner {
+      #popup-text {
+        .down-button {
+          font-size: 16px;
+        }
+      }
     }
   }
 }
@@ -301,6 +395,27 @@ body.hide-overflow {
   border: 2px solid #fff;
   height: 600px;
 }
+#score-wrap {
+  >span {
+    padding: 20px 0 0 0;
+  }
+}
+.wrap.portrait {
+  #score-wrap {
+    display: block;
+    position: absolute;
+    text-align: left;
+    top: 0;
+    >img {
+      display: none;
+    }
+    >span {
+      display: inline-block;
+      padding: 5px 0 0 5px;
+      font-size: 130%!important;
+    }
+  }
+}
 @media (max-width: 600px) {
   #high-scores {
     height: 350px;
@@ -333,19 +448,19 @@ h4 {
 
 .green {
   color: #8cc63f;
-  text-shadow: #008053 0 4px; // @todo cross-browser
+  text-shadow: #008053 0 2px; // @todo cross-browser
 }
 .aqua {
   color: #009ac8;
-  text-shadow: #008053 0 4px; // @todo cross-browser
+  text-shadow: #008053 0 2px; // @todo cross-browser
 }
 .pink {
   color: #f8c1d9;
-  text-shadow: #d60c8c 0 4px; // @todo cross-browser
+  text-shadow: #d60c8c 0 2px; // @todo cross-browser
 }
 .blue {
   color: #8ed8f8;
-  text-shadow: #009ac8 0 4px; // @todo cross-browser
+  text-shadow: #009ac8 0 2px; // @todo cross-browser
 }
 
 #google_translate_element {
@@ -353,4 +468,20 @@ h4 {
   top: 0;
   left: 0;
 }
-
+.wrap.portrait #score-wrap {
+  margin-top: 30px;
+}
+@media (max-width: 414px) { /* iPhone 6+ P full-UI no-kbd */
+  #google_translate_element,
+  #terms {
+    display: none;
+  }
+  .wrap.portrait #score-wrap {
+    margin-top: 0;
+  }
+}
+@media (max-height: 414px) { /* iPhone 6+ L min-UI no-kbd */
+  #google_translate_element {
+    display: none;
+  }
+}

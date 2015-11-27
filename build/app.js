@@ -870,9 +870,6 @@ resizePortrait = function(width, height) {
     width: '100%',
     'font-size': '150%'
   });
-  $('#popup-inner').css({
-    width: '90%'
-  });
   $('.wrap .frame >div img').css({
     width: 350 > width ? 48 : 54
   });
@@ -913,12 +910,9 @@ resizeLandscape = function(width, height) {
   $('#popup-wrap').css({
     top: (height - $('#popup-inner').height()) * .4,
     bottom: 0,
-    left: (width - height) / 2 + (height * .1),
-    width: height * .8,
+    left: (width - height) / 2,
+    width: height,
     'font-size': '200%'
-  });
-  $('#popup-inner').css({
-    width: height * .8
   });
   $('.wrap .frame >div img').css({
     width: '100%'
