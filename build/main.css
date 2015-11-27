@@ -27,43 +27,55 @@ body.hide-overflow {
   opacity: 1;
 }
 
-/* line 37, ../src/sass/main.scss */
+/* line 38, ../src/sass/main.scss */
+.portrait-only,
+.wrap.portrait .not-portrait {
+  display: none;
+}
+
+/* line 42, ../src/sass/main.scss */
+.not-portrait,
+.wrap.portrait .portrait-only {
+  display: inline;
+}
+
+/* line 46, ../src/sass/main.scss */
 .wrap {
   display: table;
   width: 100%;
   height: 100%;
 }
-/* line 41, ../src/sass/main.scss */
+/* line 50, ../src/sass/main.scss */
 .wrap > div {
   display: table-row;
 }
-/* line 43, ../src/sass/main.scss */
+/* line 52, ../src/sass/main.scss */
 .wrap > div > div {
   display: table-cell;
   vertical-align: top;
 }
-/* line 47, ../src/sass/main.scss */
+/* line 56, ../src/sass/main.scss */
 .wrap > div > div.frame > div {
   display: inline-block;
   padding-top: 10px;
   opacity: 0;
   transition: opacity 1s;
 }
-/* line 52, ../src/sass/main.scss */
+/* line 61, ../src/sass/main.scss */
 .wrap > div > div.frame > div img {
   width: 100%;
   height: auto;
 }
-/* line 57, ../src/sass/main.scss */
+/* line 66, ../src/sass/main.scss */
 .wrap > div > div.frame > div a {
   transition: opacity .5s;
   cursor: pointer;
 }
-/* line 60, ../src/sass/main.scss */
+/* line 69, ../src/sass/main.scss */
 .wrap > div > div.frame > div a:hover {
   opacity: .7;
 }
-/* line 64, ../src/sass/main.scss */
+/* line 73, ../src/sass/main.scss */
 .wrap > div > div.frame > div #fb-iframe {
   position: absolute;
   width: 50px;
@@ -74,107 +86,107 @@ body.hide-overflow {
   transform-origin: 0 0 0;
   opacity: 0;
 }
-/* line 76, ../src/sass/main.scss */
+/* line 85, ../src/sass/main.scss */
 .wrap > div > div#header {
   width: 50%;
   text-align: right;
 }
-/* line 80, ../src/sass/main.scss */
+/* line 89, ../src/sass/main.scss */
 .wrap > div > div#main {
   text-align: center;
 }
-/* line 82, ../src/sass/main.scss */
+/* line 91, ../src/sass/main.scss */
 .wrap > div > div#main canvas {
   display: inline-block !important;
   cursor: pointer;
   width: 100% !important;
   height: 100% !important;
 }
-/* line 89, ../src/sass/main.scss */
+/* line 98, ../src/sass/main.scss */
 .wrap > div > div#footer {
   width: 50%;
   text-align: left;
 }
-/* line 95, ../src/sass/main.scss */
+/* line 104, ../src/sass/main.scss */
 .wrap.portrait {
   display: block;
 }
-/* line 97, ../src/sass/main.scss */
+/* line 106, ../src/sass/main.scss */
 .wrap.portrait > div {
   display: table;
   width: 100%;
   height: 100%;
 }
-/* line 101, ../src/sass/main.scss */
+/* line 110, ../src/sass/main.scss */
 .wrap.portrait > div > div {
   display: table-row;
 }
-/* line 104, ../src/sass/main.scss */
+/* line 113, ../src/sass/main.scss */
 .wrap.portrait > div > div.frame > div {
   padding-top: 0;
   text-align: center;
   vertical-align: bottom;
 }
-/* line 109, ../src/sass/main.scss */
+/* line 118, ../src/sass/main.scss */
 .wrap.portrait > div > div.frame > div #header-gap img {
   width: 1px !important;
 }
-/* line 113, ../src/sass/main.scss */
+/* line 122, ../src/sass/main.scss */
 .wrap.portrait > div > div.frame > div img {
   width: 54px;
 }
-/* line 119, ../src/sass/main.scss */
+/* line 128, ../src/sass/main.scss */
 .wrap.portrait > div > div#header > div {
   vertical-align: bottom;
 }
-/* line 123, ../src/sass/main.scss */
+/* line 132, ../src/sass/main.scss */
 .wrap.portrait > div > div#main {
   height: 100%;
 }
-/* line 125, ../src/sass/main.scss */
+/* line 134, ../src/sass/main.scss */
 .wrap.portrait > div > div#main > div {
   vertical-align: middle;
 }
-/* line 130, ../src/sass/main.scss */
+/* line 139, ../src/sass/main.scss */
 .wrap.portrait > div > div#footer > div {
   vertical-align: top;
 }
-/* line 134, ../src/sass/main.scss */
+/* line 143, ../src/sass/main.scss */
 .wrap.portrait > div > div > div {
   display: table-cell;
 }
 
-/* line 142, ../src/sass/main.scss */
+/* line 151, ../src/sass/main.scss */
 #score {
   position: absolute;
 }
 
-/* line 146, ../src/sass/main.scss */
+/* line 155, ../src/sass/main.scss */
 #textlink {
   position: absolute;
   display: none;
   top: 100px;
   width: 100%;
 }
-/* line 151, ../src/sass/main.scss */
+/* line 160, ../src/sass/main.scss */
 #textlink a {
   display: block;
   height: 20px;
 }
 
-/* line 158, ../src/sass/main.scss */
+/* line 167, ../src/sass/main.scss */
 .bodycopy {
   max-width: 800px;
   margin: 0 auto;
   padding: 0 15px;
 }
-/* line 162, ../src/sass/main.scss */
+/* line 171, ../src/sass/main.scss */
 .bodycopy p {
   font-size: 16px;
   line-height: 24px;
 }
 
-/* line 168, ../src/sass/main.scss */
+/* line 177, ../src/sass/main.scss */
 #play-cell-survivor, button {
   display: inline-block;
   margin-bottom: 40px;
@@ -190,12 +202,12 @@ body.hide-overflow {
   text-decoration: none;
   cursor: pointer;
 }
-/* line 182, ../src/sass/main.scss */
+/* line 191, ../src/sass/main.scss */
 #play-cell-survivor:hover, button:hover {
   background-color: #009ac8;
 }
 
-/* line 187, ../src/sass/main.scss */
+/* line 196, ../src/sass/main.scss */
 #popup-wrap {
   position: absolute;
   display: none;
@@ -203,18 +215,18 @@ body.hide-overflow {
   text-align: center;
   font-size: 200%;
 }
-/* line 193, ../src/sass/main.scss */
+/* line 202, ../src/sass/main.scss */
 #popup-wrap #popup-inner {
   display: inline-block;
   width: 500px;
   padding-bottom: 20px;
   background-color: rgba(0, 0, 0, 0.8);
 }
-/* line 198, ../src/sass/main.scss */
+/* line 207, ../src/sass/main.scss */
 #popup-wrap #popup-inner #popup-dismiss {
   text-align: right;
 }
-/* line 200, ../src/sass/main.scss */
+/* line 209, ../src/sass/main.scss */
 #popup-wrap #popup-inner #popup-dismiss span {
   display: inline-block;
   padding: 10px 10px 0 10px;
@@ -222,38 +234,41 @@ body.hide-overflow {
   cursor: pointer;
   transition: color .2s;
 }
-/* line 206, ../src/sass/main.scss */
+/* line 215, ../src/sass/main.scss */
 #popup-wrap #popup-inner #popup-dismiss span:hover {
   color: #ed1c24;
 }
-/* line 211, ../src/sass/main.scss */
+/* line 220, ../src/sass/main.scss */
 #popup-wrap #popup-inner #popup-text {
-  margin-top: -2%;
+  max-width: 500px;
   padding: 0 20px;
+  margin-top: -2%;
+  margin-left: auto;
+  margin-right: auto;
 }
-/* line 214, ../src/sass/main.scss */
+/* line 226, ../src/sass/main.scss */
 #popup-wrap #popup-inner #popup-text p, #popup-wrap #popup-inner #popup-text h6 {
   font-family: arial, sans-serif;
 }
-/* line 216, ../src/sass/main.scss */
+/* line 228, ../src/sass/main.scss */
 #popup-wrap #popup-inner #popup-text p a, #popup-wrap #popup-inner #popup-text h6 a {
   color: #fff;
   text-decoration: underline;
 }
-/* line 221, ../src/sass/main.scss */
+/* line 233, ../src/sass/main.scss */
 #popup-wrap #popup-inner #popup-text h6 {
   margin: 1em 0;
   font-weight: normal;
 }
-/* line 225, ../src/sass/main.scss */
+/* line 237, ../src/sass/main.scss */
 #popup-wrap #popup-inner #popup-text a {
   transition: opacity .5s;
 }
-/* line 227, ../src/sass/main.scss */
+/* line 239, ../src/sass/main.scss */
 #popup-wrap #popup-inner #popup-text a:hover {
   opacity: .7;
 }
-/* line 231, ../src/sass/main.scss */
+/* line 243, ../src/sass/main.scss */
 #popup-wrap #popup-inner #popup-text .down-button {
   height: 64px;
   background-repeat: no-repeat;
@@ -263,18 +278,108 @@ body.hide-overflow {
   cursor: pointer;
   transition: opacity .5s;
 }
-/* line 239, ../src/sass/main.scss */
+/* line 251, ../src/sass/main.scss */
 #popup-wrap #popup-inner #popup-text .down-button:hover {
   opacity: .7;
 }
-/* line 244, ../src/sass/main.scss */
+/* line 256, ../src/sass/main.scss */
 #popup-wrap #popup-inner #popup-note {
   margin-top: -1em;
   padding: 2% 20px 0 20px;
   color: #808080;
 }
 
-/* line 252, ../src/sass/main.scss */
+/* line 263, ../src/sass/main.scss */
+#popup-wrap #popup-inner {
+  padding: 20px 0 40px 0;
+  width: 100%;
+  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8) 10%, rgba(0, 0, 0, 0.8) 90%, rgba(0, 0, 0, 0));
+  /* For Chrome 25 and Safari 6, iOS 6.1, Android 4.3 */
+  background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8) 10%, rgba(0, 0, 0, 0.8) 90%, rgba(0, 0, 0, 0));
+  /* For Firefox (3.6 to 15) */
+  background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8) 10%, rgba(0, 0, 0, 0.8) 90%, rgba(0, 0, 0, 0));
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8) 10%, rgba(0, 0, 0, 0.8) 90%, rgba(0, 0, 0, 0));
+}
+
+@media (max-width: 414px) {
+  /* iPhone 6+ P full-UI no-kbd */
+  /* line 274, ../src/sass/main.scss */
+  #popup-wrap #popup-inner {
+    width: 100% !important;
+  }
+  /* line 277, ../src/sass/main.scss */
+  #popup-wrap #popup-inner #popup-text .down-button {
+    height: 35px;
+    margin-bottom: 0.5em;
+    font-size: 18px;
+    background-size: 100% 100%;
+  }
+  /* line 283, ../src/sass/main.scss */
+  #popup-wrap #popup-inner #popup-text h1 {
+    font-size: 20px;
+  }
+  /* line 286, ../src/sass/main.scss */
+  #popup-wrap #popup-inner #popup-text h2 {
+    font-size: 18px;
+  }
+  /* line 289, ../src/sass/main.scss */
+  #popup-wrap #popup-inner #popup-text p {
+    margin-top: 0;
+    font-size: 14px !important;
+  }
+  /* line 294, ../src/sass/main.scss */
+  #popup-wrap #popup-inner #popup-note {
+    margin-top: -1.5em;
+  }
+}
+@media (max-height: 414px) {
+  /* iPhone 6+ L min-UI no-kbd */
+  /* line 303, ../src/sass/main.scss */
+  #popup-wrap {
+    top: 10px !important;
+  }
+  /* line 305, ../src/sass/main.scss */
+  #popup-wrap #popup-inner {
+    width: 100% !important;
+  }
+  /* line 308, ../src/sass/main.scss */
+  #popup-wrap #popup-inner #popup-text .down-button {
+    height: 35px;
+    margin-bottom: 0.5em;
+    font-size: 18px;
+    background-size: 100% 100%;
+  }
+  /* line 314, ../src/sass/main.scss */
+  #popup-wrap #popup-inner #popup-text h1 {
+    font-size: 18px;
+  }
+  /* line 317, ../src/sass/main.scss */
+  #popup-wrap #popup-inner #popup-text h2 {
+    font-size: 16px;
+  }
+  /* line 320, ../src/sass/main.scss */
+  #popup-wrap #popup-inner #popup-text p {
+    margin-top: 0;
+    font-size: 13px !important;
+  }
+  /* line 325, ../src/sass/main.scss */
+  #popup-wrap #popup-inner #popup-note {
+    margin-top: -1.5em;
+    font-size: 13px !important;
+  }
+}
+@media (max-height: 375px) {
+  /* iPhone 6 L min-UI no-kbd */
+  /* line 334, ../src/sass/main.scss */
+  #popup-wrap {
+    top: -5px !important;
+  }
+  /* line 338, ../src/sass/main.scss */
+  #popup-wrap #popup-inner #popup-text .down-button {
+    font-size: 16px;
+  }
+}
+/* line 346, ../src/sass/main.scss */
 #high-score-form {
   z-index: 9999;
   position: absolute;
@@ -286,27 +391,27 @@ body.hide-overflow {
   text-align: center;
   background-color: rgba(0, 0, 0, 0.9);
 }
-/* line 262, ../src/sass/main.scss */
+/* line 356, ../src/sass/main.scss */
 #high-score-form > div {
   display: inline-block;
   max-width: 800px;
   margin-top: 100px;
 }
-/* line 267, ../src/sass/main.scss */
+/* line 361, ../src/sass/main.scss */
 #high-score-form .error {
   background-color: #f8c1d9;
   font: 12px 'Press Start 2P', cursive;
   line-height: 2;
   color: #d60c8c;
 }
-/* line 273, ../src/sass/main.scss */
+/* line 367, ../src/sass/main.scss */
 #high-score-form .success {
   background-color: #8cc63f;
   font: 12px 'Press Start 2P', cursive;
   line-height: 2;
   color: #008053;
 }
-/* line 279, ../src/sass/main.scss */
+/* line 373, ../src/sass/main.scss */
 #high-score-form input {
   margin-top: 1em;
   width: 3em;
@@ -318,13 +423,13 @@ body.hide-overflow {
   text-align: center;
   text-transform: uppercase;
 }
-/* line 290, ../src/sass/main.scss */
+/* line 384, ../src/sass/main.scss */
 #high-score-form button {
   display: block;
   margin: 10px auto;
 }
 
-/* line 298, ../src/sass/main.scss */
+/* line 392, ../src/sass/main.scss */
 #high-scores {
   width: 100%;
   margin-bottom: 20px;
@@ -332,70 +437,119 @@ body.hide-overflow {
   height: 600px;
 }
 
+/* line 399, ../src/sass/main.scss */
+#score-wrap > span {
+  padding: 20px 0 0 0;
+}
+
+/* line 404, ../src/sass/main.scss */
+.wrap.portrait #score-wrap {
+  display: block;
+  position: absolute;
+  text-align: left;
+  top: 0;
+}
+/* line 409, ../src/sass/main.scss */
+.wrap.portrait #score-wrap > img {
+  display: none;
+}
+/* line 412, ../src/sass/main.scss */
+.wrap.portrait #score-wrap > span {
+  display: inline-block;
+  padding: 5px 0 0 5px;
+  font-size: 130% !important;
+}
+
 @media (max-width: 600px) {
-  /* line 305, ../src/sass/main.scss */
+  /* line 420, ../src/sass/main.scss */
   #high-scores {
     height: 350px;
   }
 
-  /* line 309, ../src/sass/main.scss */
+  /* line 424, ../src/sass/main.scss */
   #high-scores-inner .bold-bitmap {
     font-size: 18px;
   }
 }
-/* line 315, ../src/sass/main.scss */
+/* line 430, ../src/sass/main.scss */
 .bold-bitmap, h1 {
   font: 32px 'Press Start 2P', cursive;
   line-height: 1.4;
   text-shadow: #000 0 4px;
 }
 
-/* line 320, ../src/sass/main.scss */
+/* line 435, ../src/sass/main.scss */
 .bold-bitmap-small {
   font: 32px 'Press Start 2P', cursive;
   line-height: 0.7;
   text-shadow: #000 0 2px;
 }
 
-/* line 325, ../src/sass/main.scss */
+/* line 440, ../src/sass/main.scss */
 h2 {
   font: 24px 'Press Start 2P', cursive;
   text-shadow: #000 0 2px;
 }
 
-/* line 329, ../src/sass/main.scss */
+/* line 444, ../src/sass/main.scss */
 h4 {
   font: 18px/24px 'Press Start 2P', cursive;
   text-shadow: #000 0 2px;
 }
 
-/* line 334, ../src/sass/main.scss */
+/* line 449, ../src/sass/main.scss */
 .green {
   color: #8cc63f;
-  text-shadow: #008053 0 4px;
+  text-shadow: #008053 0 2px;
 }
 
-/* line 338, ../src/sass/main.scss */
+/* line 453, ../src/sass/main.scss */
 .aqua {
   color: #009ac8;
-  text-shadow: #008053 0 4px;
+  text-shadow: #008053 0 2px;
 }
 
-/* line 342, ../src/sass/main.scss */
+/* line 457, ../src/sass/main.scss */
 .pink {
   color: #f8c1d9;
-  text-shadow: #d60c8c 0 4px;
+  text-shadow: #d60c8c 0 2px;
 }
 
-/* line 346, ../src/sass/main.scss */
+/* line 461, ../src/sass/main.scss */
 .blue {
   color: #8ed8f8;
-  text-shadow: #009ac8 0 4px;
+  text-shadow: #009ac8 0 2px;
 }
 
-/* line 351, ../src/sass/main.scss */
+/* line 466, ../src/sass/main.scss */
 #google_translate_element {
   position: absolute;
   top: 0;
   left: 0;
+}
+
+/* line 471, ../src/sass/main.scss */
+.wrap.portrait #score-wrap {
+  margin-top: 30px;
+}
+
+@media (max-width: 414px) {
+  /* iPhone 6+ P full-UI no-kbd */
+  /* line 476, ../src/sass/main.scss */
+  #google_translate_element,
+  #terms {
+    display: none;
+  }
+
+  /* line 479, ../src/sass/main.scss */
+  .wrap.portrait #score-wrap {
+    margin-top: 0;
+  }
+}
+@media (max-height: 414px) {
+  /* iPhone 6+ L min-UI no-kbd */
+  /* line 484, ../src/sass/main.scss */
+  #google_translate_element {
+    display: none;
+  }
 }
