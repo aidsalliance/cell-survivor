@@ -3,7 +3,7 @@
   "description": "An HTML5 game with information on living with HIV.",
   "readme": "README.md",
   "repository": "https://github.com/aidsalliance/cell-survivor",
-  "version": "1.0.1",
+  "version": "1.0.2-1",
   "dependencies": {},
   "browser": {
     "phaser": "./src/bower_components/phaser-official/build/phaser.min.js",

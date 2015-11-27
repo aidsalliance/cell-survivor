@@ -278,6 +278,13 @@ __16.4__  bumped version to '1.0.1-2' and commit
 __16.5__  `$ git flow feature finish latest-browsers`, `$ git flow release start 1.0.1`  
 
 
+17. Update for iOS 9
+--------------------
+
+__17.1__  `$ git flow feature start ios9`  
+__17.2__  bumped version to '1.0.2-1' and commit  
+
+
 
 
 
@@ -327,4 +334,5 @@ Releases
 + 1.0.1-1  begin latest-browsers
 + 1.0.1-2  fixed responsive resize issues in latest browsers
 + 1.0.1    latest browsers
++ 1.0.2-1  begin ios9
 
