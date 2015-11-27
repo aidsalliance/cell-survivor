@@ -268,6 +268,16 @@ __15.4__  bumped version to '0.3.7-2' and commit
 __15.5__  `$ git flow feature finish instructions-icon`, `$ git flow release start 0.3.8`  
 
 
+16. Update for latest Browsers
+------------------------------
+
+__16.1__  `$ git flow feature start latest-browsers`  
+__16.2__  bumped version to '1.0.1-1' and commit  
+__16.3__  fixed responsive resize issues in latest browsers  
+__16.4__  bumped version to '1.0.1-2' and commit  
+__16.5__  `$ git flow feature finish latest-browsers`, `$ git flow release start 1.0.1`  
+
+
 
 
 
@@ -314,4 +324,7 @@ Releases
 + 0.3.7-2  with `help-toggle.coffee` and help icon
 + 1.0.0-1  begin lib-upgrade
 + 1.0.0    lib-upgrade
++ 1.0.1-1  begin latest-browsers
++ 1.0.1-2  fixed responsive resize issues in latest browsers
++ 1.0.1    latest browsers
 
