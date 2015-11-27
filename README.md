@@ -275,6 +275,7 @@ __16.1__  `$ git flow feature start latest-browsers`
 __16.2__  bumped version to '1.0.1-1' and commit  
 __16.3__  fixed responsive resize issues in latest browsers  
 __16.4__  bumped version to '1.0.1-2' and commit  
+__16.5__  `$ git flow feature finish latest-browsers`, `$ git flow release start 1.0.1`  
 
 
 
@@ -325,4 +326,5 @@ Releases
 + 1.0.0    lib-upgrade
 + 1.0.1-1  begin latest-browsers
 + 1.0.1-2  fixed responsive resize issues in latest browsers
++ 1.0.1    latest browsers
 
