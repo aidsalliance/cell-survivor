@@ -285,6 +285,7 @@ __17.1__  `$ git flow feature start ios9`
 __17.2__  bumped version to '1.0.2-1' and commit  
 __17.3__  fixed text size issues in latest iOS  
 __17.4__  bumped version to '1.0.2-2' and commit  
+__17.5__  `$ git flow feature finish ios9`, `$ git flow release start 1.0.2`  
 
 
 
@@ -338,4 +339,5 @@ Releases
 + 1.0.1    latest browsers
 + 1.0.2-1  begin ios9
 + 1.0.2-2  fixed text size issues in latest iOS
++ 1.0.2    ios9
 
